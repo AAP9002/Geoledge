@@ -1,7 +1,5 @@
 const express = require('express');
 const app = express();
-const axios = require('axios');
-const util = require('util');
 const port = process.env.PORT || 5000;
 
 // This displays message that the server running and listening to specified port
