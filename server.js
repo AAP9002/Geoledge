@@ -23,11 +23,12 @@ app.use(express.static('client/build'))
 
 // test if can get a record from mysql database and return json
 app.get('/express_backend', (req, res) => {
-  res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' }); //Line 10
-});
+  connection.query("select * from temp", function(error, results){
+    console.log(results);
+    res.send({  results  });
+  })
 
-
-console.log(process.env.DBNAME)
+  connection.end()});
 
 // JWT SET-UP CODE AND METHODS
 dotenv.config();  // get config vars
@@ -37,24 +38,3 @@ function generateAccessToken(username) {
   return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
 }
 
-
-
-// CODE TO CONNECT TO THE DATABASE
-
-const mysql = require('mysql')
-const connection = mysql.createConnection({
-  host: process.env.DB_SERVER,
-  user: process.env.DBUSER,
-  password: process.env.PASSWORD,
-  database: process.env.DBNAME
-})
-
-
-
-  connection.query("select * from temp", function(error, results){
-    console.log(results);
-    res.send({  results  });
-  })
-
-  connection.end()
-});
