@@ -3,7 +3,7 @@ const express = require('express');
 const mysql = require('mysql')
 const app = express();
 const port = process.env.PORT || 5000;
-const axios = require('axios');
+const axios = require('axios'); // use to get country api data from web
 
 const connection = mysql.createConnection({
   host: process.env.DB_SERVER,
@@ -46,6 +46,8 @@ function generateAccessToken(username) {
 }
 
 
+////////////// COUNTRY API Start //////////////
+//get cleaned country data
 app.get('/api/getallcountrydata', function(req, res) {
   axios.get('https://restcountries.com/v3.1/all')
   .then(response => {
@@ -56,12 +58,13 @@ app.get('/api/getallcountrydata', function(req, res) {
 
 });
 
+// clean country data from API ans return json b=object with formatted data
 function GenerateCountryDataTable(response){
   var countries = response;
   var formattedCountries = [];
 
   for(let i =0; i<countries.length;i++){
-
+    // NOTE some countries don't have capitals
     var capitalName = "No Capital"
     if(countries[i].capital == undefined){
       console.log(countries[i].name.common)
@@ -69,6 +72,7 @@ function GenerateCountryDataTable(response){
     else{
       capitalName = countries[i].capital[0]
     }
+    //clean and make country object
     var individualCountry = {
       name: countries[i].name.common,
       independent: countries[i].independent,
@@ -84,9 +88,11 @@ function GenerateCountryDataTable(response){
 
     }
 
-    formattedCountries.push(individualCountry)
+    formattedCountries.push(individualCountry) // add country to countries object
   }
 
   return formattedCountries;
 
 }
+
+//////////// Country API End ////////////////
