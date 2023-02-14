@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
   password: process.env.PASSWORD,
   database: process.env.DBNAME
 });
-
+// jbkjhbkvhvljvjhvhjvk
 // copy .env.TEMPLATE into a new file called .env (this file will not be send to git, so real passwords can be set to the .env)
 
 // get secret value from .env file
