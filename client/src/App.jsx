@@ -6,7 +6,7 @@ import Leaderboard from './Pages/Leaderboard'
 import PrivacyPolicy from './Pages/Privacypolicy'
 import Signup from './Pages/Sign-up'
 import TermsandConditions from './Pages/TermsandConditions'
-import Account from './Pages/Account'
+import Account from './Pages/AccountPage'
 import Footer from './Components/Footer';
 
 function App() {

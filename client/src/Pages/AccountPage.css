@@ -1,5 +1,8 @@
 
-
+.wrapper h1{
+  color: antiquewhite;
+  font-size: 80px;
+}
 .wrapper th{
     color: aliceblue;
     font-size: larger;
@@ -12,13 +15,15 @@
   }
   
   .wrapper table{
-    background-color: blueviolet;
-    padding:20px;
+    background-color: rgb(37, 6, 67);
+    padding: 80px;
   }
 
   .wrapper{
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-image: url(../uni1.jpg);
   }

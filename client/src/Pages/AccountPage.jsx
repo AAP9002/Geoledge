@@ -1,5 +1,5 @@
 import React from 'react';
-import "./Account.css";
+import "./AccountPage.css";
 import { useState } from 'react';
 
 
@@ -31,9 +31,7 @@ const About = () => {
   return (
     <div>
           <div>
-            <p>
-              Account
-            </p>
+            
             <ScoreBoard/>
           
           </div>
