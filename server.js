@@ -16,3 +16,24 @@ app.use(express.static('client/build'))
 app.get('/express_backend', (req, res) => {
   res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' }); //Line 10
 });
+
+
+// Connecting to SQL database
+const mysql = require('mysql')
+const connection = mysql.createConnection({
+  host: 'n1nlmysql47plsk.secureserver.net',
+  user: 'ph183344417512341',
+  password: 'ma0oHz266Q3NC5mjJlW7iPX46eVHAE56CAMtYsJ4Xq11uVwGiaoTXAIfCllbk51iNOdxcBPir63jaUE1',  // DELETE BEFORE PUSHING!!!
+  database: 'geo_ph18334441751'
+})
+
+connection.connect();
+
+// Adding a new user to the database
+connection.query('INSERT INTO users VALUES (3, "Horrid", "Henry", "horrid_henry@gmail.com", "veryHorrid", null, CURRENT_DATE, 0, 0)', (err, rows, fields) => {
+  if (err) throw err
+
+  console.log('New user created.');
+})
+
+connection.end()
