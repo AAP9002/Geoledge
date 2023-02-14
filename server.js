@@ -2,6 +2,9 @@ require("dotenv").config();
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+
 
 // copy .env.TEMPLATE into a new file called .env (this file will not be send to git, so real passwords can be set to the .env)
 
@@ -20,26 +23,27 @@ app.get('/express_backend', (req, res) => {
 
 console.log(process.env.DBNAME)
 
-console.log("hiya alex")
+// JWT SET-UP CODE AND METHODS
+dotenv.config();  // get config vars
+process.env.TOKEN_SECRET;   // access config var
 
-// Connecting to SQL database
+function generateAccessToken(username) {
+  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+}
+
+
+
+// CODE TO CONNECT TO THE DATABASE
+
 const mysql = require('mysql')
 const connection = mysql.createConnection({
   host: process.env.DB_SERVER,
   user: process.env.DBUSER,
-  password: process.env.PASSWORD,  // DELETE BEFORE PUSHING!!!
+  password: process.env.PASSWORD,
   database: process.env.DBNAME
 })
 
-console.log("hello");
 
-connection.connect();
 
-// Adding a new user to the database
-connection.query('INSERT INTO users VALUES (3, "Horrid", "Henry", "horrid_henry@gmail.com", "veryHorrid", null, CURRENT_DATE, 0, 0)', (err, rows, fields) => {
-  if (err) throw err
-
-  console.log('New user created.');
-})
-
-connection.end()
+// LOGIN API
+// Sending JWT to client
