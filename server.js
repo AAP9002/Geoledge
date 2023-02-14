@@ -27,14 +27,18 @@ app.get('/express_backend', (req, res) => {
     console.log(results);
     res.send({  results  });
   })
+});
 
-  connection.end()});
+app.get('/express_backend_insert', (req, res) => {
+  connection.query("INSERT INTO `temp` (`id`, `name`) VALUES ('14', 'Alex') ", function(error, results){
+    console.log(results);
+    res.send({  results  });
+  })
+});
 
 // JWT SET-UP CODE AND METHODS
-dotenv.config();  // get config vars
 process.env.TOKEN_SECRET;   // access config var
 
 function generateAccessToken(username) {
   return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
 }
-
