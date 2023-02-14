@@ -18,13 +18,15 @@ app.get('/express_backend', (req, res) => {
 });
 
 
+console.log(process.env.DBNAME)
+
 // Connecting to SQL database
 const mysql = require('mysql')
 const connection = mysql.createConnection({
-  host: 'n1nlmysql47plsk.secureserver.net',
-  user: 'ph183344417512341',
-  password: 'ma0oHz266Q3NC5mjJlW7iPX46eVHAE56CAMtYsJ4Xq11uVwGiaoTXAIfCllbk51iNOdxcBPir63jaUE1',  // DELETE BEFORE PUSHING!!!
-  database: 'geo_ph18334441751'
+  host: process.env.DB_SERVER,
+  user: process.env.DBUSER,
+  password: process.env.PASSWORD,  // DELETE BEFORE PUSHING!!!
+  database: process.env.DBNAME
 })
 
 connection.connect();
