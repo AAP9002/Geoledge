@@ -20,8 +20,6 @@ app.get('/express_backend', (req, res) => {
 
 console.log(process.env.DBNAME)
 
-console.log("hiya alex")
-
 // Connecting to SQL database
 const mysql = require('mysql')
 const connection = mysql.createConnection({
@@ -30,8 +28,6 @@ const connection = mysql.createConnection({
   password: process.env.PASSWORD,  // DELETE BEFORE PUSHING!!!
   database: process.env.DBNAME
 })
-
-console.log("hello");
 
 connection.connect();
 
