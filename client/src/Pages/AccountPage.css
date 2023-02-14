@@ -1,0 +1,29 @@
+
+.wrapper h1{
+  color: antiquewhite;
+  font-size: 80px;
+}
+.wrapper th{
+    color: aliceblue;
+    font-size: larger;
+    padding:30px;
+  }
+  
+  .wrapper td{
+    color: aliceblue;
+    padding:30px;
+  }
+  
+  .wrapper table{
+    background-color: rgb(37, 6, 67);
+    padding: 80px;
+  }
+
+  .wrapper{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url(../uni1.jpg);
+  }

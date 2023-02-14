@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url(https://wallpaper.dog/large/5547551.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form {
+  background-color: #1F2329;
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  width: 400px;
+}
+
+.form h1 {
+  color: #00F5FF;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  color: #00F5FF;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  background-color: #333;
+  border: 2px solid #00F5FF;
+  border-radius: 5px;
+  color: #00F5FF;
+  font-size: 16px;
+  padding: 10px;
+}
+
+button[type="submit"] {
+  background-color: #00F5FF;
+  border: none;
+  border-radius: 5px;
+  color: #333;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px;
+  transition: background-color 0.2s ease;
+  width: 100%;
+}
+
+button[type="submit"]:hover {
+  background-color: #80E0FF;
+}
+
+p {
+  color: #00F5FF;
+  font-size: 14px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+a {
+  color: #00F5FF;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
