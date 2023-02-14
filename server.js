@@ -25,17 +25,12 @@ const mysql = require('mysql')
 const connection = mysql.createConnection({
   host: process.env.DB_SERVER,
   user: process.env.DBUSER,
-  password: process.env.PASSWORD,  // DELETE BEFORE PUSHING!!!
+  password: process.env.PASSWORD,
   database: process.env.DBNAME
 })
 
 connection.connect();
 
 // Adding a new user to the database
-connection.query('INSERT INTO users VALUES (3, "Horrid", "Henry", "horrid_henry@gmail.com", "veryHorrid", null, CURRENT_DATE, 0, 0)', (err, rows, fields) => {
-  if (err) throw err
-
-  console.log('New user created.');
-})
 
 connection.end()
