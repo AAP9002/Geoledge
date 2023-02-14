@@ -12,25 +12,27 @@ console.log(process.env.SECRET_CODE_EXAMPLE);
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.use(express.static('client/build'))
-// create a GET route
-app.get('/express_backend', (req, res) => {
-  res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' }); //Line 10
-});
+
 
 
 console.log(process.env.DBNAME)
 
-// Connecting to SQL database
-const mysql = require('mysql')
-const connection = mysql.createConnection({
-  host: process.env.DB_SERVER,
-  user: process.env.DBUSER,
-  password: process.env.PASSWORD,
-  database: process.env.DBNAME
-})
+// create a GET route
+app.get('/express_backend', (req, res) => {
+  const mysql = require('mysql')
+  const connection = mysql.createConnection({
+    host: process.env.DB_SERVER,
+    user: process.env.DBUSER,
+    password: process.env.PASSWORD,
+    database: process.env.DBNAME
+  });
+  connection.connect();
+  connection.query("select * from temp", function(error, results){
+    console.log(results);
+    res.send({  results  });
+  })
 
-connection.connect();
+  connection.end()
+});
 
 // Adding a new user to the database
-
-connection.end()
