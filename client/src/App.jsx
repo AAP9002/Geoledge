@@ -21,7 +21,7 @@ function App() {
             <Route path='/PrivacyPolicy' element={<PrivacyPolicy/>} />
             <Route path='/Sign-up' element={<Signup/>} />
             <Route path='/TermsandConditions' element={<TermsandConditions/>} />
-            <Route path='/Account' element={<Account/>} />
+            <Route path='/AccountPage' element={<Account/>} />
           </Routes>
         <Footer />
 
