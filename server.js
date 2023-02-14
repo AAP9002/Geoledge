@@ -29,6 +29,8 @@ const connection = mysql.createConnection({
   database: process.env.DBNAME
 })
 
+console.log("hello");
+
 connection.connect();
 
 // Adding a new user to the database
