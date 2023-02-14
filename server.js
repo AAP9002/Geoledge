@@ -20,6 +20,8 @@ app.get('/express_backend', (req, res) => {
 
 console.log(process.env.DBNAME)
 
+console.log("hiya alex")
+
 // Connecting to SQL database
 const mysql = require('mysql')
 const connection = mysql.createConnection({
