@@ -53,7 +53,7 @@ function generateAccessToken(username) {
 ////////////// LOGIN/SIGNUP API Start //////////////
 // USERNAME VALIDATION METHOD
 function validateUsername(username) {
-  // checking if username is of a valid length
+  // checking if username is of a valid length (USERNAME CANNOT BE LARGER THAN 32 CHARACTERS LONG)
   if(username.length == 0 || username.length > 32) {
     return false;
   }
@@ -67,12 +67,28 @@ function validateUsername(username) {
     }
   }
 
-  return true;  // username valid
+  // checking if username is taken
+  let query = `SELECT EXISTS (SELECT 1 FROM geo2002.users WHERE username = ${username}) AS "result";`  // result column stores 1 username is taken
+
+  connection.query(usernameSearchSQL, (err, result, fields) => {
+
+    // Evaluating result
+    let resultFound = result[0].result;
+
+    if (resultFound == "1") {
+      // username is not taken
+      return true;
+    } else {
+      // username is taken
+      return false;
+    }
+  })
 }
+
 
 // PASSWORD VALIDATION METHOD
 function validatePassword(password) {
-  // checking if password is of valid length
+  // checking if password is of valid length (PASSWORD CANNOT BE LONGER THAN 64 CHARACTERS LONG)
   if(password.length == 0 || password.length > 64) {
     return false;
   }
@@ -89,7 +105,8 @@ function validatePassword(password) {
   return true;  // password valid
 }
 
-// VALIDATE EMAIL METHOD
+
+// EMAIL VALIDATION METHOD
 function validateEmail(email) {
   // Checking if email matches regular expression
   return email.match(
@@ -97,11 +114,13 @@ function validateEmail(email) {
   );
 }
 
+
 // GENERATE SALT METHOD
 function generateSalt() {
   // Generating a four byte-long salt in hexadecimal form
   return crypto.randomBytes(16).toString('hex');
 }
+
 
 // SALT AND HASH METHOD
 function saltAndHash(password, salt) {
@@ -112,7 +131,7 @@ function saltAndHash(password, salt) {
 
 
 // CREATE ACCOUNT API HANDLER
-app.get('/api/createNewUser', (req, res) => {
+app.post('/api/createAccount', (req, res) => {
   // Getting account credentials
   let username = req.body.username;
   let password = req.body.password;
@@ -154,6 +173,48 @@ app.get('/api/createNewUser', (req, res) => {
 });
 
 
+// LOGIN API HANDLER
+app.post('/api/login', (req, res) => {
+  // Getting login credentials
+  let username = req.body.username;
+  let password = req.body.password;
+
+  // Checking wether credentials were valid
+  if (validateUsermame(username) && validatePassword(password)) {
+    // Checking if a user exists with the given username
+    usernameSearchSQL = `SELECT username, password, salt FROM geo2002.users WHERE username = ${username};` // SQL that returns the username, password, and salt fields when usernames are equal
+
+    connection.query(usernameSearchSQL, (err, result, fields) => {
+
+      // Evaluating result
+      if(result.length == 0) {
+        //No username match found
+        res.json({"message":"Username or password were invalid"})  // informing client that login failed
+
+      } else {
+        // Username match found. Checking if salt and hashed passwords match
+        let saltAndHashedPassword = saltAndHash(password, result[0].salt);
+        
+        if (saltAndHashedPassword == result[0].password) {
+          // Account match has been found. Generating JWT token and sending it to the client.
+          const token = generateAccessToken(username);
+          res.json({"message":"Successfully logged in", "JWT":token});   /// message and JWT JSON to client
+
+        } else {
+          // Passwords did not match
+          res.json({"message":"Username or password were invalid"})  // informing client that login failed
+        }
+      }
+    })
+
+  } else {
+    // Credentials did not pass validation checks so must be invalid
+    res.json({"message":"Username or password were invalid"})
+  }
+});
+
+
+
 ////////////// COUNTRY API Start //////////////
 //get cleaned country data
 app.get('/api/getallcountrydata', function(req, res) {
@@ -175,32 +236,11 @@ function GenerateCountryDataTable(response){
     // NOTE some countries don't have capitals
     var capitalName = "No Capital"
     if(countries[i].capital == undefined){
-      //console.log(countries[i].name.common)
+      console.log(countries[i].name.common)
     }
     else{
       capitalName = countries[i].capital[0]
     }
-
-    //LANGUAGE
-    //seems to be only Antarctica
-    var langName = "No Official Language"
-    if(countries[i].languages == undefined){
-      console.log(countries[i].name.common)
-    }
-    else{
-      langName = Object.entries(countries[i].languages)[0][1]
-    }
-
-    //Currency
-    //Antarctica, Bouvet Island and Heard Island and McDonald Islands don't have an official currency
-    var currencySymbol = "Unknown Currency"
-    if(countries[i].currencies == undefined){
-      console.log(countries[i].name.common)
-    }
-    else{
-      currencySymbol = Object.entries(countries[i].currencies)[0][1].symbol
-    }
-
     //clean and make country object
     var individualCountry = {
       name: countries[i].name.common,
@@ -211,13 +251,10 @@ function GenerateCountryDataTable(response){
       lng: countries[i].latlng[1],
       surface_area: countries[i].area,
       population: countries[i].population,
-      timezone:Object.entries(countries[i].timezones)[0][1],
       driving_side: countries[i].car.side,
       capital: capitalName,
-      flag:countries[i].flags.svg,
-      language: langName,
-      map: "https://maps.google.com/maps?q="+countries[i].name.common+"+country&amp;t=&amp;ie=UTF8&amp;iwloc=&amp;output=embed",
-      currency: currencySymbol
+      flag:countries[i].flags.svg
+
     }
 
     formattedCountries.push(individualCountry) // add country to countries object
