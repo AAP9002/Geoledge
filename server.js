@@ -108,7 +108,7 @@ function GenerateCountryDataTable(response){
       capital: capitalName,
       flag:countries[i].flags.svg,
       language: langName,
-      map: "https://maps.google.com/maps?q="+countries[i].name.common.replaceAll(" ","+")+"+country&amp;t=&amp;ie=UTF8&amp;iwloc=&amp;output=embed",
+      map: "https://maps.google.com/maps?q="+countries[i].name.common+"+country&amp;t=&amp;ie=UTF8&amp;iwloc=&amp;output=embed",
       currency: currencySymbol
     }
 
