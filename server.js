@@ -50,7 +50,7 @@ function validateUsername(username) {
 
   // checking if username only contains valid characters (alphanumeric and special characters)
   for(let i=0; i<username.length; i++) {
-    ASCIICode = username.charCodeAt(i);
+    let ASCIICode = username.charCodeAt(i);
     
     if (!(ASCIICode >= 33 || ASCIICode <= 126)) {
       return false;
@@ -60,7 +60,7 @@ function validateUsername(username) {
   // checking if username is taken
   let query = `SELECT EXISTS (SELECT 1 FROM geo2002.users WHERE username = ${username}) AS "result";`  // result column stores 1 username is taken
 
-  connection.query(usernameSearchSQL, (err, result, fields) => {
+  connection.query(query, (err, result, fields) => {
 
     // Evaluating result
     let resultFound = result[0].result;
@@ -85,7 +85,7 @@ function validatePassword(password) {
 
   // checking if password only contains valid characters (alphanumeric and special characters)
   for(let i=0; i<password.length; i++) {
-    ASCIICode = password.charCodeAt(i);
+    let ASCIICode = password.charCodeAt(i);
     
     if (!(ASCIICode >= 33 || ASCIICode <= 126)) {
       return false;
@@ -115,7 +115,7 @@ function generateSalt() {
 // SALT AND HASH METHOD
 function saltAndHash(password, salt) {
   // Adding the salt to the end of the password and returning the hash of the result
-  passwordWithSalt = password + salt;
+  let passwordWithSalt = password + salt;
   return (crypto.createHash("sha256")).update(passwordWithSalt).digest("hex");
 }
 
@@ -172,7 +172,7 @@ app.post('/api/login', (req, res) => {
   // Checking wether credentials were valid
   if (validateUsermame(username) && validatePassword(password)) {
     // Checking if a user exists with the given username
-    usernameSearchSQL = `SELECT username, password, salt FROM geo2002.users WHERE username = ${username};` // SQL that returns the username, password, and salt fields when usernames are equal
+    let usernameSearchSQL = `SELECT username, password, salt FROM geo2002.users WHERE username = ${username};` // SQL that returns the username, password, and salt fields when usernames are equal
 
     connection.query(usernameSearchSQL, (err, result, fields) => {
 
@@ -203,3 +203,4 @@ app.post('/api/login', (req, res) => {
   }
 });
 
+////////////// LOGIN/SIGNUP API End //////////////
