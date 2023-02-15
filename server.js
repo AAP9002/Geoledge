@@ -24,24 +24,9 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 app.use(express.static('client/build'))
 
 ///////////// IMPORT MODULES FROM FILES ////////////// 
-require('./backend_Files/Country_Data_Collection_API')(app);
+require('./backend_Files/Country_Data_Collection_API')(app, connection);
 ////////////////////////////////////////////////////// 
 
-
-// test if can get a record from mysql database and return json
-app.get('/express_backend', (req, res) => {
-  connection.query("select * from temp", function(error, results){
-    console.log(results);
-    res.send({  results  });
-  })
-});
-
-app.get('/express_backend_insert', (req, res) => {
-  connection.query("INSERT INTO `temp` (`id`, `name`) VALUES ('14', 'Alex') ", function(error, results){
-    console.log(results);
-    res.send({  results  });
-  })
-});
 
 ////////////// JWT SET-UP CODE Start //////////////
 process.env.TOKEN_SECRET;   // access config var

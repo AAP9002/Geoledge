@@ -1,7 +1,6 @@
-module.exports = function (app) {
+module.exports = function (app, DBconnection) {
     const axios = require('axios'); // use to get country api data from web
 
-    ////////////// COUNTRY API Start //////////////
     //get cleaned country data
     app.get('/api/getallcountrydata', function(req, res) {
         axios.get('https://restcountries.com/v3.1/all')
@@ -12,9 +11,24 @@ module.exports = function (app) {
         });
     
     });
+
+    // test if can get a record from mysql database and return json
+    app.get('/express_backend', (req, res) => {
+        DBconnection.query("select * from temp", function(error, results){
+      console.log(results);
+      res.send({  results  });
+    })
+  });
+  
+  app.get('/express_backend_insert', (req, res) => {
+    DBconnection.query("INSERT INTO `temp` (`id`, `name`) VALUES ('14', 'Alex') ", function(error, results){
+      console.log(results);
+      res.send({  results  });
+    })
+  });
     
 
-    // clean country data from API ans return json b=object with formatted data
+    // clean country data from API ans return json object with formatted data
     function GenerateCountryDataTable(response){
         var countries = response;
         var formattedCountries = [];
@@ -74,6 +88,8 @@ module.exports = function (app) {
         return formattedCountries;
     
     }
-    
-    //////////// Country API End ////////////////
+
+    function update_data_on_database(){
+
+    }
 }
