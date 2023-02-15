@@ -12,20 +12,28 @@ module.exports = function (app, DBconnection) {
     
     });
 
-    // test if can get a record from mysql database and return json
-    app.get('/express_backend', (req, res) => {
-        DBconnection.query("select * from temp", function(error, results){
-      console.log(results);
-      res.send({  results  });
-    })
-  });
+    //get cleaned country data
+    app.get('/api/allcountries', function(req, res) {
+        DBconnection.query("select * from country", function(error, results){
+            console.log(results);
+            res.send(results);
+        })
+    });
+
+//     // test if can get a record from mysql database and return json
+//     app.get('/express_backend', (req, res) => {
+//         DBconnection.query("select * from temp", function(error, results){
+//       console.log(results);
+//       res.send({  results  });
+//     })
+//   });
   
-  app.get('/express_backend_insert', (req, res) => {
-    DBconnection.query("INSERT INTO `temp` (`id`, `name`) VALUES ('14', 'Alex') ", function(error, results){
-      console.log(results);
-      res.send({  results  });
-    })
-  });
+//   app.get('/express_backend_insert', (req, res) => {
+//     DBconnection.query("INSERT INTO `temp` (`id`, `name`) VALUES ('14', 'Alex') ", function(error, results){
+//       console.log(results);
+//       res.send({  results  });
+//     })
+//   });
     
 
     // clean country data from API ans return json object with formatted data
@@ -65,12 +73,13 @@ module.exports = function (app, DBconnection) {
     
         //clean and make country object
         var individualCountry = {
-            name: countries[i].name.common,
+            country_id:i,
+            country_name: countries[i].name.common,
             independent: countries[i].independent,
             unMember: countries[i].unMember,
             region: countries[i].region,
-            lat: countries[i].latlng[0],
-            lng: countries[i].latlng[1],
+            latitude: countries[i].latlng[0],
+            longitude: countries[i].latlng[1],
             surface_area: countries[i].area,
             population: countries[i].population,
             timezone:Object.entries(countries[i].timezones)[0][1],
@@ -89,7 +98,7 @@ module.exports = function (app, DBconnection) {
     
     }
 
-    function update_data_on_database(){
-
+    function update_data_on_database(formatted_country_data){
+        // doing it manually atm
     }
 }
