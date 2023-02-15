@@ -18,7 +18,7 @@ console.log(process.env.SECRET_CODE_EXAMPLE);
 // This displays message that the server running and listening to specified port
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-//point to ststic react files
+//point to static react files
 app.use(express.static('client/build'))
 
 // test if can get a record from mysql database and return json
