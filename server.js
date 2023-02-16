@@ -1,8 +1,9 @@
-require("dotenv").config();
+const dotenv = require('dotenv');
 const express = require('express');
 const mysql = require('mysql')
 const app = express();
 const port = process.env.PORT || 5000;
+const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
 const connection = mysql.createConnection({
@@ -30,10 +31,13 @@ require('./kevins_backend.js')(app);
 
 
 ////////////// JWT SET-UP CODE Start //////////////
-process.env.TOKEN_SECRET;   // access config var
+// get config vars
+dotenv.config();
 
-function generateAccessToken(username) {
-  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+// access config var
+process.env.TOKEN_SECRET;
+function generateAccessToken(username, clientHash) {
+  return jwt.sign({username, clientHash}, process.env.TOKEN_SECRET);
 }
 ////////////// JWT SET-UP CODE End //////////////
 
@@ -56,18 +60,20 @@ function validateUsername(username) {
       return false;
     }
   }
-
+  
   // checking if username is taken
-  let query = `SELECT EXISTS (SELECT 1 FROM geo2002.users WHERE username = ${username}) AS "result";`  // result column stores 1 username is taken
+  let query = `SELECT EXISTS (SELECT 1 FROM geo2002.users WHERE username = "${username}") AS "result"`  // result column stores 1 username is taken
+  console.log(query);
+  connection.query(query, (err, result) => {
+     console.log(result);
 
-  connection.query(query, (err, result, fields) => {
     if (err) {
       console.log("ERROR CHECKING IF USERNAME TAKEN: " + err);
       return false;
     }
 
-    // Evaluating result
-    let resultFound = result[0].result;
+   // Evaluating result
+   let resultFound = result[0].result;
 
     if (resultFound == "1") {
       // username is not taken
@@ -78,7 +84,6 @@ function validateUsername(username) {
     }
   })
 }
-
 
 // PASSWORD VALIDATION METHOD
 function validatePassword(password) {
@@ -127,30 +132,38 @@ function saltAndHash(password, salt) {
 // MIDDLEWARE METHOD FOR TOKEN AUTHENTICATION
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization']
-  const token = authHeader && authHeader.split(' ')[1]
+  const token = authHeader && authHeader.split(' ')[1]  // getting the JWT token
 
-  if (token == null) return res.sendStatus(401)
+  // Checking if token is empty
+  if (token == null) {
+    req.loggedIn = "false";
+  } else {
+    //Verifying token
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, userData) => {
+      // Checking if error occurred when authenticating JWT
+      if (err) {
+        console.log("ERROR WHEN AUTHENTICATING JWT: " + err);
+        req.user = "error";
+        req.clientHash = "error";
+      } else {
+        req.user = userData.user;
+        req.clientHash = userData.clientHash;
+      }
+    })
+  }
 
-  jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-    console.log(err)
-
-    if (err) return res.sendStatus(403)
-
-    req.user = user
-
-    next()
-  })
+  next();
 }
 
-
 // CREATE ACCOUNT API HANDLER
-app.post('/api/createAccount', (req, res) => {
+app.get('/api/createAccount', (req, res) => {
   // Getting account credentials
-  let username = req.body.username;
-  let password = req.body.password;
-  let email = req.body.email;
-  let privacy_policy = req.body.privacy_policy;
-  let terms_conditions = req.body.terms_conditions;
+  console.log(req.body);
+  let username = req.query.username;
+  let password = req.query.password;
+  let email = req.query.email;
+  let privacy_policy = req.query.privacy_policy;
+  let terms_conditions = req.query.terms_conditions;
 
   // Validating inputs
   if(validateUsername(username) && validatePassword(password) && validateEmail(email) && 
@@ -191,6 +204,7 @@ app.post('/api/login', (req, res) => {
   // Getting login credentials
   let username = req.body.username;
   let password = req.body.password;
+  let clientHash = req.body.clientHash;
 
   // Checking whether credentials were valid
   if (validateUsername(username) && validatePassword(password)) {
@@ -214,7 +228,7 @@ app.post('/api/login', (req, res) => {
         
         if (saltAndHashedPassword == result[0].password) {
           // Account match has been found. Generating JWT token and sending it to the client.
-          const token = generateAccessToken(username);
+          let token = generateAccessToken(username, clientHash);
           res.json({"message":"Successfully logged in", "JWT":token});   /// message and JWT JSON to client
 
         } else {
@@ -230,3 +244,17 @@ app.post('/api/login', (req, res) => {
   }
 });
 ////////////// LOGIN/SIGNUP API End //////////////
+
+
+
+
+////////////// VIEW ACCOUNT API Start //////////////
+
+
+
+
+
+
+
+
+////////////// VIEW ACCOUNT API End //////////////
