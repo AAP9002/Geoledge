@@ -1,12 +1,12 @@
 import './App.css';
 import Navbar from './Components/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Play from './Pages/Play.jsx'
-import Leaderboard from './Pages/Leaderboard'
-import PrivacyPolicy from './Pages/Privacypolicy'
-import Signup from './Pages/Sign-up'
-import TermsandConditions from './Pages/TermsandConditions'
-import Account from './Pages/AccountPage'
+import Play from './Pages//Play/Play'
+import Leaderboard from './Pages/Leaderboards/Leaderboard'
+import PrivacyPolicy from './Pages/Ts&Cs/Privacypolicy'
+import Signup from './Pages/Sign-up/Sign-up'
+import TermsandConditions from './Pages/Ts&Cs/TermsandConditions'
+import Account from './Pages/Account/AccountPage'
 import Footer from './Components/Footer';
 
 function App() {
