@@ -38,7 +38,7 @@
   .nav-menu {
     display: grid;
     grid-template-columns: repeat(4, auto);
-    grid-gap: 10px;
+    grid-gap: 1px;
     list-style: none;
     text-align: center;
     width: 60vw;
@@ -60,9 +60,12 @@
   }
   
   .nav-links:hover {
+    color: #fff;
     border-bottom: 4px solid #fff;
+    text-decoration: none;
     transition: all 0.2s ease-out;
   }
+  
   
   .fa-bars {
     color: #fff;
@@ -94,7 +97,7 @@
     }
   
     .nav-menu.active {
-      background: white;
+      background: rgb(67, 13, 99);
       left: 0;
       opacity: 1;
       transition: all 0.7s ease;

@@ -1,4 +1,6 @@
 import React from 'react';
+import "./Leaderboard.css";
+
 
 
 const About = () => {
@@ -6,7 +8,7 @@ const About = () => {
     <div>
           <div>
             <p>
-              GamePage
+              Leaderboard
             </p>
           </div>
     </div>

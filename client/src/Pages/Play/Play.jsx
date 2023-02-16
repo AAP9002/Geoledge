@@ -1,4 +1,5 @@
 import React from 'react';
+import "./Play.css";
 
 
 const About = () => {
@@ -6,7 +7,7 @@ const About = () => {
     <div>
           <div>
             <p>
-              Leaderboard
+              GamePage
             </p>
           </div>
     </div>

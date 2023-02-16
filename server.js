@@ -43,14 +43,14 @@ function generateAccessToken(username) {
 ////////////// LOGIN/SIGNUP API Start //////////////
 // USERNAME VALIDATION METHOD
 function validateUsername(username) {
-  // checking if username is of a valid length (USERNAME CANNOT BE LARGER THAN 32 CHARACTERS LONG)
-  if(username.length == 0 || username.length > 32) {
+  // checking if username is of a valid length (USERNAME CANNOT BE SHORTER THAN 5 AND LONGER THAN 32 CHARACTERS LONG)
+  if(username.length < 5 || username.length > 32) {
     return false;
   }
 
   // checking if username only contains valid characters (alphanumeric and special characters)
   for(let i=0; i<username.length; i++) {
-    ASCIICode = username.charCodeAt(i);
+    let ASCIICode = username.charCodeAt(i);
     
     if (!(ASCIICode >= 33 || ASCIICode <= 126)) {
       return false;
@@ -60,7 +60,11 @@ function validateUsername(username) {
   // checking if username is taken
   let query = `SELECT EXISTS (SELECT 1 FROM geo2002.users WHERE username = ${username}) AS "result";`  // result column stores 1 username is taken
 
-  connection.query(usernameSearchSQL, (err, result, fields) => {
+  connection.query(query, (err, result, fields) => {
+    if (err) {
+      console.log("ERROR CHECKING IF USERNAME TAKEN: " + err);
+      return false;
+    }
 
     // Evaluating result
     let resultFound = result[0].result;
@@ -78,14 +82,14 @@ function validateUsername(username) {
 
 // PASSWORD VALIDATION METHOD
 function validatePassword(password) {
-  // checking if password is of valid length (PASSWORD CANNOT BE LONGER THAN 64 CHARACTERS LONG)
-  if(password.length == 0 || password.length > 64) {
+  // checking if password is of valid length (PASSWORD CANNOT BE LONGER SHORTER THAN 8 AND LONGER THAN 64 CHARACTERS)
+  if(password.length < 8 || password.length > 64) {
     return false;
   }
 
   // checking if password only contains valid characters (alphanumeric and special characters)
   for(let i=0; i<password.length; i++) {
-    ASCIICode = password.charCodeAt(i);
+    let ASCIICode = password.charCodeAt(i);
     
     if (!(ASCIICode >= 33 || ASCIICode <= 126)) {
       return false;
@@ -115,8 +119,27 @@ function generateSalt() {
 // SALT AND HASH METHOD
 function saltAndHash(password, salt) {
   // Adding the salt to the end of the password and returning the hash of the result
-  passwordWithSalt = password + salt;
+  let passwordWithSalt = password + salt;
   return (crypto.createHash("sha256")).update(passwordWithSalt).digest("hex");
+}
+
+
+// MIDDLEWARE METHOD FOR TOKEN AUTHENTICATION
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+
+  if (token == null) return res.sendStatus(401)
+
+  jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+    console.log(err)
+
+    if (err) return res.sendStatus(403)
+
+    req.user = user
+
+    next()
+  })
 }
 
 
@@ -139,7 +162,7 @@ app.post('/api/createAccount', (req, res) => {
     let saltAndHashedPassword = saltAndHash(password, salt);
 
     // Creating the account in mySQL database
-    connection.query(`INSERT INTO users(username, password, email, 
+    connection.query(`INSERT INTO users(username, password, salt, email, 
         created_at, privacy_policy, terms_conditions) VALUES (${username}, ${saltAndHashedPassword},
         ${salt}, ${email}, CURDATE(), ${privacy_policy}, ${terms_conditions});`, (err, rows, fields) => {
         
@@ -169,12 +192,16 @@ app.post('/api/login', (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
 
-  // Checking wether credentials were valid
-  if (validateUsermame(username) && validatePassword(password)) {
+  // Checking whether credentials were valid
+  if (validateUsername(username) && validatePassword(password)) {
     // Checking if a user exists with the given username
-    usernameSearchSQL = `SELECT username, password, salt FROM geo2002.users WHERE username = ${username};` // SQL that returns the username, password, and salt fields when usernames are equal
+    let usernameSearchSQL = `SELECT username, password, salt FROM geo2002.users WHERE username = ${username};` // SQL that returns the username, password, and salt fields when usernames are equal
 
     connection.query(usernameSearchSQL, (err, result, fields) => {
+      if (err) {
+        console.log("ERROR IN LOGIN API" + err);
+        return;
+      }
 
       // Evaluating result
       if(result.length == 0) {
@@ -202,4 +229,4 @@ app.post('/api/login', (req, res) => {
     res.json({"message":"Username or password were invalid"})
   }
 });
-
+////////////// LOGIN/SIGNUP API End //////////////
