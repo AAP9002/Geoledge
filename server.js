@@ -197,7 +197,7 @@ app.get('/api/createAccount', (req, res) => {
     res.json({"message":"Account credentials are invalid"});
   }
 });
-
+// http://localhost:5000/api/createAccount?username=alexto123&password=alexto12345&email=alexnseve@gmail.com&privacy_policy=1&terms_conditions=1
 
 // LOGIN API HANDLER
 app.post('/api/login', (req, res) => {
