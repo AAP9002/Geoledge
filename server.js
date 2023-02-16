@@ -174,7 +174,7 @@ app.post('/api/login', (req, res) => {
   let password = req.body.password;
 
   // Checking wether credentials were valid
-  if (validateUsermame(username) && validatePassword(password)) {
+  if (validateUsername(username) && validatePassword(password)) {
     // Checking if a user exists with the given username
     let usernameSearchSQL = `SELECT username, password, salt FROM geo2002.users WHERE username = ${username};` // SQL that returns the username, password, and salt fields when usernames are equal
 
