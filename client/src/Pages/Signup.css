@@ -2,14 +2,15 @@
   box-sizing: border-box;
 }
 
-body {
-  background-image: url(https://wallpaper.dog/large/5547551.jpg);
+.Signup {
+  background-image: url(https://wallpaperaccess.com/full/655045.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
 }
+
 
 
 .container {
