@@ -61,6 +61,10 @@ function validateUsername(username) {
   let query = `SELECT EXISTS (SELECT 1 FROM geo2002.users WHERE username = ${username}) AS "result";`  // result column stores 1 username is taken
 
   connection.query(query, (err, result, fields) => {
+    if (err) {
+      console.log("ERROR CHECKING IF USERNAME TAKEN: " + err);
+      return false;
+    }
 
     // Evaluating result
     let resultFound = result[0].result;
@@ -175,6 +179,10 @@ app.post('/api/login', (req, res) => {
     let usernameSearchSQL = `SELECT username, password, salt FROM geo2002.users WHERE username = ${username};` // SQL that returns the username, password, and salt fields when usernames are equal
 
     connection.query(usernameSearchSQL, (err, result, fields) => {
+      if (err) {
+        console.log("ERROR IN LOGIN API" + err);
+        return;
+      }
 
       // Evaluating result
       if(result.length == 0) {
@@ -202,5 +210,4 @@ app.post('/api/login', (req, res) => {
     res.json({"message":"Username or password were invalid"})
   }
 });
-
 ////////////// LOGIN/SIGNUP API End //////////////
