@@ -6,7 +6,7 @@ const port = process.env.PORT || 5000;
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
-const connection = mysql.createConnection({
+var connection = mysql.createPool({
   host: process.env.DB_SERVER,
   user: process.env.DBUSER,
   password: process.env.PASSWORD,
