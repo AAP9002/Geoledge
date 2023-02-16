@@ -14,25 +14,20 @@
 // country_id, quiz_id
 // Create session, add participent
 
-// connection.query(`INSERT INTO quiz (title, description, num_of_questions) VALUES ("TBC", "TBC", ${num_of_questions});`, (err) => {
-//     if (err) {
-//         console.log("ERROR IN QUIZ INSERT " + err);
-//         return;
-//     } else {
-//         connection.query(`SELECT LAST_INSERT_ID();`, () => {
-//             quiz_id = rows[0].quiz_id;
-//         })
-
-
 //  Create lobby
-exports.host = function(app) {
+module.exports = function(app, connection) {
+    app.get('/kevin', function(req, res) {
+        res.json(200, {'test': 'it works!'})
+    })
+
     app.post('/kevin/:host_user', (req, res) => {
         let quiz_id = ""
         let session_id = ""
-        let host_user = req.body.host_user
-        connection.query(`INSERT INTO quiz (title, description, num_of_questions) VALUES ("TBC", "TBC", 0);`, (err) => {
+        // let host_user = req.body.host_user
+        const { host_user } = req.params;
+        connection.query(`INSERT INTO quiz (title, description, num_of_questions) VALUES ('TBC', 'TBC', 0);`, (err) => {
             if (err) {
-                console.log("Error inserting into quiz");
+                console.log("Error inserting into quiz " + err);
                 return;
             } else {
                 connection.query(`SELECT LAST_INSERT_ID();`, (rows) => {
@@ -55,10 +50,7 @@ exports.host = function(app) {
         res.send({session_id: session_id});
         res.status(200);
     })
-};
 
-// Create country set
-exports.start = function (app) {
     app.post('/kevin', (req, res) => {
         let num_of_questions = req.body.num_of_questions;
         let quiz_id = req.body.quiz_id;
@@ -78,3 +70,25 @@ exports.start = function (app) {
         res.send({session_id: session_id})
     })
 };
+ ///////pastye
+// // Create country set
+// exports.start = function (app) {
+//     app.post('/kevin', (req, res) => {
+//         let num_of_questions = req.body.num_of_questions;
+//         let quiz_id = req.body.quiz_id;
+//         connection.query(`SELECT country_id FROM country ORDER BY RAND();`, (rows) => {
+//             let country_id = ""
+//             for (let i = 0; i < num_of_questions; i++) {
+//                 country_id = rows[i].country_id;
+//                 connection.query(`INSERT INTO country_set (${country_id}, ${quiz_id}) VALUES (${country_id}, ${quiz_id});`, (err) => {
+//                     if (err) {
+//                         console.log("ERROR IN country_set INSERT " + err);
+//                         return;
+//                     }
+//                 })
+//             }
+//         })
+
+//         res.send({session_id: session_id})
+//     })
+// };
