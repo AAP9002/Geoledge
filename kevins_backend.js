@@ -23,9 +23,10 @@
 //             quiz_id = rows[0].quiz_id;
 //         })
 
+
 //  Create lobby
 exports.host = function(app) {
-    app.post('/kevin', (req, res) => {
+    app.post('/kevin/:host_user', (req, res) => {
         let quiz_id = ""
         let session_id = ""
         let host_user = req.body.host_user
@@ -51,7 +52,8 @@ exports.host = function(app) {
             }
         })
 
-        res.send({session_id: session_id})
+        res.send({session_id: session_id});
+        res.status(200);
     })
 };
 
