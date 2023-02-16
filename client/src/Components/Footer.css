@@ -1,14 +1,13 @@
 .footer-container {
     background-color:  rgb(67, 13, 99);
-    height: 2.5rem;
-    bottom: 0;
-    position: absolute;
+    height: 2rem;
     width: 100%;
     padding: 4rem 0 2rem 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: auto;
   }
   
   .footer-input {
@@ -38,7 +37,7 @@
     flex-direction: column;
     align-items: flex-start;
     margin: 16px;
-    text-align: left;
+    text-align: center;
     width: 160px;
     box-sizing: border-box;
   }
@@ -74,6 +73,7 @@
   .social-icon-link {
     color: #fff;
     font-size: 24px;
+    padding-left: 1.5rem;
   }
   
   .social-media {

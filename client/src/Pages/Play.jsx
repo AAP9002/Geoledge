@@ -1,4 +1,5 @@
 import React from 'react';
+import "./Play.css";
 
 
 const About = () => {
