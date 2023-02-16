@@ -1,4 +1,4 @@
-const dotenv = require('dotenv');
+require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql')
 const app = express();
@@ -16,7 +16,8 @@ const connection = mysql.createConnection({
 // copy .env.TEMPLATE into a new file called .env (this file will not be send to git, so real passwords can be set to the .env).
 
 // get secret value from .env file
-console.log(process.env.SECRET_CODE_EXAMPLE);
+
+console.log(process.env.DB_SERVER);
 
 // This displays message that the server running and listening to specified port
 app.listen(port, () => console.log(`Listening on port ${port}`));
@@ -32,7 +33,6 @@ require('./backend_Files/Country_Data_Collection_API')(app, connection);
 
 ////////////// JWT SET-UP CODE Start //////////////
 // get config vars
-dotenv.config();
 
 // access config var
 process.env.TOKEN_SECRET;
