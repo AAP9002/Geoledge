@@ -17,7 +17,7 @@ var connection = mysql.createPool({
 
 // get secret value from .env file
 
-console.log(process.env.DB_SERVER);
+console.log("Database is connected:",process.env.DBNAME);
 
 // This displays message that the server running and listening to specified port
 app.listen(port, () => console.log(`Listening on port ${port}`));
@@ -27,6 +27,7 @@ app.use(express.static('client/build'))
 
 ///////////// IMPORT MODULES FROM FILES ////////////// 
 require('./backend_Files/Country_Data_Collection_API')(app, connection);
+require('./backend_Files/Game_Loop_Question_Page')(app, connection);
 require('./kevins_backend.js')(app, connection);
 ////////////////////////////////////////////////////// 
 

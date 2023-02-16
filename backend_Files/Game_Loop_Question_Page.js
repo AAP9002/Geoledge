@@ -1,8 +1,15 @@
 module.exports = function (app, DBconnection) {
-    app.get('/express_backend', (req, res) => {
-        DBconnection.query("select * from temp", function (error, results) {
-            console.log(results);
-            res.send({ results });
-        })
+
+    app.get('/api/get_suggested_countries', (req, res) => {
+        res.send(["UK","US","FRANCE"]);
     });
+
+    app.get('/api/make_a_guess', (req, res) => {
+        res.send(["UK","US","FRANCE"]);
+    });
+
+    app.get('/api/has_everyone_answered', (req, res) => {
+        res.send({status:false});
+    });
+
 }
