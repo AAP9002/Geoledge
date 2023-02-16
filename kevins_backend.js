@@ -29,7 +29,7 @@ exports.host = function(app) {
         let quiz_id = ""
         let session_id = ""
         let host_user = req.body.host_user
-        connection.query(`INSERT INTO quiz (title, description, num_of_questions) VALUES ("TBC", "TBC", "TBC");`, (err) => {
+        connection.query(`INSERT INTO quiz (title, description, num_of_questions) VALUES ("TBC", "TBC", 0);`, (err) => {
             if (err) {
                 console.log("Error inserting into quiz");
                 return;
@@ -72,5 +72,7 @@ exports.start = function (app) {
                 })
             }
         })
+
+        res.send({session_id: session_id})
     })
 };
