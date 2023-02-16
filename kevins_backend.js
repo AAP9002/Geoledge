@@ -25,28 +25,34 @@ module.exports = function(app, connection) {
         let session_id = ""
         // let host_user = req.body.host_user
         const { host_user } = req.params;
-        connection.query(`INSERT INTO quiz (title, description, num_of_questions) VALUES ('TBC', 'TBC', 0);`, (err) => {
+        console.log("name jeff");
+
+        connection.query(`INSERT INTO quiz (title, description, num_of_questions) VALUES ('VSCODE', 'TBC', 0);`, (err) => {
             if (err) {
                 console.log("Error inserting into quiz " + err);
                 return;
-            } else {
-                connection.query(`SELECT LAST_INSERT_ID();`, (rows) => {
-                    quiz_id = rows[0].quiz_id;
-                })
-
-                connection.query(`INSERT INTO session (quiz_quiz_id, host_user) VALUES (${quiz_id}, ${host_user});`, (err) => {
+            } else { //last insert doesn't work?!
+                connection.query(`SELECT LAST_INSERT_ID();`, (err, rows) => {
                     if (err) {
-                        console.log("Error inserting into quiz");
-                        return;
+                        console.log(err);
                     } else {
-                        connection.query(`SELECT LAST_INSERT_ID();`, (rows) => {
-                            session_id = rows[0].session_id;
+                        quiz_id = rows[0].quiz_id;
+                        console.log("quiz_id: " + quiz_id);
+                        connection.query(`INSERT INTO session (quiz_quiz_id, host_user) VALUES (${quiz_id}, ${host_user});`, (err) => {
+                            if (err) {
+                                console.log("Error inserting into session");
+                                return;
+                            } else {
+                                connection.query(`SELECT LAST_INSERT_ID();`, (err, rows) => {
+                                    session_id = rows[0].session_id;
+                                })
+                            }
                         })
                     }
                 })
             }
         })
-
+        console.log("session id: " + session_id);
         res.send({session_id: session_id});
         res.status(200);
     })
@@ -67,7 +73,7 @@ module.exports = function(app, connection) {
             }
         })
 
-        res.send({session_id: session_id})
+        res.send({session_id: "branch2"})
     })
 };
  ///////pastye
