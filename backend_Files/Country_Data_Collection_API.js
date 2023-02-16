@@ -6,8 +6,10 @@ module.exports = function (app, DBconnection) {
         axios.get('https://restcountries.com/v3.1/all')
         .then(response => {
         res.setHeader('Content-Type', 'application/json');
-        
-        res.json(GenerateCountryDataTable(response.data));
+        console.log("Getting country data from external API")
+        let success = update_data_on_database(GenerateCountryDataTable(response.data));
+
+        res.json({updated_database: success});
         });
     
     });
@@ -73,7 +75,7 @@ module.exports = function (app, DBconnection) {
     
         //clean and make country object
         var individualCountry = {
-            country_id:i,
+            country_id:countries[i].cca3,
             country_name: countries[i].name.common,
             independent: countries[i].independent,
             unMember: countries[i].unMember,
@@ -99,6 +101,27 @@ module.exports = function (app, DBconnection) {
     }
 
     function update_data_on_database(formatted_country_data){
-        // doing it manually atm
+        console.log("Starting to push updates to database")
+        for(let i = 0; i<formatted_country_data.length;i++){
+            let country = formatted_country_data[i]
+            DBconnection.query("call ProcUpdateCountryRecord(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", 
+                [country.country_id, country.country_name,
+                 country.independent, country.unMember, country.region, 
+                 country.latitude, country.longitude, country.surface_area, 
+                 country.population, country.timezone, country.driving_side, 
+                 country.capital, country.flag, country.language, 
+                 country.map, country.currency], 
+                function (err, result) {
+                if (err) {
+                    console.log("err:", err);
+                    return false;
+                } else {
+                    console.log("Country ",(i+1), " [",country.country_name,"] was updated")
+                }
+            
+            });
+        }
+        console.log("Countries in database updated")
+        return true;
     }
 }
