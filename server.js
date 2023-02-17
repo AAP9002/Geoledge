@@ -24,6 +24,8 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 
 //point to static react files
 app.use(express.static('client/build'))
+// point to static backend files
+app.use(express.static('backend_Files/static_files'))
 
 ///////////// IMPORT MODULES FROM FILES ////////////// 
 require('./backend_Files/Country_Data_Collection_API')(app, connection);
