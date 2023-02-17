@@ -2,6 +2,8 @@
 // ed streamlined work: 
 // https://stackoverflow.com/questions/33946972/how-to-split-node-js-files-in-several-files/33947204#33947204
 
+const { query } = require("express");
+
 // Host creating a new session:
 // host api
 // Create session with empty quiz
@@ -27,23 +29,27 @@ module.exports = function(app, connection) {
         const { host_user } = req.params;
         console.log("name jeff");
 
-        connection.query(`INSERT INTO quiz (title, description, num_of_questions) VALUES ('VSCODE', 'TBC', 0);`, (err) => {
+        let query = `INSERT INTO quiz (title, description, num_of_questions) VALUES ('VSCODE', 'TBC', 0);`
+        connection.query(query, (err) => {
             if (err) {
                 console.log("Error inserting into quiz " + err);
                 return;
             } else { //last insert doesn't work?!
-                connection.query(`SELECT LAST_INSERT_ID();`, (err, rows) => {
+                let query = `SELECT LAST_INSERT_ID();`
+                connection.query(query, (err, rows) => {
                     if (err) {
                         console.log(err);
                     } else {
                         quiz_id = rows[0].quiz_id;
                         console.log("quiz_id: " + quiz_id);
-                        connection.query(`INSERT INTO session (quiz_quiz_id, host_user) VALUES (${quiz_id}, ${host_user});`, (err) => {
+                        let query = `INSERT INTO session (quiz_quiz_id, host_user) VALUES (${quiz_id}, ${host_user});`
+                        connection.query(query, (err) => {
                             if (err) {
                                 console.log("Error inserting into session");
                                 return;
                             } else {
-                                connection.query(`SELECT LAST_INSERT_ID();`, (err, rows) => {
+                                let query = `SELECT LAST_INSERT_ID();`
+                                connection.query(query, (err, rows) => {
                                     session_id = rows[0].session_id;
                                 })
                             }
@@ -60,11 +66,13 @@ module.exports = function(app, connection) {
     app.post('/kevin', (req, res) => {
         let num_of_questions = req.body.num_of_questions;
         let quiz_id = req.body.quiz_id;
-        connection.query(`SELECT country_id FROM country ORDER BY RAND();`, (rows) => {
+        let query =`SELECT country_id FROM country ORDER BY RAND();`
+        connection.query(query, (rows) => {
             let country_id = ""
             for (let i = 0; i < num_of_questions; i++) {
                 country_id = rows[i].country_id;
-                connection.query(`INSERT INTO country_set (${country_id}, ${quiz_id}) VALUES (${country_id}, ${quiz_id});`, (err) => {
+                let query =`INSERT INTO country_set (country_id, quiz_id) VALUES (${country_id}, ${quiz_id});`
+                connection.query(query, (err) => {
                     if (err) {
                         console.log("ERROR IN country_set INSERT " + err);
                         return;
