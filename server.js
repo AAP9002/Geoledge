@@ -73,16 +73,16 @@ function validateUsername(username) {
       return false;
     }
 
-   // Evaluating result
-   let resultFound = result[0].result;
-
+    // Evaluating result
+    let resultFound = result[0].result;
+    
     if (resultFound == "1") {
-      // username is not taken
-      return true;
-    } else {
-      // username is taken
-      return false;
-    }
+        // username is not taken
+        return true;
+      } else {
+        // username is taken
+        return false;
+      }
   })
 }
 
