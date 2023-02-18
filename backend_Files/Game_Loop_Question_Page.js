@@ -35,6 +35,10 @@ module.exports = function (app, DBconnection) {
 
     });
 
+    ///// /api/has_everyone_answered /////
+    // check if for that quiz, if there are any participants where answered = 0
+    // SELECT COUNT(answered) from participants where quiz_session_id={session_id} and answered = 0
+    // in JS if == 0, return TRUE else FALSE
     app.get('/api/has_everyone_answered', (req, res) => {
         res.send({ status: false });
     });
