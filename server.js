@@ -30,7 +30,7 @@ app.use(express.static('backend_Files/static_files'))
 ///////////// IMPORT MODULES FROM FILES ////////////// 
 require('./backend_Files/Country_Data_Collection_API')(app, connection);
 require('./backend_Files/Game_Loop_Question_Page')(app, connection);
-// require('./kevins_backend.js')(app, connection);
+require('./kevins_backend.js')(app, connection);
 ////////////////////////////////////////////////////// 
 
 
