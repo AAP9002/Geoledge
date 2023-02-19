@@ -30,7 +30,7 @@ module.exports = function(app, connection) {
         let query = `SELECT LAST_INSERT_ID();` //quiz id
         let query = `INSERT INTO session (quiz_quiz_id, host_user, created_at) VALUES (${quiz_id}, ${host_user}, NOW());`
         let query = `SELECT LAST_INSERT_ID();` //session id
-        *RMBER TO ADD USER TO PARTCPENT TABLE
+        *F-END MUST RMBER TO ADD USER TO PARTCPENT TABLE 
         ///////////////////////////
         
         ///////////////////////////////////////////////////////////////
@@ -38,25 +38,27 @@ module.exports = function(app, connection) {
         // Inputs: user_id, session_id
         // Return: -
         let query = `INSERT INTO participents (user_id, session_id, player_score, answered) VALUES (${user_id}, ${session_id}, 0, 0);`
+        ///////////////////////////
+        
         ///////////////////////////////////////////////////////////////
         // Start Game (create country set, write game config into dbo)
         // Inputs: session_id, num_of_questions, quiz_id (w/o F-End)
+        // Inputs: time_limit max_guesses
         // Return: -
         let query =`SELECT quiz_id FROM session WHERE session_id=(${session_id});`
         let query =`SELECT country_id FROM country ORDER BY RAND();`
-        // result.country_id[i] for loop range(num_of_questions)
         let query =`INSERT INTO country_set (country_id, quiz_id) VALUES (${country_id}, ${quiz_id});`
-        //
         let query = `UPDATE quiz SET num_of_questions = (${num_of_questions}) WHERE quiz_id=(${quiz_id});`
-        ///////////////////////////
+        ///////////////////////////////////////
         // Insert Game Configs
-        // Inputs: session_id, max_guesses
-        // Return: -
         let query = `UPDATE participents SET guesses = (${max_guesses}) WHERE session_id=(${session_id});`
         let query = `UPDATE session SET max_guesses = (${max_guesses}), time_limit = (${time_limit}) WHERE session_id=(${session_id});`
-        //////////////////////////////////////////////////////
-        test:
-        http://localhost:5000/api/createLobby?host_user=20
+        ///////////////////////////
+
+test:
+http://localhost:5000/api/createLobby?host_user=20
+http://localhost:5000/api/joinLobby?user_id=20&session_id=27
+http://localhost:5000/api/startGame?num_of_questions=5&max_guesses=7&time_limit=100&session_id=27
         */
     
     // Create Lobby
@@ -92,7 +94,7 @@ module.exports = function(app, connection) {
                     function (result) {
                         let quiz_id = result[0].quiz_id
                         let myPromise = new Promise(function(myResolve, myReject) {
-                            let query = `INSERT INTO session (quiz_quiz_id, host_user, created_at) VALUES (${quiz_id}, ${host_user}, NOW());`
+                            let query = `INSERT INTO session (quiz_id, host_user, created_at) VALUES (${quiz_id}, ${host_user}, NOW());`
                             connection.query(query, (err) => {
                                 if (err) {
                                     myReject(err);
@@ -129,7 +131,7 @@ module.exports = function(app, connection) {
 
     // Join Lobby
     // Create participent record from user_id and session_id
-    app.post('/api/addParticipent', (req, res) => {
+    app.post('/api/joinLobby', (req, res) => {
         let user_id = req.query.user_id;
         let session_id = req.query.session_id;
         let query = `INSERT INTO participents (user_id, session_id, player_score, answered) VALUES (${user_id}, ${session_id}, 0, 0);`
@@ -144,86 +146,76 @@ module.exports = function(app, connection) {
     });
 
     // Start Game
+    // Create Country Set:
+    // Get quiz_id, get country_id
+    // Add c to c_set (q_id, c_id)
+    // Update num of questions
+    // Update individual guesses
+    // Update max_guesses
+    app.post('/api/startGame', (req, res) => {
+        let session_id = req.query.session_id;
+        let num_of_questions = req.query.num_of_questions;
+        let countries;
+        let quiz_id;
+        // Country Set Creation:
+        let myPromise = new Promise(function(myResolve, myReject) {
+            let query =`SELECT quiz_id FROM session WHERE session_id=(${session_id});`
+            connection.query(query, (err, result) => {
+                if (err) {
+                    myReject(err);
+                } else {
+                    myResolve(result); // pass quiz_id to next promise
+                }
+            })
+        });
+        myPromise.then(
+            function(result){
+                quiz_id = result[0].quiz_id
+                let myPromise = new Promise(function(myResolve, myReject) {
+                    let query =`SELECT country_id FROM country ORDER BY RAND();`
+                    connection.query(query, (err, result) => {
+                        if (err) {
+                            res.status(500).send("Failed to select all country ids");
+                            myReject(err);
+                        } else {
+                            myResolve(result); // pass countries to next promise
+                        }
+                    })
+                });
+                myPromise.then(
+                    function(result){
+                        countries = result;
+                        let flag = false;
+                        for (let i = 0; i < num_of_questions; i++) {
+                            let country_id = countries[i].country_id;
+                            let query =`INSERT INTO country_set (country_id, quiz_id) VALUES ('${country_id}', ${quiz_id});`
+                            connection.query(query, (err) => {
+                                if (err) {
+                                    res.status(500).send("Failed to create country set");
+                                }
+                            });
+                        }
+                    }, function(error){console.log(error)}
+                );
+            }, function(error){console.log(error)}
+        );
+
+        // Game Config:
+        let max_guesses = req.query.max_guesses;
+        let time_limit = req.query.time_limit;
+        let query1 = `UPDATE participents SET guesses = (${max_guesses}) WHERE session_id=(${session_id});`
+        connection.query(query1, (err) => {
+            if (err) {
+                console.log(err);
+            }
+        });
+        let query2 = `UPDATE session SET max_guesses = (${max_guesses}), time_limit = (${time_limit}), round_ended = (0) WHERE session_id=(${session_id});`
+        connection.query(query2, (err) => {
+            if (err) {
+                console.log(err);
+            }
+        });
+
+        res.status(200).send("It worked");
+    });
 }
-
-
-
-
-        
-//         let query = `INSERT INTO quiz (title, description, num_of_questions) VALUES ('VSCODE', 'TBC', 0);`
-//         connection.query(query, (err) => {
-//             if (err) {
-//                 console.log("Error inserting into quiz " + err);
-//                 return;
-//             } else { //last insert doesn't work?!
-//                 let query = `SELECT LAST_INSERT_ID();`
-//                 connection.query(query, (err, rows) => {
-//                     if (err) {
-//                         console.log(err);
-//                     } else {
-//                         quiz_id = rows[0].quiz_id;
-//                         console.log("quiz_id: " + quiz_id);
-//                         let query = `INSERT INTO session (quiz_quiz_id, host_user) VALUES (${quiz_id}, ${host_user});`
-//                         connection.query(query, (err) => {
-//                             if (err) {
-//                                 console.log("Error inserting into session");
-//                                 return;
-//                             } else {
-//                                 let query = `SELECT LAST_INSERT_ID();`
-//                                 connection.query(query, (err, rows) => {
-//                                     session_id = rows[0].session_id;
-//                                 })
-//                             }
-//                         })
-//                     }
-//                 })
-//             }
-//         })
-//         console.log("session id: " + session_id);
-//         res.send({session_id: session_id});
-//         res.status(200);
-//     })
-
-//     app.post('/kevin', (req, res) => {
-//         let num_of_questions = req.body.num_of_questions;
-//         let quiz_id = req.body.quiz_id;
-//         let query =`SELECT country_id FROM country ORDER BY RAND();`
-//         connection.query(query, (rows) => {
-//             let country_id = ""
-//             for (let i = 0; i < num_of_questions; i++) {
-//                 country_id = rows[i].country_id;
-//                 let query =`INSERT INTO country_set (country_id, quiz_id) VALUES (${country_id}, ${quiz_id});`
-//                 connection.query(query, (err) => {
-//                     if (err) {
-//                         console.log("ERROR IN country_set INSERT " + err);
-//                         return;
-//                     }
-//                 })
-//             }
-//         })
-
-//         res.send({session_id: "branch2"})
-//     })
-// };
- ///////pastye
-// // Create country set
-// exports.start = function (app) {
-//     app.post('/kevin', (req, res) => {
-//         let num_of_questions = req.body.num_of_questions;
-//         let quiz_id = req.body.quiz_id;
-//         connection.query(`SELECT country_id FROM country ORDER BY RAND();`, (rows) => {
-//             let country_id = ""
-//             for (let i = 0; i < num_of_questions; i++) {
-//                 country_id = rows[i].country_id;
-//                 connection.query(`INSERT INTO country_set (${country_id}, ${quiz_id}) VALUES (${country_id}, ${quiz_id});`, (err) => {
-//                     if (err) {
-//                         console.log("ERROR IN country_set INSERT " + err);
-//                         return;
-//                     }
-//                 })
-//             }
-//         })
-
-//         res.send({session_id: session_id})
-//     })
-// };
