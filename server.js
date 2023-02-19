@@ -56,39 +56,40 @@ function validateUsername(username) {
   for(let i=0; i<username.length; i++) {
     let ASCIICode = username.charCodeAt(i);
     
-    if (!(ASCIICode >= 33 || ASCIICode <= 126)) {
+    if (!(ASCIICode >= 33 && ASCIICode <= 126)) {
       return false;
     }
   }
-  
+
+  return true;
+}
+
+function checkUsernameTaken(username) {
   // checking if username is taken
   let query = `SELECT EXISTS (SELECT 1 FROM geo2002.users WHERE username = "${username}") AS "result"`  // result column stores 1 username is taken
-  console.log(query);
-  connection.query(query, (err, result) => {
-     console.log(result);
 
-    if (err) {
-      console.log("ERROR CHECKING IF USERNAME TAKEN: " + err);
-      return false;
-    }
+  let promise = new Promise(function(resolve) {
+    connection.query(query, (err, result) => {
+      if (err) {
+        // Error occurred when performing SQL query
+        console.log("ERROR CHECKING IF USERNAME TAKEN: " + err);
+        resolve(null);
+      }
+      // Evaluating result
+      resolve(result[0].result);
+    });
+  });
 
-   // Evaluating result
-   let resultFound = result[0].result;
-
-    if (resultFound == "1") {
-      // username is not taken
-      return true;
-    } else {
-      // username is taken
-      return false;
-    }
-  })
+  return promise;
 }
+
 
 // PASSWORD VALIDATION METHOD
 function validatePassword(password) {
+  console.log("validating password");
   // checking if password is of valid length (PASSWORD CANNOT BE LONGER SHORTER THAN 8 AND LONGER THAN 64 CHARACTERS)
   if(password.length < 8 || password.length > 64) {
+    // password length of invalid size
     return false;
   }
 
@@ -96,7 +97,8 @@ function validatePassword(password) {
   for(let i=0; i<password.length; i++) {
     let ASCIICode = password.charCodeAt(i);
     
-    if (!(ASCIICode >= 33 || ASCIICode <= 126)) {
+    if (!(ASCIICode >= 33 && ASCIICode <= 126)) {
+      console.log("char not valid: " + ASCIICode);
       return false;
     }
   }
@@ -108,9 +110,9 @@ function validatePassword(password) {
 // EMAIL VALIDATION METHOD
 function validateEmail(email) {
   // Checking if email matches regular expression
-  return email.match(
+  return (email.match(
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  );
+  ));
 }
 
 
@@ -127,7 +129,6 @@ function saltAndHash(password, salt) {
   let passwordWithSalt = password + salt;
   return (crypto.createHash("sha256")).update(passwordWithSalt).digest("hex");
 }
-
 
 // MIDDLEWARE METHOD FOR TOKEN AUTHENTICATION
 function authenticateToken(req, res, next) {
@@ -155,68 +156,160 @@ function authenticateToken(req, res, next) {
   next();
 }
 
+// // Testing how sql queries work
+// function myTest() {
+//   resultFound = null;
+//   let query = `SELECT EXISTS (SELECT 1 FROM geo2002.users WHERE username = "akejxe") AS "result"`;  // result column stores 1 username is taken
+
+//   console.log("Before query");
+  
+//   connection.query(query, (err, result) => {
+//     console.log("Doing query")
+//     if (err) {
+//       // Error occurred when performing SQL query
+//       console.log("ERROR CHECKING IF USERNAME TAKEN: " + err);
+//       resultFound = null;
+//     } else {
+//       // Evaluating result
+//       resultFound = result[0].result;
+//       console.log(resultFound);
+
+//     }
+//   });
+
+//   console.log("Finished query: " + resultFound);
+// }
+
+// Testing how sql queries work
+// function myTest2() {
+//   resultFound = null
+
+//   let query = `SELECT EXISTS (SELECT 1 FROM geo2002.users WHERE username = "akejxe") AS "result"`;  // result column stores 1 username is taken
+
+//   console.log("Before query");
+
+//   let myPromise = new Promise(function(myResolve) {
+//     connection.query(query, (err, result) => {
+//       console.log("Doing query")
+//       if (err) {
+//         // Error occurred when performing SQL query
+//         console.log("ERROR CHECKING IF USERNAME TAKEN: " + err);
+//         resultFound = null;
+//       } else {
+//         // Evaluating result
+//         resultFound = result[0].result;
+//         myResolve(resultFound);
+//       }
+//     });
+//   });
+
+//   myPromise.then(
+//     function(value) { console.log("Finished query: " + value); }
+//   );
+// }
+
+// myTest2();
+
 // CREATE ACCOUNT API HANDLER
 app.get('/api/createAccount', (req, res) => {
   // Getting account credentials
-  console.log(req.body);
   let username = req.query.username;
   let password = req.query.password;
   let email = req.query.email;
   let privacy_policy = req.query.privacy_policy;
   let terms_conditions = req.query.terms_conditions;
 
-  // Validating inputs
-  if(validateUsername(username) && validatePassword(password) && validateEmail(email) && 
-      (privacy_policy == 0 || privacy_policy == 1) && (terms_conditions == 0 || terms_conditions == 1)) {
-    // Generating a salt for the user user
-    let salt = generateSalt();
-
-    // Salt + Hash password
-    let saltAndHashedPassword = saltAndHash(password, salt);
-
-    // Creating the account in mySQL database
-    connection.query(`INSERT INTO users(username, password, salt, email, 
-        created_at, privacy_policy, terms_conditions) VALUES (${username}, ${saltAndHashedPassword},
-        ${salt}, ${email}, CURDATE(), ${privacy_policy}, ${terms_conditions});`, (err, rows, fields) => {
-        
-
-      // checking if account was successfully created
-      if (err) {
-        // account creation NOT successful
-        console.log("ACCOUNT CREATED ERROR: " + err);   // printing error message to console
-        res.json({"message":"There was an error creating the account"})  // informing client account not created
-      } else {
-        // account creation successful
-        console.log('Account created');
-        res.json({"message":"Sccount successfully created"});  // informing client account was created
-      }
-    })
-
-  } else {
-    // Sending message to client that account details were invalid
-    res.json({"message":"Account credentials are invalid"});
+  // Validating username
+  if(!validateUsername(username)) {
+    // Credentials did not pass validation checks
+    res.json({"message":"Credentials were invalid"})  // informing client account not created
+    return;
   }
+
+  //Checking if username is taken
+  let usernameValidPromise = (checkUsernameTaken(username));
+  let usernameValid = false;
+
+  usernameValidPromise.then((response) => {
+    if (response == "0") {
+      // username is not taken
+      usernameValid = true;
+    } else if (response == "1") {
+      // username taken
+      res.json({"message":"Username is taken"})  // informing client username is taken
+      return;
+    } else {
+      res.json({"message":"There was an error creating your account"})  // informing client account not created
+      return;
+    }
+
+    // Validating inputs
+    if(usernameValid && validatePassword(password) && validateEmail(email) && 
+        (privacy_policy == 0 || privacy_policy == 1) && (terms_conditions == 0 || terms_conditions == 1)) {
+          console.log("passed");
+      // Generating a salt for the user user
+      let salt = generateSalt();
+
+      // Salt + Hash password
+      let saltAndHashedPassword = saltAndHash(password, salt);
+
+      let query =  `INSERT INTO geo2002.users(username, password, salt, email, 
+        created_at, privacy_policy, terms_conditions) VALUES ('${username}', '${saltAndHashedPassword}',
+        '${salt}', '${email}', CURDATE(), '${privacy_policy}', '${terms_conditions}');`
+
+      // Creating the account in mySQL database
+      let createAccountPromise = new Promise(function(resolve) {
+        connection.query(query, (err, rows, fields) => {
+          // checking if account was successfully created
+          if (err) {
+            // account creation NOT successful
+            console.log("ERROR WHEN CREATING ACCOUNT: " + err);   // printing error message to console
+            resolve(null);
+          } else {
+            // account creation successful
+            console.log('Account created');
+            resolve(true);
+          }
+        });
+      });
+
+      // Evaluating results of SQL query
+      createAccountPromise.then((response) => {
+        if (response === true) {
+          res.json({"message":"Account successfully created"});  // informing client account was created
+        } else {
+          res.json({"message":"There was an error when creating the account"})  // informing client account not created
+        }
+      });
+    } else {
+      // Credentials did not pass validation checks
+      res.json({"message":"Credentials were invalid"})  // informing client account not created
+    }
+  });
 });
 // http://localhost:5000/api/createAccount?username=alexto123&password=alexto12345&email=alexnseve@gmail.com&privacy_policy=1&terms_conditions=1
 
+
+
 // LOGIN API HANDLER
-app.post('/api/login', (req, res) => {
+// test http://localhost:5000/api/login?username=kev123&password=pass&clientHash=AB153
+app.get('/api/login', (req, res) => {
   // Getting login credentials
-  let username = req.body.username;
-  let password = req.body.password;
-  let clientHash = req.body.clientHash;
+  let username = req.query.username;
+  let password = req.query.password;
+  let clientHash = req.query.clientHash;
 
   // Checking whether credentials were valid
   if (validateUsername(username) && validatePassword(password)) {
     // Checking if a user exists with the given username
-    let usernameSearchSQL = `SELECT username, password, salt FROM geo2002.users WHERE username = ${username};` // SQL that returns the username, password, and salt fields when usernames are equal
-
+    let usernameSearchSQL = `SELECT username, password, salt FROM geo2002.users WHERE username = '${username}';` // SQL that returns the username, password, and salt fields when usernames are equal
+    
     connection.query(usernameSearchSQL, (err, result, fields) => {
       if (err) {
         console.log("ERROR IN LOGIN API" + err);
         return;
       }
-
+      
       // Evaluating result
       if(result.length == 0) {
         //No username match found
@@ -236,7 +329,7 @@ app.post('/api/login', (req, res) => {
           res.json({"message":"Username or password were invalid"})  // informing client that login failed
         }
       }
-    })
+  });
 
   } else {
     // Credentials did not pass validation checks so must be invalid
