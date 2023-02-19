@@ -5,16 +5,15 @@
 const { query } = require("express");
 
 // Host creating a new session:
-// host api
+// host api:
 // Create session with empty quiz
 // wait for playuers to join
 // add host and other participewnts to part tgable
-// start api
+// start api:
 // get quiz_id
 // Get the country list in a random order
-// Create a country set of specified length by inserting a record of-
+// Create a country set of n countries by inserting n records of-
 // country_id, quiz_id
-// Create session, add participent
 
 //  Create lobby
 module.exports = function(app, connection) {
