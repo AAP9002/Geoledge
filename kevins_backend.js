@@ -28,6 +28,46 @@ module.exports = function(app, connection) {
         const { host_user } = req.params;
         console.log("name jeff");
 
+        // SQL Processes:
+        ///////////////////////////////////////////////////////////////
+        // Create Lobby (empty quiz and empty session)
+        // Inputs: host_id
+        // Return: session_id (aka join code)
+        let query = `INSERT INTO quiz (title, description, num_of_questions) VALUES ('BLANK', 'BLANK', 0);`
+        let query = `SELECT LAST_INSERT_ID();` //quiz id
+        let query = `INSERT INTO session (quiz_quiz_id, host_user, created_at) VALUES (${quiz_id}, ${host_user}, NOW());`
+        let query = `SELECT LAST_INSERT_ID();` //session id
+        ///////////////////////////
+        let query = `INSERT INTO participents (user_id, session_id, player_score, answered) VALUES (${host_user}, ${session_id}, 0, 0);`
+        // either keep this in, or call the joinAPI(host_user, session_id)
+        ///////////////////////////////////////////////////////////////
+        // Join Lobby
+        // Inputs: user_id, session_id
+        let query = `INSERT INTO participents (user_id, session_id, player_score, answered) VALUES (${user_id}, ${session_id}, 0, 0);`
+        ///////////////////////////////////////////////////////////////
+        // Start Game (create country set, write game config into dbo)
+        // Inputs: session_id, num_of_questions, quiz_id (w/o F-End)
+        // Return: -
+        let query =`SELECT country_id FROM country ORDER BY RAND();`
+        // result.country_id[i] for loop range(num_of_questions)
+        let query =`INSERT INTO country_set (country_id, quiz_id) VALUES (${country_id}, ${quiz_id});`
+        //
+        let query = `UPDATE quiz SET num_of_questions = (${num_of_questions}) WHERE quiz_id=(${quiz_id});`
+        ///////////////////////////
+        // Insert Game Configs
+        // Inputs: session_id, max_guesses
+        // Return: -
+        let query = `UPDATE participents SET guesses = (${max_guesses}) WHERE session_id=(${session_id});`
+        let query = `UPDATE session SET max_guesses = (${max_guesses}), time_limit = (${time_limit}) WHERE session_id=(${session_id});`
+        //////////////////////////////////////////////////////
+
+
+
+
+
+
+
+        
         let query = `INSERT INTO quiz (title, description, num_of_questions) VALUES ('VSCODE', 'TBC', 0);`
         connection.query(query, (err) => {
             if (err) {
