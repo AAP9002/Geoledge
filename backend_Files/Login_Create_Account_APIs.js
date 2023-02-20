@@ -1,10 +1,8 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+require('./JWTFunctions')();
 
 module.exports = function (app, connection) {
-    function generateAccessToken(username, clientHash) {
-            return jwt.sign({username, clientHash}, process.env.TOKEN_SECRET);
-    }
 
     ////////////// LOGIN/SIGNUP API Start //////////////
     // USERNAME VALIDATION METHOD
