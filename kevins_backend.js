@@ -18,7 +18,6 @@
 // app.get('/test', function(req, res) {
 //     res.json(200, {'test': 'it works!'})
 // })
-const { query } = require("express");
 module.exports = function(app, connection) {
         /*
         // SQL Processes:
