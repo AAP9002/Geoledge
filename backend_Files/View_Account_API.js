@@ -10,6 +10,7 @@ module.exports = function (app, connection) {
             res.json({ "message":"User not logged in" });
         } else {
             // Fetching account details from SQL
+            let promise = new Promise(function(res))
         }
     });
 

@@ -210,8 +210,8 @@ module.exports = function (app, connection) {
                     if (saltAndHashedPassword == result[0].password) {
                         // Account match has been found. Generating JWT token and sending it to the client.
                         let token = generateAccessToken(username, clientHash);
-                        res.json({"message":"Successfully logged in"});   /// message and JWT JSON to client
                         res.cookie("JWT", token, {signed: true});
+                        res.json({"message":"Successfully logged in"});   /// message and JWT JSON to client
                     } else {
                         // Passwords did not match
                         res.json({"message":"Username or password were invalid"})  // informing client that login failed
