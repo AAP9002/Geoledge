@@ -31,7 +31,7 @@ app.use(express.static('backend_Files/static_files'))
 const authenticateToken = function(req, res, next) {
   // Getting JWT token from cookies
   try {  
-    const token = req.signedCookies['JWT'];
+    const token = req.cookies['JWT'];
 
     // Checking if token is empty
     if (token == null) {
