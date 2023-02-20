@@ -26,6 +26,45 @@ app.use(express.static('client/build'))
 // point to static backend files
 app.use(express.static('backend_Files/static_files'))
 
+///////////// PERMANENT MIDDLEWARE FUNCTIONS /////////////
+// MIDDLEWARE METHOD FOR TOKEN AUTHENTICATION
+const authenticateToken = function(req, res, next) {
+  // Getting JWT token from cookies
+  try {  
+    const token = req.signedCookies['JWT'];
+
+    // Checking if token is empty
+    if (token == null) {
+        req.loggedIn = "false";
+    } else {
+    //Verifying token
+        jwt.verify(token, process.env.TOKEN_SECRET, (err, userData) => {
+            // Checking if error occurred when authenticating JWT
+            if (err) {
+                // errored occured when verifying token
+                console.log("ERROR WHEN AUTHENTICATING JWT: " + err);
+                req.user = null;
+                req.clientHash = null;
+            } else {
+                // user is logged in
+                req.user = userData.user;
+                req.clientHash = userData.clientHash;
+            }
+        })
+    }
+
+    next();
+  } catch (e) {
+    // Error occurred when reading JWT token implying tat the user is not logged in
+    req.user = null;
+    req.clientHash = null;
+    next();
+  }
+}
+
+app.use(authenticateToken);
+/////////////////////////////////////////////////////////
+
 ///////////// IMPORT MODULES FROM FILES ////////////// 
 require('./backend_Files/Country_Data_Collection_API')(app, connection);
 require('./backend_Files/Login_Create_Account_APIs')(app, connection);

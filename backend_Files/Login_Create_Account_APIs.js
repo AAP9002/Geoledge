@@ -91,33 +91,11 @@ module.exports = function (app, connection) {
         let passwordWithSalt = password + salt;
         return (crypto.createHash("sha256")).update(passwordWithSalt).digest("hex");
     }
-    
 
-    // MIDDLEWARE METHOD FOR TOKEN AUTHENTICATION
-    function authenticateToken(req, res, next) {
-        const authHeader = req.headers['authorization']
-        const token = authHeader && authHeader.split(' ')[1]  // getting the JWT token
-    
-        // Checking if token is empty
-        if (token == null) {
-            req.loggedIn = "false";
-        } else {
-        //Verifying token
-            jwt.verify(token, process.env.TOKEN_SECRET, (err, userData) => {
-                // Checking if error occurred when authenticating JWT
-                if (err) {
-                    console.log("ERROR WHEN AUTHENTICATING JWT: " + err);
-                    req.user = "error";
-                    req.clientHash = "error";
-                } else {
-                    req.user = userData.user;
-                    req.clientHash = userData.clientHash;
-                }
-            })
-        }
-    
-        next();
-    }
+    // TESTING TO SEE IF MIDDLEWARE METHOD WORKS
+    app.get('/api/loggedin', (req, res, next) => {
+        
+    });
     
     
     // CREATE ACCOUNT API HANDLER
@@ -233,7 +211,7 @@ module.exports = function (app, connection) {
                         // Account match has been found. Generating JWT token and sending it to the client.
                         let token = generateAccessToken(username, clientHash);
                         res.json({"message":"Successfully logged in", "JWT":token});   /// message and JWT JSON to client
-            
+                        res.cookie("JWT", token, {signed: true});
                     } else {
                         // Passwords did not match
                         res.json({"message":"Username or password were invalid"})  // informing client that login failed
