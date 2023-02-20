@@ -43,11 +43,11 @@ const authenticateToken = function(req, res, next) {
             if (err) {
                 // errored occured when verifying token
                 console.log("ERROR WHEN AUTHENTICATING JWT: " + err);
-                req.user = null;
+                req.username = null;
                 req.clientHash = null;
             } else {
                 // user is logged in
-                req.user = userData.user;
+                req.username = userData.username;
                 req.clientHash = userData.clientHash;
             }
         })
@@ -56,7 +56,7 @@ const authenticateToken = function(req, res, next) {
     next();
   } catch (e) {
     // Error occurred when reading JWT token implying tat the user is not logged in
-    req.user = null;
+    req.username = null;
     req.clientHash = null;
     next();
   }

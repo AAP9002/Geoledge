@@ -1,5 +1,4 @@
 const crypto = require('crypto');
-const jwt = require('jsonwebtoken');
 require('./JWTFunctions')();
 
 module.exports = function (app, connection) {
@@ -46,7 +45,6 @@ module.exports = function (app, connection) {
     
     // PASSWORD VALIDATION METHOD
     function validatePassword(password) {
-        console.log("validating password");
         // checking if password is of valid length (PASSWORD CANNOT BE LONGER SHORTER THAN 8 AND LONGER THAN 64 CHARACTERS)
         if(password.length < 8 || password.length > 64) {
             // password length of invalid size
@@ -180,6 +178,7 @@ module.exports = function (app, connection) {
     // LOGIN API HANDLER
     // test http://localhost:5000/api/login?username=kev123&password=pass&clientHash=AB153
     app.get('/api/login', (req, res) => {
+        console.log(req.username);
         // Getting login credentials
         let username = req.query.username;
         let password = req.query.password;
@@ -208,7 +207,7 @@ module.exports = function (app, connection) {
                     if (saltAndHashedPassword == result[0].password) {
                         // Account match has been found. Generating JWT token and sending it to the client.
                         let token = generateAccessToken(username, clientHash);
-                        res.json({"message":"Successfully logged in", "JWT":token});   /// message and JWT JSON to client
+                        res.json({"message":"Successfully logged in"});   /// message and JWT JSON to client
                         res.cookie("JWT", token, {signed: true});
                     } else {
                         // Passwords did not match
