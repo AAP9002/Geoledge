@@ -14,8 +14,10 @@ function App() {
   return (
     <>
       <Router>
+       
         <Navbar />
-          <Routes>
+           <div className='App'>
+            <Routes>
             <Route exact path='/' element={<Home/>} />
             <Route path='/Home' element={<Home/>} />
             <Route path='/Play' element={<Play/>} />
@@ -25,8 +27,9 @@ function App() {
             <Route path='/TermsandConditions' element={<TermsandConditions/>} />
             <Route path='/AccountPage' element={<Account/>} />
           </Routes>
+        </div>
         <Footer />
-
+      
         
       </Router>
     </>
