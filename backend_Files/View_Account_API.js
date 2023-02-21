@@ -3,12 +3,15 @@ module.exports = function (app, connection) {
 
     ////////////// VIEW ACCOUNT API Start //////////////
     app.get('/api/viewAccount', (req, res) => {
+        // SENDS BACK TO CLIENT: STATUS 
+        console.log("hi");
+
         // Checking to see if the user is logged in
         let username = req.username;
-
+        
         if (username == null) {
             // Client is not logged in
-            res.json({ "message": "User not logged in" });
+            res.status(200).send({ "status":"client not logged" });
         } else {
             // Fetching account details from SQL
             let promise = new Promise(function(resolve) {
@@ -24,7 +27,7 @@ module.exports = function (app, connection) {
                         if (result.length == 0) {
                             // No account under such username (very unusual result);
                             console.log("User attempted to get account information but failed");
-                            res.status(400).send("Username invalid");
+                            res.status(200).send({ "status":"client not logged" });
                         } else {
                             // Account found and returning account with specified username
                             resolve(result[0].result);
