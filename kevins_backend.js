@@ -184,7 +184,6 @@ http://localhost:5000/api/startGame?num_of_questions=5&max_guesses=7&time_limit=
                 myPromise.then(
                     function(result){
                         countries = result;
-                        let flag = false;
                         for (let i = 0; i < num_of_questions; i++) {
                             let country_id = countries[i].country_id;
                             let query =`INSERT INTO country_set (country_id, quiz_id) VALUES ('${country_id}', ${quiz_id});`
