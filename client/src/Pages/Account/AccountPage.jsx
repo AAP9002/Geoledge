@@ -4,9 +4,9 @@ import { useState } from 'react';
 
 
 function ScoreBoard(){
-  const [wins, ] = useState(0)
-  const [GamePlayed, ] =  useState(0)
-  const [WinRate,] = useState(0)
+  const [wins, setWins] = useState(0)
+  const [GamePlayed,setGamePlayed ] =  useState(0)
+  const [WinRate, SetWinrate] = useState(0)
 
 
 
