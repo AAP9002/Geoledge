@@ -1,18 +1,20 @@
 import React from 'react';
 import "./Play.css";
+import { Rounds } from "./rounds"
+import { RoundLength } from "./roundtime"
 
 
-const About = () => {
+const Play = () => {
   return (
+    <>
     <div>
-          <div>
-            <p>
-              GamePage
-            </p>
-          </div>
+      <Rounds></Rounds>
     </div>
- 
+    <div>
+      <RoundLength></RoundLength>
+    </div>
+    </>
   );
 };
 
-export default About;
+export default Play;
