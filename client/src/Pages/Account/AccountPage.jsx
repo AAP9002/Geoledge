@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "./AccountPage.css";
 import { useState } from 'react';
 
 
 function ScoreBoard(){
-  const [wins, ] = useState(0)
-  const [GamePlayed, ] =  useState(0)
-  const [WinRate,] = useState(0)
+  const [wins, setWins] = useState(0)
+  const [GamePlayed,setGamePlayed ] =  useState(0)
+  const [WinRate, SetWinrate] = useState(0)
+
+    useEffect(() => {
+      fetch('/api/viewAccount').then(res =>res.json()).then(account =>{
+        console.log(account);
 
 
+      });
+     }, []);
 
 
   return (<div className='wrapper'>

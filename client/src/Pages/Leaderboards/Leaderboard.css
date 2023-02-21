@@ -1,0 +1,29 @@
+.leaderboard h1{
+    color: antiquewhite;
+  font-size: 80px;
+
+}
+
+.leaderboard th{
+    color: aliceblue;
+    font-size: larger;
+    padding:30px;
+}
+
+.leaderboard td{
+    color: aliceblue;
+    padding:30px;
+  }
+
+  .leaderboard table{
+    background-color: rgb(37, 6, 67);
+    padding: 80px;
+  }
+  .leaderboard{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url(../Leaderboards/Images/LDBimage.jpg);
+  }
