@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "./AccountPage.css";
 import { useState } from 'react';
 
 
 function ScoreBoard(){
-  const [wins, ] = useState(0)
-  const [GamePlayed, ] =  useState(0)
-  const [WinRate,] = useState(0)
+  const [wins, setWins] = useState(0)
+  const [GamePlayed,setGamePlayed ] =  useState(0)
+  const [WinRate, SetWinrate] = useState(0)
+  const [Account, SetAccount] = useState({})
 
 
+  useEffect(() => {
+    fetch('/country_name_list.json').then(res =>res).then(Account =>{
+      SetAccount(Account);
+    });
+    }, []);
 
 
   return (<div className='wrapper'>
-          <h1 align="center" font-size="300">My Account</h1>
-          <table align="center" border="0" cellpadding="60" cellspacing="0" >
+          <h1>My Account { JSON.stringify(Account)}</h1>
+          <table>
           <thead>
           <tr>
               <th>Wins</th>
@@ -23,7 +29,6 @@ function ScoreBoard(){
       </thead>
           <tbody><tr><td align="center">{wins}</td><td align="center">{GamePlayed}</td><td align="center">{WinRate}</td></tr></tbody>
       </table>
-
   </div>)
 }
 

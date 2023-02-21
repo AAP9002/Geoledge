@@ -3,22 +3,6 @@
 // https://stackoverflow.com/questions/33946972/how-to-split-node-js-files-in-several-files/33947204#33947204
 // promise multiple sql https://medium.com/swlh/dealing-with-multiple-promises-in-javascript-41d6c21f20ff
 // promise w3schools
-
-// Host creating a new session:
-// host api:
-// Create session with empty quiz
-// wait for playuers to join
-// add host and other participewnts to part tgable
-// start api:
-// get quiz_id
-// Get the country list in a random order
-// Create a country set of n countries by inserting n records of-
-// country_id, quiz_id
-
-// app.get('/test', function(req, res) {
-//     res.json(200, {'test': 'it works!'})
-// })
-module.exports = function(app, connection) {
         /*
         // SQL Processes:
         ///////////////////////////////////////////////////////////////
@@ -59,7 +43,7 @@ http://localhost:5000/api/createLobby?host_user=20
 http://localhost:5000/api/joinLobby?user_id=20&session_id=27
 http://localhost:5000/api/startGame?num_of_questions=5&max_guesses=7&time_limit=100&session_id=27
         */
-    
+module.exports = function(app, connection) {
     // Create Lobby
     // Create empty quiz and select quiz id
     // Create empty session and select session id
@@ -184,7 +168,6 @@ http://localhost:5000/api/startGame?num_of_questions=5&max_guesses=7&time_limit=
                 myPromise.then(
                     function(result){
                         countries = result;
-                        let flag = false;
                         for (let i = 0; i < num_of_questions; i++) {
                             let country_id = countries[i].country_id;
                             let query =`INSERT INTO country_set (country_id, quiz_id) VALUES ('${country_id}', ${quiz_id});`
