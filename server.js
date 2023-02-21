@@ -31,7 +31,7 @@ app.use(express.static('backend_Files/static_files'))
 const authenticateToken = function(req, res, next) {
   // Getting JWT token from cookies
   try {  
-    const token = req.signedCookies['JWT'];
+    const token = req.cookies['JWT'];
 
     // Checking if token is empty
     if (token == null) {
@@ -70,6 +70,7 @@ require('./backend_Files/Country_Data_Collection_API')(app, connection);
 require('./backend_Files/Login_Create_Account_APIs')(app, connection);
 require('./backend_Files/Game_Loop_Question_Page')(app, connection);
 require('./kevins_backend.js')(app, connection);
+require('./backend_Files/View_Account_API')(app, connection);
 ////////////////////////////////////////////////////// 
 
 

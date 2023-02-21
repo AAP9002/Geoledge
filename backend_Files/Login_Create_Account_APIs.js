@@ -1,7 +1,11 @@
 const crypto = require('crypto');
-require('./JWTFunctions')();
+const jwt = require('jsonwebtoken');
 
 module.exports = function (app, connection) {
+    // JWT Functions
+    function generateAccessToken(username, clientHash) {
+        return jwt.sign({username, clientHash}, process.env.TOKEN_SECRET);
+    }
 
     ////////////// LOGIN/SIGNUP API Start //////////////
     // USERNAME VALIDATION METHOD
@@ -178,12 +182,11 @@ module.exports = function (app, connection) {
     // LOGIN API HANDLER
     // test http://localhost:5000/api/login?username=kev123&password=pass&clientHash=AB153
     app.get('/api/login', (req, res) => {
-        console.log(req.username);
         // Getting login credentials
         let username = req.query.username;
         let password = req.query.password;
         let clientHash = req.query.clientHash;
-    
+        
         // Checking whether credentials were valid
         if (validateUsername(username) && validatePassword(password)) {
             // Checking if a user exists with the given username
@@ -207,8 +210,8 @@ module.exports = function (app, connection) {
                     if (saltAndHashedPassword == result[0].password) {
                         // Account match has been found. Generating JWT token and sending it to the client.
                         let token = generateAccessToken(username, clientHash);
+                        res.cookie("JWT", token);
                         res.json({"message":"Successfully logged in"});   /// message and JWT JSON to client
-                        res.cookie("JWT", token, {signed: true});
                     } else {
                         // Passwords did not match
                         res.json({"message":"Username or password were invalid"})  // informing client that login failed
