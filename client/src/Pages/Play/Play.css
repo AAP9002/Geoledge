@@ -1,0 +1,153 @@
+.lobby h1{
+   color: white;
+   font-size: 80px; 
+   text-align: center;
+}
+
+
+
+.styledbutton{
+    background-color: #ab50d4;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 5px;
+  margin: 10px 5px 0px 0px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0px 2px 2px lightgray;
+  transition: ease background-color 250ms;
+  height: auto;
+  width: auto;
+  opacity: 70%;
+}
+
+.styledbutton2{
+    background-color: #ab50d4;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 5px;
+  margin: 10px 5px 0px 0px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0px 2px 2px lightgray;
+  transition: ease background-color 250ms;
+  height: auto;
+  width: auto;
+  opacity: 70%;
+
+}
+
+.styledbutton3{
+    background-color: #ab50d4;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 5px;
+  margin: 10px 5px 0px 0px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0px 2px 2px lightgray;
+  transition: ease background-color 250ms;
+  height: 10vh;
+  width: 30vh;
+  text-align: center;
+
+}
+
+.styledbutton:hover {
+    background-color: #975CAB;
+  }
+
+  .styledbutton2:hover {
+    background-color: #975CAB;
+  }
+
+  .styledbutton:focus{
+    opacity: 100%;
+    border: 2px white;
+  }
+
+  .styledbutton2:focus{
+    opacity: 100%;
+    border: 2px white;
+  }
+
+  .styledbutton:disabled {
+    cursor: default;
+    opacity: 0.7;
+  }
+
+.lobby{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #4E2461;
+    text-align: center;
+  }
+
+.submit{
+    background-color: #4E2461;
+    color: #4E2461;
+}
+
+.leaderboard h1{
+    color: antiquewhite;
+  font-size: 80px;
+
+}
+
+.table th{
+    color: aliceblue;
+    font-size: larger;
+    padding:30px;
+}
+
+.table td{
+    color: aliceblue;
+    padding:30px;
+  }
+
+.table{
+    background-color: #4E2461;
+    padding: 80px;
+    text-decoration-color: white;
+  }
+  .leaderboard{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url(../Leaderboards/Images/LDBimage.jpg);
+  }
+
+.settingscontainer{
+    align-items: center;
+    text-align: center;
+    min-height: 70%;
+}
+
+.settings{
+    background-color: #4E2461;
+    min-height: 70vh;
+}
+
+.settings h2{
+    text-align: center;
+    color: white;
+}
+
+.settings h3{
+    color: white;
+    margin-top: 2%;
+}
+
+.lob{
+    background-color: #4E2461;
+    text-align: center;
+}
+
+.lob h1{
+    color: white;
+}
