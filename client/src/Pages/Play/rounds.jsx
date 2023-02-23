@@ -14,10 +14,12 @@ const Button = styled.button`
   padding: 5px 15px;
   border-radius: 5px;
   outline: 0;
-  margin: 10px 0px;
+  margin: 10px 10px 10px 10px;
   cursor: pointer;
   box-shadow: 0px 2px 2px lightgray;
   transition: ease background-color 250ms;
+  height: 6vh;
+  width: 6vh;
   &:hover {
     background-color: ${(props) => theme[props.theme].hover};
   }
