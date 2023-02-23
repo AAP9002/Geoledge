@@ -11,14 +11,15 @@ function ScoreBoard(){
 
 
   useEffect(() => {
-    fetch('/country_name_list.json').then(res =>res).then(Account =>{
+    fetch('/api/viewAccount').then(res => res.json()).then(Account =>{
+      console.log(Account);
       SetAccount(Account);
     });
     }, []);
 
 
   return (<div className='wrapper'>
-          <h1>My Account { JSON.stringify(Account)}</h1>
+          <h1>My Account { Account.status }</h1>
           <table>
           <thead>
           <tr>

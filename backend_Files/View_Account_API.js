@@ -11,7 +11,7 @@ module.exports = function (app, connection) {
         
         if (username == null) {
             // Client is not logged in
-            res.status(200).send({ "status":"client not logged" });
+            res.status(401).send({ "status":"client not logged" });
         } else {
             // Fetching account details from SQL
             let promise = new Promise(function(resolve) {
@@ -27,7 +27,7 @@ module.exports = function (app, connection) {
                         if (result.length == 0) {
                             // No account under such username (very unusual result);
                             console.log("User attempted to get account information but failed");
-                            res.status(200).send({ "status":"client not logged" });
+                            res.status(401).send({ "status":"client not logged" });
                         } else {
                             // Account found and returning account with specified username
                             resolve(result[0].result);
@@ -37,10 +37,10 @@ module.exports = function (app, connection) {
             });
 
             promise.then((response) => {
+                
                 if (!(response == null)) {
                     // sending user account details to user
-                    res.status(200);
-                    res.json({"games_played": response.games_played, "wins": response.wins, "losses": response.losses});
+                    res.status(200).send({ "games_played": response.games_played, "wins": response.wins, "losses": response.losses });
                 }
             });
         }
