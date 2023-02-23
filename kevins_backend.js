@@ -115,10 +115,10 @@ module.exports = function(app, connection) {
     // Join Lobby
     // Create participent record from user_id and session_id
     app.post('/api/joinLobby', (req, res) => {
-        let user_id = req.query.user_id;
+        let username = req.query.username;
         let session_id = req.query.session_id;
-        let query = `INSERT INTO participents (user_id, session_id, player_score, answered) VALUES (${user_id}, ${session_id}, 0, 0);`
-        connection.query(query, (err) => {
+        let query = "call join_lobby(?,?)"
+        connection.query(query, [username, session_id], (err, result) => {
             if (err) {
                 console.log("sql broken: " + err)
                 res.status(500).send(err);
