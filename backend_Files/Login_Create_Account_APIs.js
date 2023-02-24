@@ -91,26 +91,22 @@ module.exports = function (app, connection) {
         let passwordWithSalt = password + salt;
         return (crypto.createHash("sha256")).update(passwordWithSalt).digest("hex");
     }
-
-    // TESTING TO SEE IF MIDDLEWARE METHOD WORKS
-    app.get('/api/loggedin', (req, res, next) => {
-        
-    });
     
     
     // CREATE ACCOUNT API HANDLER
     app.get('/api/createAccount', (req, res) => {
+        console.log("creating account");
         // Getting account credentials
         let username = req.query.username;
         let password = req.query.password;
         let email = req.query.email;
         let privacy_policy = req.query.privacy_policy;
         let terms_conditions = req.query.terms_conditions;
-    
+        
         // Validating username
         if(!validateUsername(username)) {
             // Credentials did not pass validation checks
-            res.json({"message":"Credentials were invalid"})  // informing client account not created
+            res.status(401).send({ "message":"Credentials were invalid" });  // informing client account not created
             return;
         }
     
@@ -124,17 +120,16 @@ module.exports = function (app, connection) {
                 usernameValid = true;
             } else if (response == "1") {
                 // username taken
-                res.json({"message":"Username is taken"})  // informing client username is taken
+                res.status(401).send({ "status":"Username is taken" })  // informing client username is taken
                 return;
             } else {
-                res.json({"message":"There was an error creating your account"})  // informing client account not created
+                res.status(401).send({ "status":"There was an error creating your account" })  // informing client account not created
                 return;
             }
         
             // Validating inputs
             if(usernameValid && validatePassword(password) && validateEmail(email) && 
                 (privacy_policy == 0 || privacy_policy == 1) && (terms_conditions == 0 || terms_conditions == 1)) {
-                    console.log("passed");
                 // Generating a salt for the user user
                 let salt = generateSalt();
         
@@ -164,14 +159,14 @@ module.exports = function (app, connection) {
                 // Evaluating results of SQL query
                 createAccountPromise.then((response) => {
                     if (response === true) {
-                        res.json({"message":"Account successfully created"});  // informing client account was created
+                        res.status(201).send({ "status":"Account successfully created" });  // informing client account was created
                     } else {
-                        res.json({"message":"There was an error when creating the account"})  // informing client account not created
+                        res.status(401).send({ "status":"There was an error when creating the account" })  // informing client account not created
                     }
                 });
             } else {
                 // Credentials did not pass validation checks
-                res.json({"message":"Credentials were invalid"})  // informing client account not created
+                res.status(401).send({ "status":"Credentials were invalid" });  // informing client account not created
             }
         });
     });
@@ -201,7 +196,7 @@ module.exports = function (app, connection) {
                 // Evaluating result
                 if(result.length == 0) {
                     //No username match found
-                    res.json({"message":"Username or password were invalid"})  // informing client that login failed
+                    res.status(401).send( {"status":"Username or password were invalid"} )  // informing client that login failed
         
                 } else {
                     // Username match found. Checking if salt and hashed passwords match
@@ -211,17 +206,17 @@ module.exports = function (app, connection) {
                         // Account match has been found. Generating JWT token and sending it to the client.
                         let token = generateAccessToken(username, clientHash);
                         res.cookie("JWT", token);
-                        res.json({"message":"Successfully logged in"});   /// message and JWT JSON to client
+                        res.status(200).send({"status":"Successfully logged in"});   /// message and JWT JSON to client
                     } else {
                         // Passwords did not match
-                        res.json({"message":"Username or password were invalid"})  // informing client that login failed
+                        res.status(401).send( {"status":"Username or password were invalid"} )  // informing client that login failed
                     }
                 }
             });
         
         } else {
             // Credentials did not pass validation checks so must be invalid
-            res.json({"message":"Username or password were invalid"})
+            res.status(401).send( {"status":"Username or password were invalid"} )
         }
     });
     ////////////// LOGIN/SIGNUP API End //////////////

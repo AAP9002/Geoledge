@@ -20,7 +20,13 @@ const SignUpPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     console.log('Name:', name, 'Email:', email, 'Password:', password);
+
+    // API Call to create accuount
+    fetch(`/api/createAccount?username=${ name }&password=${ password }&email=${ email }&privacy_policy=1&terms_conditions=1`).then(res => res.json()).then(status => {
+      console.log(status);
+    });
   };
 
   return (
