@@ -1,9 +1,9 @@
 import React from 'react';
-import "./Play.css";
 import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import button from 'react-bootstrap/button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-
+import "./Play.css";
+import { Link } from 'react-router-dom';
 
 
 function Play(){
@@ -41,31 +41,35 @@ function Play(){
     </div>
     <div class="col-md-4">
       <div class="settingscontainer">
-      <form onSubmit={handleSubmit}>
+
         <div class="settings">
           <h2 class="h2"> Settings </h2>
           <div>
             
               <h3>Number Of Rounds</h3>
-              <ButtonGroup>
-                <Button class="styledbutton" id="1" onClick={changeNOR}>1</Button><Button class="styledbutton" id="2" onClick={changeNOR}>2</Button><Button class="styledbutton" id="3" onClick={changeNOR}>3</Button>
-                <Button class="styledbutton" id="4" onClick={changeNOR}>4</Button><Button class="styledbutton" id="5" onClick={changeNOR}>5</Button><Button class="styledbutton" id="6" onClick={changeNOR}>6</Button>
-                <Button class="styledbutton" id="7" onClick={changeNOR}>7</Button><Button class="styledbutton" id="8" onClick={changeNOR}>8</Button><Button class="styledbutton" id="9" onClick={changeNOR}>9</Button>
-                <Button class="styledbutton" id="10" onClick={changeNOR}>10</Button>
+              <ButtonGroup> 
+                <button class="styledbutton2" id="1" onClick={changeNOR}>1</button><button class="styledbutton2" id="2" onClick={changeNOR}>2</button><button class="styledbutton2" id="3" onClick={changeNOR}>3</button>
+                <button class="styledbutton2" id="4" onClick={changeNOR}>4</button><button class="styledbutton2" id="5" onClick={changeNOR}>5</button><button class="styledbutton2" id="6" onClick={changeNOR}>6</button>
+                <button class="styledbutton2" id="7" onClick={changeNOR}>7</button><button class="styledbutton2" id="8" onClick={changeNOR}>8</button><button class="styledbutton2" id="9" onClick={changeNOR}>9</button>
+                <button class="styledbutton2" id="10" onClick={changeNOR}>10</button>
               </ButtonGroup>
 
               <h3>Time Per Round </h3>
               <ButtonGroup className="me-2" aria-label="Second group">
                 
                 
-                <Button class="styledbutton2" id="15" onClick={changeTPR}>15s</Button><Button class="styledbutton2" id="30" onClick={changeTPR}>30s</Button><Button class="styledbutton2" id="45" onClick={changeTPR}>45s</Button>
-                <Button class="styledbutton2" id="60" onClick={changeTPR}>60s</Button>
+                <button class="styledbutton2" id="15" onClick={changeTPR}>15s</button><button class="styledbutton2" id="30" onClick={changeTPR}>30s</button><button class="styledbutton2" id="45" onClick={changeTPR}>45s</button>
+                <button class="styledbutton2" id="60" onClick={changeTPR}>60s</button>
               </ButtonGroup>
  
-          </div>
-          <button class='styledbutton3'>Play</button>
+          </div> <Link to='../JoinLobby'>    
+          <form onSubmit={handleSubmit}>
+         
+          <button class='styledbutton3'>Play</button>  
+          
+          </form></Link>
         </div>
-      </form>
+    
       </div>
     </div>
   </div>

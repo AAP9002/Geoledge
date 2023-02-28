@@ -7,7 +7,7 @@
 
 
 .styledbutton{
-    background-color: #ab50d4;
+  background-color: #ab50d4;
   color: white;
   padding: 5px 15px;
   border-radius: 5px;
@@ -16,8 +16,8 @@
   text-align: left;
   box-shadow: 0px 2px 2px lightgray;
   transition: ease background-color 250ms;
-  height: auto;
-  width: auto;
+  height: 10vh;
+  width: 0vh;
   opacity: 70%;
 }
 
@@ -34,6 +34,21 @@
   height: auto;
   width: auto;
   opacity: 70%;
+
+}
+.styledbutton4{
+  background-color: #ab50d4;
+color: white;
+padding: 5px 15px;
+border-radius: 5px;
+margin: 10px 5px 0px 0px;
+cursor: pointer;
+text-align: left;
+box-shadow: 0px 2px 2px lightgray;
+transition: ease background-color 250ms;
+height: auto;
+width: auto;
+opacity: 70%;
 
 }
 
