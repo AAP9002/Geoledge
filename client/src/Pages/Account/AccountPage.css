@@ -1,22 +1,25 @@
 
 .wrapper h1{
-  color: antiquewhite;
+  color: rgb(39, 223, 174);
   font-size: 80px;
 }
 .wrapper th{
-    color: aliceblue;
-    font-size: larger;
+    color: rgb(39, 223, 174);
+    font-size: 40px;
     padding:30px;
   }
   
   .wrapper td{
-    color: aliceblue;
+    color: rgb(39, 223, 174);
     padding:30px;
+    font-size: 30px;
   }
   
   .wrapper table{
-    background-color: rgb(37, 6, 67);
-    padding: 80px;
+    background-color: rgb(122, 39, 206);
+    padding: 50px;
+    border-radius: 20px;
+
   }
 
   .wrapper{

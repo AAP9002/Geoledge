@@ -1,5 +1,5 @@
 .leaderboard h1{
-    color: antiquewhite;
+  color: rgb(39, 223, 174);
   font-size: 80px;
 
 }
@@ -16,8 +16,9 @@
   }
 
   .leaderboard table{
-    background-color: rgb(37, 6, 67);
+    background-color: rgb(122, 39, 206);
     padding: 80px;
+    border-radius: 20px;
   }
   .leaderboard{
     height: 100vh;

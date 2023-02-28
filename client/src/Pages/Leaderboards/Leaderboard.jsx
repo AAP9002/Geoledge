@@ -15,7 +15,7 @@ function LeaderBoard() {
   
 
   // populate Players array with all the players fetched 
-  let player = {no:"",username: "", wins: "",Games:"",WP:"",};
+  let playerInfo = [{no:"",username: "", wins: "",Games:"",WP:"",}, , , ];
 
   return (
     <div className="leaderboard">
