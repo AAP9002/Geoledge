@@ -49,8 +49,21 @@ module.exports = function(app, connection) {
     // Create empty session and select session id
     // Return session_id to front end (not needed anymore but just leave it in bc why not)
     // Remember to add host to the lobby in a separate api
+    app.get('/api/LobbyQuizID', (req, res) => {
+        let host_user = req.query.user_id;
+        let query = "call create_lobby(?)"
+        connection.query(query, [host_user], (err, result) => {
+            if (err) {
+                console.log("sql broken: " + err)
+                res.status(500).send(err);
+            } else {
+                res.status(200).send(result);
+            }
+        })
+    });
+
     app.post('/api/createLobby', (req, res) => {
-        let host_user = req.query.host_user;
+        let host_user = req.user_id;
         let myPromise = new Promise(function(myResolve, myReject) {
             let query = `INSERT INTO quiz (title, description, num_of_questions) VALUES ('BLANK', 'BLANK', 0);` 
             connection.query(query, (err) => {
@@ -128,7 +141,22 @@ module.exports = function(app, connection) {
         })
     });
 
-    // Get game code (session id)
+    // Get Lobby Players
+    // Get user_ids from participents via session_id
+    app.get('/api/getLobbyPlayers', (req, res) => {
+        let session_id = req.query.session_id;
+        let query = "call get_lobby_players(?)"
+        connection.query(query, [session_id], (err, result) => {
+            if (err) {
+                console.log("sql broken: " + err)
+                res.status(500).send(err);
+            } else {
+                res.status(200).send(result);
+            }
+        })
+    });
+
+    // Get Game Code (Session ID)
     // Return session id where user is user.
     app.get('/api/getCode', (req, res) => {
         let user_id = req.user_id;
