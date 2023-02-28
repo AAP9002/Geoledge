@@ -1,7 +1,5 @@
 module.exports = function (app, connection) {
     app.get('/api/leaderboards', function (req, res) {
-        // SELECT username, games_played, wins, losses FROM geo2002.users ORDER BY wins ASC LIMIT 50;
-        
         // Getting sort order defined by client
         let sort = req.query.sort;
         let query = "";
@@ -23,8 +21,10 @@ module.exports = function (app, connection) {
         if (query == "") {
             // invalid query
             res.status(401).send({ "status": "sort invalid"} );
+
+        // PERFORMING SQL QUERY OTHERWISE
         } else {
-            // performing sql query
+            // Performing sql query
             let promise = new Promise(function(resolve) {
                 connection.query(query, (err, result) => {
                     if (err) {
@@ -33,15 +33,20 @@ module.exports = function (app, connection) {
                         resolve(null);
                     }
                     // Evaluating result
-                    resolve(result[0].result);
+                    resolve(result);
                 });
             });
 
+            // Evaluating SQL query
             promise.then((response) => {
-                
+                if (response == null) {
+                    // SQL query failed. Informing client of this
+                    res.status(401).send( { "status": "Could not get leaderboards"} );
+                } else {
+                    // Sending leaderboards back to client
+                    res.status(201).send( {"leaderboards": response} );
+                }
             });
         }
-
-        // Evaluating SQL query
     });
 }
