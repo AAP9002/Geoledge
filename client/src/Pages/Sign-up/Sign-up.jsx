@@ -94,7 +94,7 @@ const SignUpPage = () => {
             </label>
           </div>
           <button type="submit">Sign Up</button>
-          <p>Already have an account <button type="button" onClick={handleLoginClick}>Log In</button></p>
+          <p>Already have an account <a href="Log-in"> <button type="button" onClick={handleLoginClick}>Log In</button> </a></p>
         </form>
       </div>  
     </div>

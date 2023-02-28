@@ -67,7 +67,7 @@ const LoginPage = () => {
             />
           </div>
           <button type="submit">Login</button>
-          <p>Don't have an account? <button type="button" onClick={handleSignUpClick}>Sign up</button></p>
+          <p>Don't have an account? <a href="Sign-up"><button type="button" onClick={handleSignUpClick}>Sign up</button></a></p>
         </form>
       </div>
     </div>
