@@ -128,6 +128,25 @@ module.exports = function(app, connection) {
         })
     });
 
+    // Get game code (session id)
+    // Return session id where user is user.
+    app.get('/api/getCode', (req, res) => {
+        let user_id = req.query.user_id;
+        if (user_id) {
+            let query = `SELECT session_id FROM participents WHERE user_id = ${user_id};`
+            connection.query(query, (err, result) => {
+                if (err) {
+                    console.log("sql broken: " + err)
+                    res.status(500).send(err);
+                } else {
+                    let session_code = result[0].session_id;
+                    res.status(200).send({session_code});
+                }
+            })
+        } else {
+            res.status(500).send("you're not logged in.");
+        }
+    })
     // Start Game
     // Create Country Set:
     // Get quiz_id, get country_id
