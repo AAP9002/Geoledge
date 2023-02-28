@@ -4,6 +4,7 @@ const mysql = require('mysql')
 const app = express();
 const port = process.env.PORT || 5000;
 const jwt = require('jsonwebtoken');
+var cookieParser = require('cookie-parser');
 
 var connection = mysql.createPool({
   host: process.env.DB_SERVER,
@@ -26,16 +27,20 @@ app.use(express.static('client/build'))
 // point to static backend files
 app.use(express.static('backend_Files/static_files'))
 
+// using cookie parser middleware
+app.use(cookieParser());
+
 ///////////// PERMANENT MIDDLEWARE FUNCTIONS /////////////
 // MIDDLEWARE METHOD FOR TOKEN AUTHENTICATION
 const authenticateToken = function(req, res, next) {
   // Getting JWT token from cookies
   try {  
     const token = req.cookies['JWT'];
-
+    
     // Checking if token is empty
     if (token == null) {
         req.loggedIn = "false";
+        console.log("JWT verification failed: token empty");
     } else {
     //Verifying token
         jwt.verify(token, process.env.TOKEN_SECRET, (err, userData) => {
@@ -43,12 +48,15 @@ const authenticateToken = function(req, res, next) {
             if (err) {
                 // errored occured when verifying token
                 console.log("ERROR WHEN AUTHENTICATING JWT: " + err);
+                req.loggedIn = "false";
                 req.username = null;
                 req.clientHash = null;
             } else {
                 // user is logged in
+                req.loggedIn = "true";
                 req.username = userData.username;
                 req.clientHash = userData.clientHash;
+                console.log("JWT verified");
             }
         })
     }
@@ -56,8 +64,10 @@ const authenticateToken = function(req, res, next) {
     next();
   } catch (e) {
     // Error occurred when reading JWT token implying tat the user is not logged in
+    req.loggedIn = "false";
     req.username = null;
     req.clientHash = null;
+    console.log("JWT verification failed");
     next();
   }
 }
