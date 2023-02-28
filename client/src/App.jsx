@@ -9,12 +9,7 @@ import TermsandConditions from './Pages/Ts&Cs/TermsandConditions'
 import Account from './Pages/Account/AccountPage'
 import Footer from './Components/Footer';
 import Home from './Pages/Home/Home'
-<<<<<<< HEAD
-import JoinLobby from './JoinLobby';
-
-=======
 import JoinLobby from './Pages/JoinLobby/JoinLobby';
->>>>>>> 584c2f73775fc45d8965115decf8efce3241e6e3
 
 function App() {
   return (
