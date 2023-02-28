@@ -42,6 +42,8 @@ test:
 http://localhost:5000/api/createLobby?host_user=20
 http://localhost:5000/api/joinLobby?user_id=20&session_id=27
 http://localhost:5000/api/startGame?num_of_questions=5&max_guesses=7&time_limit=100&session_id=27
+http://localhost:3000/api/login?username=Alan123456&password=alan123456
+
         */
 module.exports = function(app, connection) {
     // Create Lobby
@@ -49,80 +51,17 @@ module.exports = function(app, connection) {
     // Create empty session and select session id
     // Return session_id to front end (not needed anymore but just leave it in bc why not)
     // Remember to add host to the lobby in a separate api
-    app.get('/api/LobbyQuizID', (req, res) => {
-        let host_user = req.query.user_id;
+    app.post('/api/createLobby', (req, res) => {
+        let host_id = req.userID;
         let query = "call create_lobby(?)"
-        connection.query(query, [host_user], (err, result) => {
+        connection.query(query, [host_id], (err, result) => {
             if (err) {
                 console.log("sql broken: " + err)
                 res.status(500).send(err);
             } else {
-                res.status(200).send(result);
+                res.status(200).send(result[1][0]);
             }
         })
-    });
-
-    app.post('/api/createLobby', (req, res) => {
-        let host_user = req.user_id;
-        let myPromise = new Promise(function(myResolve, myReject) {
-            let query = `INSERT INTO quiz (title, description, num_of_questions) VALUES ('BLANK', 'BLANK', 0);` 
-            connection.query(query, (err) => {
-                if (err) {
-                    myReject(err);
-                } else {
-                    myResolve(); // move onto next promise
-                }
-            })
-        });
-        myPromise.then(
-            function() {
-                let myPromise = new Promise(function (myResolve, myReject) {
-                    let query = `SELECT LAST_INSERT_ID() AS quiz_id;`
-                    connection.query(query, (err, result) => {
-                        if (err) {
-                            myReject(err);
-                        } else {
-                            myResolve(result); //pass quiz_id to next p
-                        }
-                    });
-                });
-                myPromise.then(
-                    function (result) {
-                        let quiz_id = result[0].quiz_id
-                        let myPromise = new Promise(function(myResolve, myReject) {
-                            let query = `INSERT INTO session (quiz_id, host_user, created_at) VALUES (${quiz_id}, ${host_user}, NOW());`
-                            connection.query(query, (err) => {
-                                if (err) {
-                                    myReject(err);
-                                } else {
-                                    myResolve();
-                                }
-                            })
-                        });
-                        myPromise.then(
-                            function() {
-                                let myPromise = new Promise(function (myResolve, myReject) {
-                                    let query = `SELECT LAST_INSERT_ID() AS session_id;`
-                                    connection.query(query, (err, result) => {
-                                        if (err) {
-                                            myReject(err);
-                                        } else {
-                                            myResolve(result); // pass session_id
-                                        }
-                                    });
-                                });
-                                myPromise.then(
-                                    function (result) {
-                                        res.status(200).json({'session_id': result[0].session_id});
-                                    }
-                                    
-                                );
-                            }, function(error) {console.log(error)}
-                        );
-                    }, function(error) {console.log(error)}
-                );
-            }, function(error) {console.log(error)}
-        );
     });
 
     // Join Lobby
@@ -151,7 +90,11 @@ module.exports = function(app, connection) {
                 console.log("sql broken: " + err)
                 res.status(500).send(err);
             } else {
-                res.status(200).send(result);
+                if (result[0][0] == null) {
+                    res.status(500).send("lobby players is empty or doesn't exist");    
+                } else {
+                    res.status(200).send(result);
+                }
             }
         })
     });
