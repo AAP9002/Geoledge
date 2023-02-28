@@ -47,7 +47,7 @@ module.exports = function(app, connection) {
     // Create Lobby
     // Create empty quiz and select quiz id
     // Create empty session and select session id
-    // Return session_id to front end
+    // Return session_id to front end (not needed anymore but just leave it in bc why not)
     // Remember to add host to the lobby in a separate api
     app.post('/api/createLobby', (req, res) => {
         let host_user = req.query.host_user;
@@ -115,7 +115,7 @@ module.exports = function(app, connection) {
     // Join Lobby
     // Create participent record from user_id and session_id
     app.post('/api/joinLobby', (req, res) => {
-        let username = req.query.username;
+        let username = req.username;
         let session_id = req.query.session_id;
         let query = "call join_lobby(?,?)"
         connection.query(query, [username, session_id], (err, result) => {
@@ -131,7 +131,7 @@ module.exports = function(app, connection) {
     // Get game code (session id)
     // Return session id where user is user.
     app.get('/api/getCode', (req, res) => {
-        let user_id = req.query.user_id;
+        let user_id = req.user_id;
         if (user_id) {
             let query = `SELECT session_id FROM participents WHERE user_id = ${user_id};`
             connection.query(query, (err, result) => {
