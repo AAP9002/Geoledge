@@ -3,9 +3,9 @@ const jwt = require('jsonwebtoken');
 
 module.exports = function (app, connection) {
     // JWT Functions
-    function generateAccessToken(username) {
+    function generateAccessToken(username, userID) {
         let clientHash =  crypto.randomBytes(64).toString('hex');   // creating random 64 byte-long hash
-        return jwt.sign({username, clientHash}, process.env.TOKEN_SECRET);
+        return jwt.sign({username, userID, clientHash}, process.env.TOKEN_SECRET);
     }
 
     ////////////// LOGIN/SIGNUP API Start //////////////
@@ -186,7 +186,7 @@ module.exports = function (app, connection) {
         // Checking whether credentials were valid
         if (validateUsername(username) && validatePassword(password)) {
             // Checking if a user exists with the given username
-            let usernameSearchSQL = `SELECT username, password, salt FROM geo2002.users WHERE username = '${username}';` // SQL that returns the username, password, and salt fields when usernames are equal
+            let usernameSearchSQL = `SELECT user_id, username, password, salt FROM geo2002.users WHERE username = '${username}';` // SQL that returns the username, password, and salt fields when usernames are equal
             
             connection.query(usernameSearchSQL, (err, result, fields) => {
                 if (err) {
@@ -205,7 +205,7 @@ module.exports = function (app, connection) {
                     
                     if (saltAndHashedPassword == result[0].password) {
                         // Account match has been found. Generating JWT token and sending it to the client.
-                        let token = generateAccessToken(username);
+                        let token = generateAccessToken(username, result[0].user_id);
                         res.cookie("JWT", token);
                         res.status(200).send({"status":"Successfully logged in"});   /// message and JWT JSON to client
                     } else {

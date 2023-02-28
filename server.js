@@ -40,6 +40,9 @@ const authenticateToken = function(req, res, next) {
     // Checking if token is empty
     if (token == null) {
         req.loggedIn = "false";
+        req.username = null;
+        req.userID = null;
+        req.clientHash = null;
         console.log("JWT verification failed: token empty");
     } else {
     //Verifying token
@@ -50,11 +53,13 @@ const authenticateToken = function(req, res, next) {
                 console.log("ERROR WHEN AUTHENTICATING JWT: " + err);
                 req.loggedIn = "false";
                 req.username = null;
+                req.userID = null;
                 req.clientHash = null;
             } else {
                 // user is logged in
                 req.loggedIn = "true";
                 req.username = userData.username;
+                req.userID = userData.userID;
                 req.clientHash = userData.clientHash;
                 console.log("JWT verified");
             }
@@ -66,6 +71,7 @@ const authenticateToken = function(req, res, next) {
     // Error occurred when reading JWT token implying tat the user is not logged in
     req.loggedIn = "false";
     req.username = null;
+    req.userID = userData.userID;
     req.clientHash = null;
     console.log("JWT verification failed");
     next();
