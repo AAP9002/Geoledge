@@ -9,6 +9,7 @@ import TermsandConditions from './Pages/Ts&Cs/TermsandConditions'
 import Account from './Pages/Account/AccountPage'
 import Footer from './Components/Footer';
 import Home from './Pages/Home/Home'
+import JoinLobby from './Pages/JoinLobby/JoinLobby';
 
 function App() {
   return (
@@ -24,8 +25,10 @@ function App() {
             <Route path='/Leaderboard' element={<Leaderboard/>} />
             <Route path='/PrivacyPolicy' element={<PrivacyPolicy/>} />
             <Route path='/Sign-up' element={<Signup/>} />
+            <Route path='/join-lobby' element={<JoinLobby/>} />
             <Route path='/TermsandConditions' element={<TermsandConditions/>} />
             <Route path='/AccountPage' element={<Account/>} />
+            <Route path='/JoinLobby' element={<JoinLobby/>}/>
           </Routes>
         </div>
         <Footer />

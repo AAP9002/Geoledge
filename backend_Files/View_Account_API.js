@@ -4,7 +4,6 @@ module.exports = function (app, connection) {
     ////////////// VIEW ACCOUNT API Start //////////////
     app.get('/api/viewAccount', (req, res) => {
         // SENDS BACK TO CLIENT: STATUS 
-        console.log("hi");
 
         // Checking to see if the user is logged in
         let username = req.username;
