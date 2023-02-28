@@ -161,3 +161,17 @@
       transition: 250ms;
     }
   }
+
+  .nav-menu {
+    display: flex;
+    align-items: center; 
+    list-style: none;
+    text-align: center;
+    width: 60vw;
+    margin-right: 2rem;
+  }
+
+  .nav-links.join-lobby {
+    margin-left: 2rem;
+  }
+  

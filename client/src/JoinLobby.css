@@ -1,130 +1,130 @@
 .join-lobby-wrapper {
-    background-color: #6d5eac;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .join-lobby-wrapper h1 {
-    font-size: 36px;
-    margin: 50px 0 0;
-  }
-  
+  background-image: url(https://wallpaperaccess.com/full/655045.jpg);
+  background-color: #1c2331;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+
+.join-lobby-wrapper h1 {
+  font-size: 36px;
+  margin: 50px 0 0;
+  color: #fff;
+}
+
+.join-lobby-container {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+  height: 400px;
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.join-lobby-content {
+  padding: 50px;
+  width: 80%;
+}
+
+.join-lobby-header {
+  background-color: #1c2331;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.join-lobby-header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.join-lobby-form {
+  margin-top: 30px;
+}
+
+.join-lobby-input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.join-lobby-input-group label {
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #1c2331;
+}
+
+.join-lobby-input-group input {
+  border: 2px solid #1c2331;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.join-lobby-button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.join-lobby-button {
+  background-color: #1c2331;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+.join-lobby-button:hover {
+  background-color: #0b0d13;
+}
+
+.return-home-button {
+  background-color: #fff;
+  border: 2px solid #1c2331;
+  border-radius: 5px;
+  color: #1c2331;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+.return-home-button:hover {
+  background-color: #1c2331;
+  color: #fff;
+}
+
+@media screen and (max-width: 600px) {
   .join-lobby-container {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-    height: 400px;
-    width: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 90%;
+    height: 350px;
   }
-  
+
   .join-lobby-content {
-    padding: 50px;
-    width: 80%;
+    width: 90%;
+    padding: 30px;
   }
-  
-  .join-lobby-header {
-    background-color: #6d5eac;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-  }
-  
+
   .join-lobby-header h2 {
-    margin: 0;
-    font-size: 24px;
+    font-size: 20px;
   }
-  
-  .join-lobby-form {
-    margin-top: 30px;
-  }
-  
-  .join-lobby-input-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-  }
-  
+
   .join-lobby-input-group label {
-    font-size: 18px;
-    margin-bottom: 5px;
-    color: #6d5eac;
-  }
-  
-  .join-lobby-input-group input {
-    border: 2px solid #6d5eac;
-    border-radius: 5px;
     font-size: 16px;
-    padding: 10px;
   }
-  
-  .join-lobby-button-group {
-    display: flex;
-    justify-content: space-between;
+
+  .join-lobby-input-group input {
+    font-size: 14px;
   }
-  
+
   .join-lobby-button {
-    background-color: #6d5eac;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 18px;
-    padding: 10px 20px;
-    transition: all 0.3s ease;
+    font-size: 16px;
+    padding: 8px 16px;
   }
-  
-  .join-lobby-button:hover {
-    background-color: #5c4f91;
-  }
-  
-  .return-home-button {
-    background-color: #fff;
-    border: 2px solid #6d5eac;
-    border-radius: 5px;
-    color: #6d5eac;
-    cursor: pointer;
-    font-size: 18px;
-    padding: 10px 20px;
-    transition: all 0.3s ease;
-  }
-  
-  .return-home-button:hover {
-    background-color: #6d5eac;
-    color: #fff;
-  }
-  
-  @media screen and (max-width: 600px) {
-    .join-lobby-container {
-      width: 90%;
-      height: 350px;
-    }
-  
-    .join-lobby-content {
-      width: 90%;
-      padding: 30px;
-    }
-  
-    .join-lobby-header h2 {
-      font-size: 20px;
-    }
-  
-    .join-lobby-input-group label {
-      font-size: 16px;
-    }
-  
-    .join-lobby-input-group input {
-      font-size: 14px;
-    }
-  
-    .join-lobby-button {
-      font-size: 16px;
-      padding: 8px 16px;
-    }
-  }
-  
-  
+}

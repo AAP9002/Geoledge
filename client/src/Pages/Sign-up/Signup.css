@@ -89,3 +89,43 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+button[type="button"] {
+  background-color: transparent;
+  border: none;
+  color: #00F5FF;
+  cursor: pointer;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+button[type="button"]:hover {
+  color: #80E0FF;
+}
+
+button[type="button"]:focus {
+  outline: none;
+}
+
+button[type="button"]:hover {
+  text-decoration: underline;
+}
+
+
+#termsAccepted + label {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+}
+
+
+input[type="checkbox"]#termsAccepted {
+  margin-right: 10px;
+}
+
+label[for="termsAccepted"] {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
