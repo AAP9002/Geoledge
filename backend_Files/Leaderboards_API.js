@@ -24,7 +24,7 @@ module.exports = function (app, connection) {
             // invalid query
             res.status(401).send({ "status": "sort invalid"} );
         } else {
-            // performing sql query
+            // Performing sql query
             let promise = new Promise(function(resolve) {
                 connection.query(query, (err, result) => {
                     if (err) {
@@ -33,12 +33,18 @@ module.exports = function (app, connection) {
                         resolve(null);
                     }
                     // Evaluating result
-                    resolve(result[0].result);
+                    resolve(result);
                 });
             });
 
             promise.then((response) => {
-                
+                if (response == null) {
+                    // SQL query failed. Informing client of this
+                    res.status(401).send( { "status": "Could not get leaderboards"} );
+                } else {
+                    // Sending leaderboards back to client
+                    res.status(201).send( {"leaderboards": response} );
+                }
             });
         }
 
