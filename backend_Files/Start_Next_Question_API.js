@@ -11,34 +11,30 @@ module.exports = function (app, connection) {
     */
 
 
-    // =================   FUNCTIONS   ====================
-    function startGame(sessionID) {
-        // Function that starts the game for the given session
-        let query = `UPDATE session SET game_state = "displaying question" WHERE session_id = ${ sessionID }`;
+    // ==================  FUNCTIONS ======================
+    function nextQuestion(sessionID) {
+        // Changing game_state to "displaying question" and incrementing "current_question"
+        let query = "call move_to_next_question(sessionID)";
 
-        connection.query(query, (err, result) => {
+        connection.query(query, [sessionID], (err, result) => {
             if (err) {
-                console.log("ERROR: Error when changing game_state from starting to displaying question");
+                // Error occurred during SQL query (likely server-side issue)
                 res.status(500).send("Error occured on the server");
             }
-        });
+        })
     }
-
+    
 
     // ====================   API   =======================
-    app.get('/api/startGame', (req, res) => {
-        console.log("creating account");
-        // Getting userID of host
-        let userID = req.userID
-        let sessionID = req.query.sessionID;
+    app.get('/api/startNextQuestion', (req, res) => {
+        // This API is called to move game_state from "showing current scores" to "starting next question"
+        let userID = req.userID;
+        let sessionID = req.sessionID;
         
-        // 1. SQL query to check if client is the host of the session
-        // 2. If yes, update game_state, and then start countdown
-
-
-        // Checking if client is the host of the lobby
+        // Checking if client is the host of the session
         let query = "call validate_host_in_session(?,?)"
         let promise = new Promise(function(resolve, reject) {
+
             connection.query(query, [userID, sessionID], (err, result) => {
                 if (err) {
                     // Error occurred when performing SQL query
@@ -53,19 +49,17 @@ module.exports = function (app, connection) {
 
         promise.then(
             function(result) {
-                // Evaluating result found
-
-                if(result == 1) {
-                    // Client is found to be the host of the session
-                    // Changing the game_state
-
+                // Evaluating result
+                if (result == "1") {
+                    // client is the host of the session hence starting next question
                     let promise2 = new Promise(function(resolve, reject) {
-                        let query2 = `UPDATE session SET game_state = "starting game" WHERE session_id = ${ sessionID }`;
+                        let query2 = `UPDATE session SET game_state = "starting next question" WHERE session_id = ${ sessionID } AND
+                            game_state = "displaying current scores`;
 
                         connection.query(query2, (err, result) => {
                             if (err) {
                                 // Error occurred when performing SQL query
-                                console.log("ERROR: Error when changing game_state from waiting to starting");
+                                console.log("ERROR: Error when changing game_state from displaying current scores to starting next question");
                                 reject("SQL error");
                             } else {
                                 // SQL query successful
@@ -77,28 +71,22 @@ module.exports = function (app, connection) {
                     promise2.then(function() {
                         // Game state changed from "waiting" to "starting"
                         // Starting countdown for the game to start
-                        setTimeout(startGame(sessionID), 5000);     // 5s timer
+                        setTimeout(nextQuestion(sessionID), 5000);     // 5s timer
                     },
                     function() { 
                         // Error when attempting to change the game state. Informing the client of this error
                         res.status(401).send("Session could not be started");
                     });
-
-
                 } else {
                     // Client is not the host of the session (or sessionID does not not exist)
                     res.status(401).send("Unauthorised request");
                 }
 
-            },
-            function(error) {
+            }, function(reject) {
                 // Error occurred in SQL query (likely server-side error). Informing client of this error
                 res.status(500).send("Error occured on the server");
             }
-        )
-
-
-
+        );
     });
 
 }
