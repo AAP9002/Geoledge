@@ -66,6 +66,7 @@ module.exports = function(app, connection) {
 
     // Join Lobby
     // Create participent record from user_id and session_id
+    // Front-end gets session_id from getCode api
     app.post('/api/joinLobby', (req, res) => {
         let username = req.username;
         let session_id = req.query.session_id;
@@ -79,6 +80,10 @@ module.exports = function(app, connection) {
             }
         })
     });
+
+    // WHAT DO I NEED TO DO NEXT?
+    // Procedurilize start game
+    // COUNTDOWN!
 
     // Get Lobby Players
     // Get user_ids from participents via session_id
