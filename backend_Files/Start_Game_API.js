@@ -1,0 +1,102 @@
+module.exports = function (app, connection) {
+    /* ==============  INFORMATION ON GAME_STATE  ==============
+       Game states held by game_state:
+            1. "waiting for players"
+            2. "starting game"
+            3. "displaying question"
+            4. "revealing answer"
+            5. "showing current scores"
+            6. "countdown before next question"
+            7. "Showing final scores"
+    */
+
+
+
+    // =================   FUNCTIONS   ====================
+    function startGame(sessionID) {
+        // Function that starts the game for the given session
+        let query = `UPDATE session SET game_state = "displaying question" WHERE session_id = ${ sessionID }`;
+    }
+
+
+
+
+    // ====================   API   =======================
+    app.get('/api/startGame', (req, res) => {
+        console.log("creating account");
+        // Getting userID of host
+        let userID = req.userID
+        let sessionID = req.query.sessionID;
+        
+        // 2. SQL query to check if client is the host of the session
+        // 3. If yes, start the countdown
+
+
+        // Checking if client is the host of the lobby
+        let query = `SELECT EXISTS (SELECT 1 FROM geo2002.session WHERE session_id = ${ sessionID } AND
+             host_user = ${ userID }) AS "result"`;
+        
+        let promise = new Promise(function(resolve, reject) {
+            connection.query(query, (err, result) => {
+                if (err) {
+                    // Error occurred when performing SQL query
+                    console.log("ERROR: Error occured when trying to match userId and sessionID using SQL query");
+                    reject("SQL error");
+                } else {
+                    // Evaluating result
+                    resolve(result[0].result);
+                }
+            });
+        });
+
+        promise.then(
+            function(result) {
+                // Evaluating result found
+
+                if(result == 1) {
+                    // Client is found to be the host of the session
+                    // Changing the game_state
+
+                    let promise2 = new Promise(function(resolve, reject) {
+                        let query2 = `UPDATE session SET game_state = "starting game" WHERE session_id = ${ sessionID }`;
+
+                        connection.query(query2, (err, result) => {
+                            if (err) {
+                                // Error occurred when performing SQL query
+                                console.log("ERROR: Error when changing game_state from waiting to starting");
+                                reject("SQL error");
+                            } else {
+                                // SQL query successful
+                                resolve();
+                            }
+                        });
+                    });
+
+                    promise2.then(function() {
+                        // Game state changed from "waiting" to "starting"
+                        // Starting countdown for the game to start
+                        setTimeout(startGame(sessionID), 5000);     // 5s timer
+                    },
+                    function() { 
+                        // Error when attempting to change the game state. Informing the client of this error
+                        res.status(401).send("Session could not be started");
+                    });
+
+
+                } else {
+                    // Client is not the host of the session (or sessionID does not not exist)
+                    res.status(401).send("Unauthorised request");
+                }
+
+            },
+            function(error) {
+                // Error occurred in SQL query (likely server-side error). Informing client of this error
+                res.status(500).send("Error occured on the server");
+            }
+        )
+
+
+
+    });
+
+}
