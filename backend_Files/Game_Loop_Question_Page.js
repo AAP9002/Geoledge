@@ -5,7 +5,6 @@ module.exports = function (app, DBconnection) {
         let user = req.userID;
         let user_verified = user != undefined;
         let answer_submitted = req.query.answer_submitted;
-        //change to AFG to get a correct status
 
         if (!user_verified) {
             //console.log(user);
@@ -22,12 +21,12 @@ module.exports = function (app, DBconnection) {
                 }
                 else {
                     try {
-                        console.log(results);
+                        //console.log(results);
 
                         guess = results[0][0]
 
                         actual_docted = results[4][0];
-                        console.log(actual_docted);
+                        //console.log(actual_docted);
                         status_of_correct = guess.country_id == actual_docted.country_id;
 
                         res.status(200).send({
@@ -50,7 +49,7 @@ module.exports = function (app, DBconnection) {
                         });
                     }
                     catch {
-                        res.status(500).send("Error when processing data")
+                        res.status(500).send("Error when processing data, may be not in game or not in question state")
                     }
                 }
             })
@@ -133,6 +132,10 @@ module.exports = function (app, DBconnection) {
                 });
             }
         })
+    });
+
+    app.get('/api/countryNames', (req, res) => {
+        res.sendFile(`${__dirname}/static_files/country_name_list.json`);
     });
 
 }
