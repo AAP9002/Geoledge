@@ -14,9 +14,9 @@ const About = () => {
         <h1>GEOLEDGE</h1>
         <h2>Prepared to test your geographical knowledge?</h2>
         <div className = "btns">
-        <a className ="styledbutton" href='./Play'> Host Game</a>
-        <a className ="styledbutton" href='./Play'> Play Online</a>
-        <a className ="styledbutton" href='./Play'> Join Game</a>
+        <a className ="styledbutton" href='./#/Play'> Host Game</a>
+        <a className ="styledbutton" href='./#/Play'> Play Online</a>
+        <a className ="styledbutton" href='./#/Play'> Join Game</a>
         </div>
       </div>
       </div>
