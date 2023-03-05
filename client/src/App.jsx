@@ -1,6 +1,6 @@
 import './App.css';
 import Navbar from './Components/Navbar';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { HashRouter as Router, Routes, Route} from 'react-router-dom';
 import Play from './Pages//Play/Play'
 import Leaderboard from './Pages/Leaderboards/Leaderboard'
 import PrivacyPolicy from './Pages/Ts&Cs/Privacypolicy'
