@@ -107,29 +107,29 @@ module.exports = function(app, connection) {
     // Get Game Code (Session ID)
     // Return session id where user is user.
     app.get('/api/getCode', (req, res) => {
-        let user_id = req.user_id;
-        if (user_id) {
-            let query = `SELECT session_id FROM participents WHERE user_id = ${user_id};`
-            connection.query(query, (err, result) => {
-                if (err) {
-                    console.log("sql broken: " + err)
-                    res.status(500).send(err);
-                } else {
-                    let session_code = result[0].session_id;
-                    res.status(200).send({session_code});
-                }
-            })
-        } else {
-            res.status(500).send("you're not logged in.");
-        }
+    //     let user_id = req.user_id;
+    //     if (user_id) {
+    //         let query = `SELECT session_id FROM participents WHERE user_id = ${user_id};`
+    //         connection.query(query, (err, result) => {
+    //             if (err) {
+    //                 console.log("sql broken: " + err)
+    //                 res.status(500).send(err);
+    //             } else {
+    //                 let session_code = result[0].session_id;
+    //                 res.status(200).send({session_code});
+    //             }
+    //         })
+    //     } else {
+    //         res.status(500).send("you're not logged in.");
+    //     }
     })
-    // Start Game
-    // Create Country Set:
-    // Get quiz_id, get country_id
-    // Add c to c_set (q_id, c_id)
-    // Update num of questions
-    // Update individual guesses
-    // Update max_guesses
+    // // Start Game
+    // // Create Country Set:
+    // // Get quiz_id, get country_id
+    // // Add c to c_set (q_id, c_id)
+    // // Update num of questions
+    // // Update individual guesses
+    // // Update max_guesses
     app.post('/api/startGame', (req, res) => {
         let session_id = req.query.session_id;
         let num_of_questions = req.query.num_of_questions;
@@ -137,11 +137,13 @@ module.exports = function(app, connection) {
         let quiz_id;
         // Country Set Creation:
         let myPromise = new Promise(function(myResolve, myReject) {
-            let query =`SELECT quiz_id FROM session WHERE session_id=(${session_id});`
+            let query =`SELECT quiz_id FROM session WHERE session_id=${session_id};`
+            console.log(query);
             connection.query(query, (err, result) => {
                 if (err) {
                     myReject(err);
                 } else {
+                    console.log(result);
                     myResolve(result); // pass quiz_id to next promise
                 }
             })
@@ -165,7 +167,7 @@ module.exports = function(app, connection) {
                         countries = result;
                         for (let i = 0; i < num_of_questions; i++) {
                             let country_id = countries[i].country_id;
-                            let query =`INSERT INTO country_set (country_id, quiz_id) VALUES ('${country_id}', ${quiz_id});`
+                            let query =`INSERT INTO country_set (country_id, quiz_id, question_no) VALUES ('${country_id}', ${quiz_id}, ${i+1});`
                             connection.query(query, (err) => {
                                 if (err) {
                                     res.status(500).send("Failed to create country set");
@@ -180,18 +182,15 @@ module.exports = function(app, connection) {
         // Game Config:
         let max_guesses = req.query.max_guesses;
         let time_limit = req.query.time_limit;
-        let query1 = `UPDATE participents SET guesses = (${max_guesses}) WHERE session_id=(${session_id});`
-        connection.query(query1, (err) => {
+        let query = "call game_config(?,?,?)"
+        connection.query(query, [session_id, max_guesses, time_limit], (err, result) => {
             if (err) {
-                console.log(err);
+                console.log("sql broken: " + err)
+                res.status(500).send(err);
+            } else {
+                res.status(200).send('game configs set');
             }
-        });
-        let query2 = `UPDATE session SET max_guesses = (${max_guesses}), time_limit = (${time_limit}), round_ended = (0) WHERE session_id=(${session_id});`
-        connection.query(query2, (err) => {
-            if (err) {
-                console.log(err);
-            }
-        });
+        })
 
         res.status(200).send("It worked");
     });
