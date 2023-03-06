@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "./Game.css";
 import Question from './Question/Question';
+import { useEffect } from 'react';
 
 
 const Game = () => {
-    let status = "question";
+    useEffect(() => {
+        fetch('/api/countryNames').then(res => res.json()).then(names =>{
+            setCountryNames(names);
+        });
+    }, []);
+
 
     switch(status){
         case "question":
