@@ -12,11 +12,12 @@ module.exports = function (app, connection) {
 
     /*
         APIS to be created:
-            1. game_state transition from "revealing answer" to "showing current scores" initiated by host #
-            2. API for client to check the current value of game_state #
-            3. API for client to get current question #
-            4. API for client to get the answer to the question #'
-            5. API for client to get the current scores #
+            1. game_state transition from "revealing answer" to "showing current scores" initiated by host - 
+            2. API for client to check the current value of game_state - Alan completed
+            3. API for client to get current question - N/A
+            4. API for client to get the answer to the question - Alan completed
+            5. API for client to get the current scores (or final scores if game has finished). 
+                    initiated by user via button click - N/A 
     */
 
     // ==================  FUNCTIONS ======================
@@ -62,7 +63,7 @@ module.exports = function (app, connection) {
 
     function roundEnd() {
         // Switching game state from "displaying question" to "revealing answer"
-        let query = `UPDATE session SET game_state = "revealing answer" WHERE session_id = ${ sessionID }`;
+        let query = `UPDATE session SET game_state = "revealing answer" WHERE session_id = "${ sessionID }"`;
 
         connection.query(query, (err, result) => {
             if (err) {
@@ -102,7 +103,7 @@ module.exports = function (app, connection) {
                 if (result == "1") {
                     // client is the host of the session hence starting next question
                     let promise2 = new Promise(function(resolve, reject) {
-                        let query2 = `UPDATE session SET game_state = "starting next question" WHERE session_id = ${ sessionID } AND
+                        let query2 = `UPDATE session SET game_state = "starting next question" WHERE session_id = "${ sessionID }" AND
                             game_state = "displaying current scores`;
 
                         connection.query(query2, (err, result) => {

@@ -10,12 +10,13 @@ module.exports = function (app, connection) {
             7. "Showing final scores"
     */
 
+    // http://localhost:5000/api/startGame?sessionID=35
 
     // =================   FUNCTIONS   ====================
-    function startGame(sessionID) {
+    function startGame(res, sessionID) {
         // Function that starts the game for the given session
         let promise = new Promise(function (resolve) {
-            let query = `UPDATE session SET game_state = "displaying question" WHERE session_id = ${ sessionID }`;
+            let query = `UPDATE session SET game_state = "displaying question" WHERE session_id = "${ sessionID }"`;
             
             connection.query(query, (err, result) => {
                 if (err) {
@@ -46,30 +47,29 @@ module.exports = function (app, connection) {
 
             promise2.then( 
                 function (timeLimit) {
-                    setTimeout(roundEnd(),timeLimit);
+                    setTimeout(function() { roundEnd(res, sessionID) }, timeLimit);
                 }
             );
         });
     }
 
-    function roundEnd() {
+    function roundEnd(res, sessionID) {
          // Switching game state from "displaying question" to "revealing answer"
-         let query = `UPDATE session SET game_state = "revealing answer" WHERE session_id = ${ sessionID }`;
+         let query = `UPDATE session SET game_state = "revealing answer" WHERE session_id = "${ sessionID }"`;
 
          connection.query(query, (err, result) => {
              if (err) {
                  console.log("ERROR: Error when changing game_state from starting to displaying question");
                  res.status(500).send("Error occured on the server");
+             } else {
+                res.status(200).send("OK");
              }
-
-             resolve();
          })
     }
 
 
     // ====================   API   =======================
     app.get('/api/startGame', (req, res) => {
-        console.log("creating account");
         // Getting userID of host
         let userID = req.userID
         let sessionID = req.query.sessionID;
@@ -79,8 +79,9 @@ module.exports = function (app, connection) {
 
 
         // Checking if client is the host of the lobby
-        let query = "call validate_host_in_session(?,?)"
         let promise = new Promise(function(resolve, reject) {
+            let query = "call validate_host_in_session(?,?)";
+
             connection.query(query, [userID, sessionID], (err, result) => {
                 if (err) {
                     // Error occurred when performing SQL query
@@ -88,7 +89,7 @@ module.exports = function (app, connection) {
                     reject("SQL error");
                 } else {
                     // Evaluating result
-                    resolve(result[0].result);
+                    resolve(result[0][0].result);
                 }
             });
         });
@@ -96,13 +97,12 @@ module.exports = function (app, connection) {
         promise.then(
             function(result) {
                 // Evaluating result found
-
                 if(result == 1) {
                     // Client is found to be the host of the session
                     // Changing the game_state
 
                     let promise2 = new Promise(function(resolve, reject) {
-                        let query2 = `UPDATE session SET game_state = "starting game" WHERE session_id = ${ sessionID }`;
+                        let query2 = `UPDATE session SET game_state = "starting game" WHERE session_id = "${ sessionID }"`;
 
                         connection.query(query2, (err, result) => {
                             if (err) {
@@ -119,7 +119,7 @@ module.exports = function (app, connection) {
                     promise2.then(function() {
                         // Game state changed from "waiting" to "starting"
                         // Starting countdown for the game to start
-                        setTimeout(startGame(sessionID), 5000);     // 5s timer
+                        setTimeout(function() { startGame(res, sessionID) }, 5000);     // 5s timer
                     },
                     function() { 
                         // Error when attempting to change the game state. Informing the client of this error
