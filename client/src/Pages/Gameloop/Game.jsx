@@ -8,9 +8,16 @@ const Game = () => {
     const [status, setStatus] = useState("Loading")
 
     useEffect(() => {
-        fetch('/api/CurrentGameState').then(res => res.json()).then(stateJson => {
-            setStatus(stateJson.status);
-        });
+
+        let timer;
+        setTimeout(() => {
+            timer = setInterval(() => {
+                fetch('/api/CurrentGameState').then(res => res.json()).then(stateJson => {
+                    setStatus(stateJson.status);
+                })
+            }, 3000);
+        }, 4000);
+        return () => clearInterval(timer);
     });
 
     /* ==============  INFORMATION ON GAME_STATE  ==============
