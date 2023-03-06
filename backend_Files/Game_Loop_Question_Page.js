@@ -2,21 +2,21 @@ module.exports = function (app, DBconnection) {
 
     // submit a guess, will return correct status and the stats of guess country and stats of answer country 
     app.get('/api/make_a_guess', (req, res) => {
-        let user = req.username;
-        let current_quiz_session = req.query.current_quiz_session;
-        let user_verified = user == undefined;
+        let user = req.userID;
+        let user_verified = user != undefined;
         let answer_submitted = req.query.answer_submitted;
-        //change to AFG to get a correct status
 
         if (!user_verified) {
+            //console.log(user);
             res.status(401).send({
                 auth_status: user_verified
             });
         }
-
-        DBconnection.query("call check_country_guess_correct(?,?,?)",
-            [answer_submitted, user, current_quiz_session], function (error, results) {
+        else{
+            DBconnection.query("call check_country_guess_correct(?,?)",
+            [answer_submitted, user], function (error, results) {
                 if (error) {
+                    console.log(error);
                     res.status(500).status()
                 }
                 else {
@@ -25,16 +25,9 @@ module.exports = function (app, DBconnection) {
 
                         guess = results[0][0]
 
-                        actual_docted_index = results[2][0]['num_of_questions'];
-                        actual_docted = results[3][Number(actual_docted_index)];
+                        actual_docted = results[4][0];
                         //console.log(actual_docted);
                         status_of_correct = guess.country_id == actual_docted.country_id;
-
-                        delete actual_docted["country_name"];
-                        delete actual_docted["country_id"];
-                        delete actual_docted["map"];
-                        delete actual_docted["idcountry_set"];
-                        delete actual_docted["quiz_id"];
 
                         res.status(200).send({
                             auth_status: user_verified,
@@ -56,11 +49,11 @@ module.exports = function (app, DBconnection) {
                         });
                     }
                     catch {
-                        res.status(500).send("Error when processing data")
+                        res.status(500).send("Error when processing data, may be not in game or not in question state")
                     }
                 }
             })
-
+        }
     });
 
     function compare_and_give_direction(guess_lat, guess_lng, target_lat, target_lng) {
@@ -139,6 +132,10 @@ module.exports = function (app, DBconnection) {
                 });
             }
         })
+    });
+
+    app.get('/api/countryNames', (req, res) => {
+        res.sendFile(`${__dirname}/static_files/country_name_list.json`);
     });
 
 }

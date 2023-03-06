@@ -1,6 +1,6 @@
 import './App.css';
 import Navbar from './Components/Navbar';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { HashRouter as Router, Routes, Route} from 'react-router-dom';
 import Play from './Pages//Play/Play'
 import Leaderboard from './Pages/Leaderboards/Leaderboard'
 import PrivacyPolicy from './Pages/Ts&Cs/Privacypolicy'
@@ -11,6 +11,7 @@ import Footer from './Components/Footer';
 import Home from './Pages/Home/Home'
 import JoinLobby from './Pages/JoinLobby/JoinLobby';
 import LoginPage from './Pages/Sign-up/LoginPage.jsx'
+import Game from './Pages/Gameloop/Game';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path='/TermsandConditions' element={<TermsandConditions/>} />
             <Route path='/AccountPage' element={<Account/>} />
             <Route path='/JoinLobby' element={<JoinLobby/>}/>
+            <Route path='/Game' element={<Game/>}/>
           </Routes>
         </div>
         <Footer />
