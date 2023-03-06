@@ -1,6 +1,6 @@
 import React from 'react';
 import './Leaderboard.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function LeaderBoard() {
   const [No, setNo] = useState(0)
@@ -9,10 +9,15 @@ function LeaderBoard() {
   const [Games, SetGameplayed] = useState(0)
   const [WP, SetWP] = useState(0)
 
-  const [Players, setPlayers] = useState([]);
+  const [Leaderboard, setLeaderboard] = useState([]);
 
   // API Fetch to get all players
-  
+  useEffect(() => {
+    fetch('/api/leaderboards?sort=wins').then(res => res.json()).then(fetchedData =>{
+      console.log(fetchedData);
+      setLeaderboard(fetchedData);
+    });
+    }, []);
 
   // populate Players array with all the players fetched 
   let playerInfo = [{no:"",username: "", wins: "",Games:"",WP:"",}, , , ];
