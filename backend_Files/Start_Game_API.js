@@ -14,14 +14,56 @@ module.exports = function (app, connection) {
     // =================   FUNCTIONS   ====================
     function startGame(sessionID) {
         // Function that starts the game for the given session
-        let query = `UPDATE session SET game_state = "displaying question" WHERE session_id = ${ sessionID }`;
+        let promise = new Promise(function (resolve) {
+            let query = `UPDATE session SET game_state = "displaying question" WHERE session_id = ${ sessionID }`;
+            
+            connection.query(query, (err, result) => {
+                if (err) {
+                    console.log("ERROR: Error when changing game_state from 'starting' to 'displaying question'");
+                    res.status(500).send("Error occured on the server");
+                }
 
-        connection.query(query, (err, result) => {
-            if (err) {
-                console.log("ERROR: Error when changing game_state from starting to displaying question");
-                res.status(500).send("Error occured on the server");
-            }
+                resolve();
+            })
         });
+        
+        promise.then(function (result) {
+            // Waiting for question to end
+            let promise2 = new Promise(function (resolve) {
+                let query = `SELECT time_limit FROM geo2002.session WHERE session_id = "${ sessionID }"`;
+
+                connection.query(query, (err, result) => {
+                    if (err) {
+                        console.log("ERROR: Error when getting time limit for session");
+                        res.status(500).send("Error occured on the server");
+                        resolve(100);
+                    }
+                    else {
+                        resolve(result[0].time_limit);
+                    }
+                })
+            });
+
+            promise2.then( 
+                function (timeLimit) {
+                    setTimeout(roundEnd(),timeLimit);
+                }
+            );
+        });
+    }
+
+    function roundEnd() {
+         // Switching game state from "displaying question" to "revealing answer"
+         let query = `UPDATE session SET game_state = "revealing answer" WHERE session_id = ${ sessionID }`;
+
+         connection.query(query, (err, result) => {
+             if (err) {
+                 console.log("ERROR: Error when changing game_state from starting to displaying question");
+                 res.status(500).send("Error occured on the server");
+             }
+
+             resolve();
+         })
     }
 
 
