@@ -116,17 +116,29 @@ opacity: 70%;
     color: aliceblue;
     font-size: larger;
     padding:30px;
+
+
 }
 
 .table td{
     color: aliceblue;
     padding:30px;
+    border-radius: 10px;
+    border-color: aliceblue;
+    border-style: solid;
+
   }
 
 .table{
     background-color: #4E2461;
-    padding: 80px;
+    height: 40vh;
     text-decoration-color: white;
+    border-radius: 20px;
+    border-color: aliceblue;
+    border-style: solid;
+    width: 100%;
+
+
   }
   .leaderboard{
     height: 100vh;
@@ -141,11 +153,18 @@ opacity: 70%;
     align-items: center;
     text-align: center;
     min-height: 70%;
+
 }
+
 
 .settings{
     background-color: #4E2461;
-    min-height: 70vh;
+    height: 40vh;
+    width: 100%;
+
+    border-radius: 20px;
+    border-color: aliceblue;
+    border-style: solid;
 }
 
 .settings h2{
@@ -165,4 +184,8 @@ opacity: 70%;
 
 .lob h1{
     color: white;
+}
+
+.back{
+  background-image: url(../Home/starry2.png);
 }
