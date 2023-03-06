@@ -1,5 +1,6 @@
 import React from 'react';
 import './JoinLobby.css';
+import { Link } from 'react-router-dom';
 
 function JoinLobby() {
   return (
@@ -21,7 +22,7 @@ function JoinLobby() {
             </div>
             <div className="join-lobby-button-group">
               <button className="join-lobby-button">Join Lobby</button>
-              <button className="return-home-button">Return to Home</button>
+              <Link to="/Home"> <button className="return-home-button">Return to Home</button></Link>
             </div>
           </form>
         </div>
