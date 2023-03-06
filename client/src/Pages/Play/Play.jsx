@@ -23,7 +23,7 @@ function Play(){
     event.preventDefault();
     console.log('Number of Rounds:', NumberOfRounds, 'Time per Round', TimePerRound);
 
-    fetch(`/api/startGame?num_of_questions=${ NumberOfRounds }`)
+    fetch(`/api/startGame?num_of_questions=${ NumberOfRounds }&time_limit=${ TimePerRound }`)
   };
 
 
