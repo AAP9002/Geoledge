@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import "./Play.css";
-import { Link } from 'react-router-dom';
+import { Link, redirect } from 'react-router-dom';
 
 
 function Play(){
@@ -22,7 +22,11 @@ function Play(){
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log('Number of Rounds:', NumberOfRounds, 'Time per Round', TimePerRound);
+
+    fetch(`/api/startGame?num_of_questions=${ NumberOfRounds }`)
   };
+
+
   return (
   <div >
   <div className="lob">
@@ -61,12 +65,12 @@ function Play(){
                 <button className="styledbutton2" id="60" onClick={changeTPR}>60s</button>
               </ButtonGroup>
  
-          </div> <Link to='../JoinLobby'>    
+          </div>   
           <form onSubmit={handleSubmit}>
          
           <button className='styledbutton3'>Play</button>  
           
-          </form></Link>
+          </form>
         </div>
     
       </div>
