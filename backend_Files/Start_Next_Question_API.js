@@ -12,13 +12,11 @@ module.exports = function (app, connection) {
 
     /*
         APIS to be created:
-            1. game_state transition from "revealing answer" to "showing current scores" initiated by host
-            2. API for client to check the current value of game_state
-            3. API for client to get current question
-            4. API for client to get the answer to the question
-            5. API for client to get the current scores
-
-
+            1. game_state transition from "revealing answer" to "showing current scores" initiated by host #
+            2. API for client to check the current value of game_state #
+            3. API for client to get current question #
+            4. API for client to get the answer to the question #'
+            5. API for client to get the current scores #
     */
 
     // ==================  FUNCTIONS ======================
@@ -80,11 +78,11 @@ module.exports = function (app, connection) {
     app.get('/api/startNextQuestion', (req, res) => {
         // This API is called to move game_state from "showing current scores" to "starting next question"
         let userID = req.userID;
-        let sessionID = req.sessionID;
+        let sessionID = req.query.sessionID;
         
         // Checking if client is the host of the session
-        let query = "call validate_host_in_session(?,?)"
         let promise = new Promise(function(resolve, reject) {
+            let query = "call validate_host_in_session(?,?)";
 
             connection.query(query, [userID, sessionID], (err, result) => {
                 if (err) {
