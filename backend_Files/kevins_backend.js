@@ -3,59 +3,35 @@
 // https://stackoverflow.com/questions/33946972/how-to-split-node-js-files-in-several-files/33947204#33947204
 // promise multiple sql https://medium.com/swlh/dealing-with-multiple-promises-in-javascript-41d6c21f20ff
 // promise w3schools
-        /*
-        // SQL Processes:
-        ///////////////////////////////////////////////////////////////
-        // Create Lobby (empty quiz and empty session)
-        // Inputs: host_user
-        // Return: session_id (aka join code)
-        let query = `INSERT INTO quiz (title, description, num_of_questions) VALUES ('BLANK', 'BLANK', 0);`
-        let query = `SELECT LAST_INSERT_ID();` //quiz id
-        let query = `INSERT INTO session (quiz_quiz_id, host_user, created_at) VALUES (${quiz_id}, ${host_user}, NOW());`
-        let query = `SELECT LAST_INSERT_ID();` //session id
-        *F-END MUST RMBER TO ADD USER TO PARTCPENT TABLE 
-        ///////////////////////////
-        
-        ///////////////////////////////////////////////////////////////
-        // Join Lobby
-        // Inputs: user_id, session_id
-        // Return: -
-        let query = `INSERT INTO participents (user_id, session_id, player_score, answered) VALUES (${user_id}, ${session_id}, 0, 0);`
-        ///////////////////////////
-        
-        ///////////////////////////////////////////////////////////////
-        // Start Game (create country set, write game config into dbo)
-        // Inputs: session_id, num_of_questions, quiz_id (w/o F-End)
-        // Inputs: time_limit max_guesses
-        // Return: -
-        let query =`SELECT quiz_id FROM session WHERE session_id=(${session_id});`
-        let query =`SELECT country_id FROM country ORDER BY RAND();`
-        let query =`INSERT INTO country_set (country_id, quiz_id) VALUES (${country_id}, ${quiz_id});`
-        let query = `UPDATE quiz SET num_of_questions = (${num_of_questions}) WHERE quiz_id=(${quiz_id});`
-        ///////////////////////////////////////
-        // Insert Game Configs
-        let query = `UPDATE participents SET guesses = (${max_guesses}) WHERE session_id=(${session_id});`
-        let query = `UPDATE session SET max_guesses = (${max_guesses}), time_limit = (${time_limit}) WHERE session_id=(${session_id});`
-        ///////////////////////////
-
-test:
-http://localhost:5000/api/createLobby?host_user=20
-http://localhost:5000/api/joinLobby?user_id=20&session_id=27
-http://localhost:5000/api/startGame?num_of_questions=5&max_guesses=7&time_limit=100&session_id=27
-http://localhost:3000/api/login?username=Alan123456&password=alan123456
-
-        */
 module.exports = function(app, connection) {
-    // Create Lobby
-    // Create empty quiz and select quiz id
-    // Create empty session and select session id
-    // Return session_id to front end (not needed anymore but just leave it in bc why not)
-    // Remember to add host to the lobby in a separate api
+    /* ==============  API DESCRIPTIONS  ==============
+        1. createLobby
+            - description:
+                - sets up lobby on dbo.
+                - host added to participents.
+                - returns session_id
+        2. joinLobby
+            - description:
+                - guest user joins via code
+        3. getLobbyPlayers
+            - description:
+                - returns participents where session_id
+        4. getSessionID
+            - description:
+                - returns session_id where user
+        5. startGame
+            - description:
+                - creates country_set
+                - writes game configs to dbo 
+    */
+
+    
+    // ====================   API   =======================
     app.post('/api/createLobby', (req, res) => {
         let host_id = req.userID;
         let query = "call create_lobby(?)"
         connection.query(query, [host_id], (err, result) => {
-            if (err) {
+            if (err) {bvc
                 console.log("sql broken: " + err)
                 res.status(500).send(err);
             } else {
@@ -64,9 +40,6 @@ module.exports = function(app, connection) {
         })
     });
 
-    // Join Lobby
-    // Create participent record from user_id and session_id
-    // Front-end gets session_id from getCode api
     app.post('/api/joinLobby', (req, res) => {
         let username = req.username;
         let session_id = req.query.session_id;
@@ -81,12 +54,6 @@ module.exports = function(app, connection) {
         })
     });
 
-    // WHAT DO I NEED TO DO NEXT?
-    // Procedurilize start game
-    // COUNTDOWN!
-
-    // Get Lobby Players
-    // Get user_ids from participents via session_id
     app.get('/api/getLobbyPlayers', (req, res) => {
         let session_id = req.query.session_id;
         let query = "call get_lobby_players(?)"
@@ -104,32 +71,24 @@ module.exports = function(app, connection) {
         })
     });
 
-    // Get Game Code (Session ID)
-    // Return session id where user is user.
-    app.get('/api/getCode', (req, res) => {
-    //     let user_id = req.user_id;
-    //     if (user_id) {
-    //         let query = `SELECT session_id FROM participents WHERE user_id = ${user_id};`
-    //         connection.query(query, (err, result) => {
-    //             if (err) {
-    //                 console.log("sql broken: " + err)
-    //                 res.status(500).send(err);
-    //             } else {
-    //                 let session_code = result[0].session_id;
-    //                 res.status(200).send({session_code});
-    //             }
-    //         })
-    //     } else {
-    //         res.status(500).send("you're not logged in.");
-    //     }
+    app.get('/api/getSessionID', (req, res) => {
+        let user_id = req.user_id;
+        if (user_id) {
+            let query = `SELECT session_id FROM participents WHERE user_id = ${user_id};`
+            connection.query(query, (err, result) => {
+                if (err) {
+                    console.log("sql broken: " + err)
+                    res.status(500).send(err);
+                } else {
+                    let session_code = result[0].session_id;
+                    res.status(200).send({session_code});
+                }
+            })
+        } else {
+            res.status(500).send("you're not logged in.");
+        }
     })
-    // // Start Game
-    // // Create Country Set:
-    // // Get quiz_id, get country_id
-    // // Add c to c_set (q_id, c_id)
-    // // Update num of questions
-    // // Update individual guesses
-    // // Update max_guesses
+
     app.post('/api/startGame', (req, res) => {
         let session_id = req.query.session_id;
         let num_of_questions = req.query.num_of_questions;
@@ -187,11 +146,9 @@ module.exports = function(app, connection) {
             if (err) {
                 console.log("sql broken: " + err)
                 res.status(500).send(err);
-            } else {
-                res.status(200).send('game configs set');
             }
         })
 
-        res.status(200).send("It worked");
+        res.status(200).send("Ready to start game");
     });
 }
