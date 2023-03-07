@@ -32,7 +32,8 @@ module.exports = function(app, connection) {
                 console.log("sql broken: " + err)
                 res.status(500).send(err);
             } else {
-                res.status(200).send(result[1][0]);
+                console.log(((Object.entries(result[2][0])[0])[1]))
+                res.status(200).send({id:((Object.entries(result[2][0])[0])[1])});
             }
         })
     });
