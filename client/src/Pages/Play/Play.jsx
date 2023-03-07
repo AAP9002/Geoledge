@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import  { useNavigation } from 'react-router-dom';
 import "./Play.css";
 
 
@@ -36,7 +36,9 @@ function Play(){
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log('Number of Rounds:', NumberOfRounds, 'Time per Round', TimePerRound);
-    fetch(`/api/SubmitGameSettings?session_id=${game_Session_ID}&num_of_questions=${ NumberOfRounds }&max_guesses=${10}&time_limit=${ TimePerRound }`,{method: "POST"})
+    fetch(`/api/SubmitGameSettings?session_id=${game_Session_ID}&num_of_questions=${ NumberOfRounds }&max_guesses=${10}&time_limit=${ TimePerRound }`,{method: "POST"}).then(res=>{
+    });
+    window.location.href = "/#/Game";
   };
 
   
