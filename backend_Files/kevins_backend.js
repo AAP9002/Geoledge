@@ -1,5 +1,3 @@
-// split backend into multiple files to allow simultaneously synchroniz-
-// ed streamlined work: 
 // https://stackoverflow.com/questions/33946972/how-to-split-node-js-files-in-several-files/33947204#33947204
 // promise multiple sql https://medium.com/swlh/dealing-with-multiple-promises-in-javascript-41d6c21f20ff
 // promise w3schools
@@ -25,7 +23,6 @@ module.exports = function(app, connection) {
                 - writes game configs to dbo 
     */
 
-    
     // ====================   API   =======================
     app.post('/api/createLobby', (req, res) => {
         let host_id = req.userID;
