@@ -1,4 +1,5 @@
 module.exports = function (app, DBconnection) {
+    // === Need to check that game state in "dispaying question" before accepting answer === - Alex
 
     // submit a guess, will return correct status and the stats of guess country and stats of answer country 
     app.get('/api/make_a_guess', (req, res) => {
