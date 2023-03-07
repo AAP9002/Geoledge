@@ -36,7 +36,7 @@ function Play(){
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log('Number of Rounds:', NumberOfRounds, 'Time per Round', TimePerRound);
-    fetch(`/api/startGame?session_id&=${game_Session_ID}&num_of_questions=${ NumberOfRounds }&max_guesses=${10}&time_limit=${ TimePerRound }`)
+    fetch(`/api/SubmitGameSettings?session_id=${game_Session_ID}&num_of_questions=${ NumberOfRounds }&max_guesses=${10}&time_limit=${ TimePerRound }`,{method: "POST"})
   };
 
   
