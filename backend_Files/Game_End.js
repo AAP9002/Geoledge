@@ -55,14 +55,14 @@ module.exports = function(app, connection) {
                     })
 
                     if (i == 0) { // first index has the highest score
-                        let query = `UPDATE users SET wins = (wins + 1) WHERE user_id = ${user_id};`
+                        let query = `UPDATE users SET wins = (wins + 1), win_rate = wins/losses WHERE user_id = ${user_id};`
                         connection.query(query, (err, result) => {
                             if (err) {
                                 res.status(500).send();
                             }
                         })
                     } else {
-                        let query = `UPDATE users SET losses = (losses + 1) WHERE user_id = ${user_id};`
+                        let query = `UPDATE users SET losses = (losses + 1), win_rate = wins/losses WHERE user_id = ${user_id};`
                         connection.query(query, (err, result) => {
                             if (err) {
                                 res.status(500).send();
@@ -70,7 +70,7 @@ module.exports = function(app, connection) {
                         })
                     }
                 }
-                res.status(200).send("User Stats Updated. W/L not calculated yet. Add this to SQL q");
+                res.status(200).send("User Stats Updated.");
             },
             function(error){
                 console.log("sql broken: " + error)
