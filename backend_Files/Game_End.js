@@ -26,19 +26,56 @@ module.exports = function(app, connection) {
             }
         })
     }); 
-    // Compare question number to number of questions
     
+
     app.post('/api/updateUserStats', (req, res) => {
+        // let query = `UPDATE users, participents SET users.games_played = (users.games_played + 1) WHERE user_id = ${user_id};`
         let session_id = req.query.session_id;
-        // let user_id = req.userID;
-        let query = "call update_stats(?)"
-        connection.query(query, [session_id], (err, result) => {
-            if (err) {
-                console.log("sql broken: " + err)
-                res.status(500).send(err);
-            } else {
-                res.status(200).send("user stats updated");
+        let myPromise = new Promise(function(myResolve, myReject) {
+            let query = `SELECT user_id FROM participents WHERE session_id = ${session_id} ORDER BY player_score DESC;`
+            connection.query(query, (err, result) => {
+                if (err) {
+                    myReject(err);
+                } else {
+                    myResolve(result);
+                }
+            })
+        });
+
+        myPromise.then(
+            function(result){
+                for (let i = 0; i < result.length; i++) {
+                    let user_id = result[i].user_id;
+                    let query = `UPDATE users SET games_played = (games_played + 1) WHERE user_id = ${user_id};`
+                    connection.query(query, (err, result) => {
+                        if (err) {
+                            console.log("You do not want this to show bc this error breaks the system.")
+                            res.status(500).send();
+                        }
+                    })
+
+                    if (i == 0) { // first index has the highest score
+                        let query = `UPDATE users SET wins = (wins + 1), win_rate = wins/losses WHERE user_id = ${user_id};`
+                        connection.query(query, (err, result) => {
+                            if (err) {
+                                res.status(500).send();
+                            }
+                        })
+                    } else {
+                        let query = `UPDATE users SET losses = (losses + 1), win_rate = wins/losses WHERE user_id = ${user_id};`
+                        connection.query(query, (err, result) => {
+                            if (err) {
+                                res.status(500).send();
+                            }
+                        })
+                    }
+                }
+                res.status(200).send("User Stats Updated.");
+            },
+            function(error){
+                console.log("sql broken: " + error)
+                res.status(500).send(error);
             }
-        })
+        )
     });
 }
