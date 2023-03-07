@@ -13,7 +13,7 @@ module.exports = function (app, connection) {
     /*
         APIS to be created:
             1. game_state transition from "revealing answer" to "showing current scores" initiated by host - 
-            1.a transition from showing scores to (next question/end next)
+            1.a transition from showing scores to (next question/end page)
             2. API for client to check the current value of game_state - Alan completed
             3. API for client to get current question - N/A (not needed)
             4. API for client to get the answer to the question - Alan completed
