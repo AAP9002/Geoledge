@@ -19,10 +19,10 @@ const LoginPage = () => {
     event.preventDefault();
 
     // Checking if username and password fields are empty
-    if (username.length == 0) {
+    if (username.length === 0) {
       // Username field is empty
 
-    } else if (password.length == 0) {
+    } else if (password.length === 0) {
       // Password field is empty
 
     } else {
@@ -31,6 +31,7 @@ const LoginPage = () => {
         .then(res => res.json())
         .then(status => {
           console.log(status);
+          window.location.href = "/#/AccountPage";
         });
     }
   };
@@ -67,7 +68,7 @@ const LoginPage = () => {
             />
           </div>
           <button type="submit">Login</button>
-          <p>Don't have an account? <a href="Sign-up"><button type="button" onClick={handleSignUpClick}>Sign up</button></a></p>
+          <p>Don't have an account? <a href="/#/Sign-up"><button type="button" onClick={handleSignUpClick}>Sign up</button></a></p>
         </form>
       </div>
     </div>

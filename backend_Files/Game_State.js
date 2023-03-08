@@ -21,7 +21,7 @@ module.exports = function (app, DBconnection) {
         else{
             DBconnection.query("call get_Current_Game_State(?)",
             [user], function (error, results) {
-                console.log(results);
+                //console.log(results);
                 if (error) {
                     console.log(error);
                     res.status(500).status("Database Error")
