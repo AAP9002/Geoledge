@@ -9,8 +9,7 @@ set answered 0, set guesses max_guesses
 
 updateUserStats
 +1 to user's games played, W/L etc.
-Drops session and all related parts to prevent multiple user stat updating
-
+(Drops session and all related parts to prevent multiple user stat updating)
 
 */
 module.exports = function(app, connection) {
@@ -29,7 +28,6 @@ module.exports = function(app, connection) {
     
 
     app.post('/api/updateUserStats', (req, res) => {
-        // let query = `UPDATE users, participents SET users.games_played = (users.games_played + 1) WHERE user_id = ${user_id};`
         let session_id = req.query.session_id;
         let myPromise = new Promise(function(myResolve, myReject) {
             let query = `SELECT user_id FROM participents WHERE session_id = ${session_id} ORDER BY player_score DESC;`
@@ -78,4 +76,17 @@ module.exports = function(app, connection) {
             }
         )
     });
+
+    app.post('/api/dropGame', (req, res) => {
+        let session_id = req.query.session_id;
+        let query = "call drop_game(?)"
+        connection.query(query, [session_id], (err) => {
+            if (err) {
+                console.log("couldn't drop game: " + err)
+                res.status(500).send(err);
+            } else {
+                res.status(200).send("game dropped");
+            }
+        })
+    }); 
 }
