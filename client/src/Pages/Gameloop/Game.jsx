@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import "./Game.css";
 import Question from './Question/Question';
+import Waiting_for_players from './Waiting_for_players/Waiting_for_players';
+import Starting_game from './Starting_Game/Starting_game';
+import Reveal_answer from './Reveal_answer/Reveal_answer';
+import Current_scores from './Current_scores/Current_scores';
+import End_game from './End_game/End_game'
 
 const Game = () => {
 
@@ -35,32 +40,29 @@ const Game = () => {
     switch (status) {
         case "waiting for players":
             return (
-                <p>waiting for players</p>
+                <Waiting_for_players />
             );
         case "starting game":
             return (
-                <p>starting game</p>
+                <Starting_game />
             );
         case "displaying question":
+        case "starting next question":
             return (
                 <Question />
             );
         case "revealing answer":
             return (
-                <p>revealing answer</p>
+                <Reveal_answer />
             );
 
         case "showing current scores":
             return (
-                <p>showing current scores</p>
+                <Current_scores />
             );
-        case "starting next question":
+        case "Showing final scores":
             return (
-                <p>starting next question</p>
-            );
-        case "showing current scores":
-            return (
-                <p>showing current scores</p>
+                <End_game />
             );
         case "Loading":
             return (
@@ -68,7 +70,7 @@ const Game = () => {
             );
         default:
             return (
-                <p>Not in recognized state😔</p>
+                <p>Not in recognized state😔, Login or not in game</p>
             );
     }
 };

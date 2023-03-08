@@ -91,4 +91,5 @@ require('./backend_Files/Leaderboards_API')(app, connection);
 require('./backend_Files/Start_Game_API')(app, connection);
 require('./backend_Files/Next_Question_API')(app, connection);
 require('./backend_Files/Game_State')(app, connection);
+require('./backend_Files/Game_End')(app, connection);
 //////////////////////////////////////////////////////
