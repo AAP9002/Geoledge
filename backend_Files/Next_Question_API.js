@@ -21,47 +21,48 @@ module.exports = function (app, connection) {
     */
 
     // ==================  FUNCTIONS ======================
-    function nextQuestion(sessionID) {
+    function nextQuestion(res, sessionID) {
         // Changing game_state to "displaying question" and incrementing "current_question"
         let promise = new Promise(function (resolve) {
-            let query = "call move_to_next_question(sessionID)";
+            let query = "call move_to_next_question(?)";
 
             connection.query(query, [sessionID], (err, result) => {
                 if (err) {
                     // Error occurred during SQL query (likely server-side issue)
+                    console.log("error occured when changing game state");
                     res.status(500).send("Error occured on the server");
                 }
 
                 resolve();
             });
+        });
 
-            promise.then(function (result) {
-                // Waiting for question to end
-                let promise2 = new Promise(function (resolve) {
-                    let query = `SELECT time_limit FROM geo2002.session WHERE session_id = "${ sessionID }"`;
-    
-                    connection.query(query, (err, result) => {
-                        if (err) {
-                            console.log("ERROR: Error when getting time limit for session");
-                            res.status(500).send("Error occured on the server");
-                            resolve(100);
-                        }
-                        else {
-                            resolve(result[0].time_limit);
-                        }
-                    })
-                });
-    
-                promise2.then( 
-                    function (timeLimit) {
-                        setTimeout(roundEnd(), timeLimit);
+        promise.then(function (result) {
+            // Waiting for question to end
+            let promise2 = new Promise(function (resolve) {
+                let query = `SELECT time_limit FROM geo2002.session WHERE session_id = "${ sessionID }"`;
+
+                connection.query(query, (err, result) => {
+                    if (err) {
+                        console.log("ERROR: Error when getting time limit for session");
+                        res.status(500).send("Error occured on the server");
+                        resolve(100);
                     }
-                );
+                    else {
+                        resolve(result[0].time_limit);
+                    }
+                })
             });
+    
+            promise2.then( 
+                function (timeLimit) {
+                    setTimeout(function() { roundEnd(res, sessionID) }, timeLimit);
+                }
+            );
         });
     }
 
-    function roundEnd() {
+    function roundEnd(res, sessionID) {
         // Switching game state from "displaying question" to "revealing answer"
         let query = `UPDATE session SET game_state = "revealing answer" WHERE session_id = "${ sessionID }"`;
 
@@ -70,13 +71,11 @@ module.exports = function (app, connection) {
                 console.log("ERROR: Error when changing game_state from starting to displaying question");
                 res.status(500).send("Error occured on the server");
             }
-
-            resolve();
         })
     }
     
     // ====================   API   =======================
-    app.get('/api/startNextQuestion', (req, res) => {
+    app.get('/api/nextQuestion', (req, res) => {
         // This API is called to move game_state from "showing current scores" to "starting next question"
         let userID = req.userID;
         let sessionID = req.query.sessionID;
@@ -92,7 +91,7 @@ module.exports = function (app, connection) {
                     reject("SQL error");
                 } else {
                     // Evaluating result
-                    resolve(result[0].result);
+                    resolve(result[0][0].result);
                 }
             });
         });
@@ -101,32 +100,58 @@ module.exports = function (app, connection) {
             function(result) {
                 // Evaluating result
                 if (result == "1") {
-                    // client is the host of the session hence starting next question
-                    let promise2 = new Promise(function(resolve, reject) {
-                        let query2 = `UPDATE session SET game_state = "starting next question" WHERE session_id = "${ sessionID }" AND
-                            game_state = "displaying current scores`;
+                    // client is the host of the session. Now checking if the game_state is in "displaying answer"
+                    let promise2 = new Promise((resolve, reject) => {
+                        let query = `SELECT game_state FROM session WHERE session_id = "${ sessionID }"`;
 
-                        connection.query(query2, (err, result) => {
-                            if (err) {
-                                // Error occurred when performing SQL query
-                                console.log("ERROR: Error when changing game_state from displaying current scores to starting next question");
-                                reject("SQL error");
+                        connection.query(query, (err, result) => {
+                            if(err) {
+                                reject("Error");
                             } else {
-                                // SQL query successful
-                                resolve();
+                                resolve(result[0].game_state);  // returns the game_state of the sessionID
                             }
                         });
                     });
 
-                    promise2.then(function() {
-                        // Game state changed from "waiting" to "starting"
-                        // Starting countdown for the game to start
-                        setTimeout(nextQuestion(sessionID), 5000);     // 5s timer
-                    },
-                    function() { 
-                        // Error when attempting to change the game state. Informing the client of this error
-                        res.status(401).send("Session could not be started");
+                    promise2.then(function(result) {
+                        if (result == "showing current scores") {
+                            let promise3 = new Promise(function(resolve, reject) {
+                                let query2 = `UPDATE session SET game_state = "starting next question" WHERE session_id = "${ sessionID }" AND
+                                    game_state = "displaying current scores"`;
+
+                                connection.query(query2, (err, result) => {
+                                    if (err) {
+                                        // Error occurred when performing SQL query
+                                        console.log("ERROR: Error when changing game_state from displaying current scores to starting next question");
+                                        reject("SQL error");
+                                    } else {
+                                        // SQL query successful
+                                        resolve();
+                                    }
+                                });
+                            });
+                        
+
+                            promise3.then(function() {
+                                // Game state changed from "waiting" to "starting"
+                                // Starting countdown for the game to start
+                                res.status(200).send("Successful");  // informing host that their API call is being handled accordingly
+                                setTimeout(function() { nextQuestion(res, sessionID) }, 5000);     // 5s timer
+                            },
+                            function() { 
+                                // Error when attempting to change the game state. Informing the client of this error
+                                res.status(401).send("Session could not be started");
+                            });
+                        } else {
+                            // game_state is not in the valid state for this API
+                            res.status(401).send("Game state not in valid state");
+                        }
+
+
+                    }, function(reject) {
+                        res.send(401).send("Server-side error");
                     });
+
                 } else {
                     // Client is not the host of the session (or sessionID does not not exist)
                     res.status(401).send("Unauthorised request");
@@ -134,6 +159,7 @@ module.exports = function (app, connection) {
 
             }, function(reject) {
                 // Error occurred in SQL query (likely server-side error). Informing client of this error
+                console.log("rejected");
                 res.status(500).send("Error occured on the server");
             }
         );
