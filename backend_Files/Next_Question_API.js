@@ -7,19 +7,17 @@ module.exports = function (app, connection) {
             4. "revealing answer"
             5. "showing current scores"
             6. "starting next question"
-            7. "showing final scores"
+            7. "Showing final scores"
     */
 
     /*
         APIS to be created:
             1. game_state transition from "revealing answer" to "showing current scores" initiated by host - 
-            1.a transition from showing scores to (next question/end page)
             2. API for client to check the current value of game_state - Alan completed
-            3. API for client to get current question - N/A (not needed)
+            3. API for client to get current question - N/A
             4. API for client to get the answer to the question - Alan completed
             5. API for client to get the current scores (or final scores if game has finished). 
                     initiated by user via button click - N/A 
-            6. API for calculating scores to update scores - Kev
     */
 
     // ==================  FUNCTIONS ======================
