@@ -18,7 +18,6 @@ module.exports = function (app, DBconnection) {
 
                 res.json({ updated_database: success });
             });
-
     });
 
     //get cleaned country data

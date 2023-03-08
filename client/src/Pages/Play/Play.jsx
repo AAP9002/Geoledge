@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-
-
 import "./Play.css";
-import { Link, redirect } from 'react-router-dom';
 
 
 function Play(){
+  // on load create new game session
+  const [creating_game_Session, setSessionCreationState] = useState(true);
+  const [game_Session_ID, setGame_Session_ID] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/createLobby',{method: "POST"}).then(res => res.json()).then(stateJson => {
+      setGame_Session_ID(stateJson.id);
+      setSessionCreationState(false);
+    })
+  },[]);
+  //
+
   const[NumberOfRounds, setNOR] = useState(0)
   const[TimePerRound, setTPR] = useState(0)
   const[Players, setPlayers] = useState([]);
@@ -27,22 +35,25 @@ function Play(){
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log('Number of Rounds:', NumberOfRounds, 'Time per Round', TimePerRound);
-
-    fetch(`/api/startGame?num_of_questions=${ NumberOfRounds }&time_limit=${ TimePerRound }`)
+    fetch(`/api/SubmitGameSettings?session_id=${game_Session_ID}&num_of_questions=${ NumberOfRounds }&max_guesses=${10}&time_limit=${ TimePerRound }`,{method: "POST"}).then(res=>{
+    });
+    window.location.href = "/#/Game";
   };
 
   
-
+if(creating_game_Session){
+  return(<p>Loading</p>)
+}
 
   return (
+
   <div >
   <div className="lob">
-  <h1>LOBBY</h1>
+  <h1>LOBBY CODE:{game_Session_ID}</h1>
   </div>
   <Container className='back'>
   <Row>
     <Col>
-
     <table className = "table">
         <thead> <tc> <th>no:</th><th>Player</th></tc></thead>
         <tbody>

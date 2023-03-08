@@ -1,7 +1,7 @@
 // https://stackoverflow.com/questions/33946972/how-to-split-node-js-files-in-several-files/33947204#33947204
 // promise multiple sql https://medium.com/swlh/dealing-with-multiple-promises-in-javascript-41d6c21f20ff
 // promise w3schools
-module.exports = function(app, connection) {
+module.exports = function (app, connection) {
     /* ==============  API DESCRIPTIONS  ==============
         1. createLobby
             - description:
@@ -28,11 +28,13 @@ module.exports = function(app, connection) {
         let host_id = req.userID;
         let query = "call create_lobby(?)"
         connection.query(query, [host_id], (err, result) => {
-            if (err) {bvc
+            if (err) {
+                bvc
                 console.log("sql broken: " + err)
                 res.status(500).send(err);
             } else {
-                res.status(200).send(result[1][0]);
+                console.log(((Object.entries(result[2][0])[0])[1]))
+                res.status(200).send({ id: ((Object.entries(result[2][0])[0])[1]) });
             }
         })
     });
@@ -60,7 +62,7 @@ module.exports = function(app, connection) {
                 res.status(500).send(err);
             } else {
                 if (result[0][0] == null) {
-                    res.status(500).send("lobby players is empty or doesn't exist");    
+                    res.status(500).send("lobby players is empty or doesn't exist");
                 } else {
                     res.status(200).send(result);
                 }
@@ -78,7 +80,7 @@ module.exports = function(app, connection) {
                     res.status(500).send(err);
                 } else {
                     let session_code = result[0].session_id;
-                    res.status(200).send({session_code});
+                    res.status(200).send({ session_code });
                 }
             })
         } else {
@@ -86,7 +88,8 @@ module.exports = function(app, connection) {
         }
     })
 
-    app.post('/api/startGame', (req, res) => {
+    http://localhost:5000/api/SubmitGameSettings?session_id=&=107&num_of_questions=10&max_guesses=10&time_limit=6
+    app.post('/api/SubmitGameSettings', (req, res) => {
         let session_id = req.query.session_id;
         let num_of_questions = req.query.num_of_questions;
         let countries;
@@ -108,10 +111,10 @@ module.exports = function(app, connection) {
             })
         });
         myPromise.then(
-            function(result){
+            function (result) {
                 quiz_id = result[0].quiz_id
-                let myPromise = new Promise(function(myResolve, myReject) {
-                    let query =`SELECT country_id FROM country ORDER BY RAND();`
+                let myPromise = new Promise(function (myResolve, myReject) {
+                    let query = `SELECT country_id FROM country ORDER BY RAND();`
                     connection.query(query, (err, result) => {
                         if (err) {
                             res.status(500).send("Failed to select all country ids");
@@ -122,11 +125,11 @@ module.exports = function(app, connection) {
                     })
                 });
                 myPromise.then(
-                    function(result){
+                    function (result) {
                         countries = result;
                         for (let i = 0; i < num_of_questions; i++) {
                             let country_id = countries[i].country_id;
-                            let query =`INSERT INTO country_set (country_id, quiz_id, question_no) VALUES ('${country_id}', ${quiz_id}, ${i+1});`
+                            let query = `INSERT INTO country_set (country_id, quiz_id, question_no) VALUES ('${country_id}', ${quiz_id}, ${i + 1});`
                             connection.query(query, (err) => {
                                 if (err) {
                                     res.status(500).send("Failed to create country set");
@@ -134,19 +137,19 @@ module.exports = function(app, connection) {
                             });
                         }
                     }, function(error){console.log(error)}
-                    );
-                }, function(error){console.log(error)}
                 );
-                
-                // Game Config:
-                let query = "call game_config(?,?,?,?)"
-                connection.query(query, [session_id, max_guesses, time_limit, num_of_questions], (err, result) => {
-                    if (err) {
-                        console.log("sql broken: " + err)
+            }, function(error){console.log(error)}
+        );
+
+        // Game Config:
+        let query = "call game_config(?,?,?,?)"
+        connection.query(query, [session_id, max_guesses, time_limit, num_of_questions], (err, result) => {
+            if (err) {
+                console.log("sql broken: " + err)
                 res.status(500).send(err);
             }
         })
-        
+
         res.status(200).send("Ready to start game");
     });
 }

@@ -31,6 +31,7 @@ const LoginPage = () => {
         .then(res => res.json())
         .then(status => {
           console.log(status);
+          window.location.href = "/#/AccountPage";
         });
     }
   };
