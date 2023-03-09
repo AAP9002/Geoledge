@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
+    <div className='big'>
     <div className='footer-container'>
       <div class='footer-links'>
         <div className='footer-link-wrapper'>
@@ -53,6 +54,7 @@ function Footer() {
           </div>
         </div>
       </section>
+    </div>
     </div>
     </div>
   );

@@ -63,9 +63,9 @@ opacity: 70%;
   box-shadow: 0px 2px 2px lightgray;
   transition: ease background-color 250ms;
   height: 100%;
-  width: 50%;
+  width: 100%;
   text-align: center;
-
+  top: 0%;
 }
 
 .styledbutton:hover {
@@ -183,10 +183,14 @@ opacity: 70%;
     color: white;
 }
 
-.container{
-  background-image: url(../Home/starry2.png);
-}
+
 
 .form{
-  width: 10vh;
+  background-color: #4E2461;
+  height: 50%;
+  width: 20%;
+  align-self: center;
+  border-color: aliceblue;
+  border-style: solid;  
+
 }
