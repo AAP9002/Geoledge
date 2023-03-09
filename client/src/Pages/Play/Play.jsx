@@ -1,9 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
+
 
 
 import "./Play.css";
@@ -35,13 +32,17 @@ function Play(){
 
 
   return (
-  <div >
+
+  <div className='container'>
   <div className="lob">
   <h1>LOBBY</h1>
   </div>
-  <Container className='back'>
-  <Row>
-    <Col>
+
+
+
+  
+  <div className='row'>
+    <div className='col'>
 
     <table className = "table">
         <thead> <tc> <th>no:</th><th>Player</th></tc></thead>
@@ -49,8 +50,9 @@ function Play(){
           <tr><td>{No}</td></tr>
         </tbody>
       </table>
-    </Col>
-    <Col className="settingscontainer">
+    </div>
+    <div className='col'>
+    <div className="settingscontainer">
     <div className="row-md-4">
       <div >
 
@@ -84,10 +86,11 @@ function Play(){
     
       </div>
     </div>
-    </Col>
-    </Row>
-    </Container>
+    </div>
+    </div>
+    </div>
   </div>
+  
   );
 };
 
