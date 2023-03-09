@@ -8,6 +8,7 @@ function ScoreBoard(){
   const [GamePlayed,setGamePlayed ] =  useState(0)
   const [WinRate, SetWinrate] = useState(0)
   const [Account, SetAccount] = useState({})
+  const[Username, SetUsername] = useState("Hi")
 
 
   useEffect(() => {
@@ -20,15 +21,28 @@ function ScoreBoard(){
 
   return (<div className='wrapper'>
           <h1>My Account { Account.status }</h1>
-          <table>
-          <thead>
+          <table className='Wins'>
+          <thead className='WinsHead'>
           <tr>
               <th>Wins</th>
               <th>Game Played</th>
               <th>Win rate</th>
           </tr>
       </thead>
-          <tbody><tr><td align="center">{wins}</td><td align="center">{GamePlayed}</td><td align="center">{WinRate}</td></tr></tbody>
+          <tbody className='WinsBody'><tr><td align="center">{wins}</td><td align="center">{GamePlayed}</td><td align="center">{WinRate}</td></tr></tbody>
+      </table>
+        
+
+        {/* table for userinfo basics */}
+      <table className='Credentials'>
+       <thead className='CredentialsHead'>
+        <tr>
+          <th align="center">Username:</th>
+        </tr>
+       </thead>
+       <tbody className='CredentialsBody'>
+        <tr>Username</tr>
+       </tbody>
       </table>
   </div>)
 }
