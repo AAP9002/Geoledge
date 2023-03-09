@@ -47,7 +47,7 @@ module.exports = function (app, connection) {
 
             promise2.then( 
                 function (timeLimit) {
-                    setTimeout(function() { roundEnd(res, sessionID) }, timeLimit);
+                    setTimeout(function() { roundEnd(res, sessionID) }, (timeLimit*1000));
                 }
             );
         });
