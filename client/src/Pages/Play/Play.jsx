@@ -46,7 +46,6 @@ if(creating_game_Session){
 }
 
   return (
-
   <div >
   <div className="lob">
   <h1>LOBBY CODE:{game_Session_ID}</h1>
@@ -54,14 +53,16 @@ if(creating_game_Session){
   <Container className='back'>
   <Row>
     <Col>
+
     <table className = "table">
         <thead> <tc> <th>no:</th><th>Player</th></tc></thead>
         <tbody>
           <tr><td>{No}</td></tr>
         </tbody>
       </table>
-    </Col>
-    <Col className="settingscontainer">
+    </div>
+    <div className='col'>
+    <div className="settingscontainer">
     <div className="row-md-4">
       <div >
 
@@ -95,10 +96,11 @@ if(creating_game_Session){
     
       </div>
     </div>
-    </Col>
-    </Row>
-    </Container>
+    </div>
+    </div>
+    </div>
   </div>
+  
   );
 };
 
