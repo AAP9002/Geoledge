@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import "./Play.css";
 
 
+
 function Play(){
   // on load create new game session
   const [creating_game_Session, setSessionCreationState] = useState(true);
@@ -95,11 +96,15 @@ function Play(){
     </div>
     </div>
     </Row>
-    <form className='form' onSubmit={handleSubmit}>
+    <div>
+    <div>
+    <form  onSubmit={handleSubmit}>
          
     <button className='styledbutton3'>Play</button>  
           
     </form>
+    </div>
+    </div>
     </Container>
   </div>
   
