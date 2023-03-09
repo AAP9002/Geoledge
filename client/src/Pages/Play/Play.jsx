@@ -48,11 +48,14 @@ function Play(){
 
   return (
   <div >
-  <div className="lob">
-  <h1>LOBBY CODE:{game_Session_ID}</h1>
-  </div>
+
   <Container className='back'>
   <Row>
+    <Row>
+    <div className="lob">
+  <h1>LOBBY CODE:{game_Session_ID}</h1>
+  </div>
+    </Row>
     <Col>
 
     <table className = "table">
