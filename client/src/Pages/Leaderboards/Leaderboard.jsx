@@ -20,9 +20,7 @@ function LeaderBoard() {
   // API Fetch to get all players
   useEffect(() => {
     fetch('/api/leaderboards?sort=wins').then(res => res.json()).then(fetchedData =>{
-      // console.log(fetchedData);
-      setLeaderboard(fetchedData);
-      console.log(LeaderBoard);
+      setLeaderboard(fetchedData.leaderboards);
     });
     }, []);
 
@@ -40,7 +38,7 @@ function LeaderBoard() {
 
 
         <tbody className='myTable'>
-        {tableRows.map((row)=> <tr><td align='center'>{row.name}</td><td align='center'>{row.score}</td></tr>)}
+        {Leaderboard.map((row)=> <tr><td align='center'>{row.username}</td><td align='center'>{row.wins}</td></tr>)}
         </tbody>
         </table>
         
