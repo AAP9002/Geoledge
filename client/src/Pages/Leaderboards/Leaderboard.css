@@ -1,30 +1,47 @@
-.leaderboard h1{
-  color: rgb(39, 223, 174);
-  font-size: 80px;
+
+
+
+.board{
+background-color: rgb(108, 25, 104);
+align-items: center;
+position: relative;
+
+
+padding: 40px;
+border-radius: 20px;
+position:relative;
+left: -50px; 
+
+
+
+    
 
 }
 
-.leaderboard th{
-    color: aliceblue;
-    font-size: larger;
-    padding:30px;
+
+.myTable{
+    
+    color: antiquewhite;
+    font-size:200%;
+    
+}
+.columns{
+    color: antiquewhite;
+    font-size:200%;
+   
+    padding: 100px;
+    width: 300px;
+    align-items: center;
+    
+    
 }
 
-.leaderboard td{
-    color: aliceblue;
-    padding:30px;
-  }
-
-  .leaderboard table{
-    background-color: rgb(122, 39, 206);
-    padding: 80px;
-    border-radius: 20px;
-  }
-  .leaderboard{
+.wrapper{
     height: 100vh;
     display: flex;
-    justify-content: center;
+    
     align-items: center;
     flex-direction: column;
-    background-image: url(../Leaderboards/Images/LDBimage.jpg);
-  }
+}
+
+
