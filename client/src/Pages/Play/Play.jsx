@@ -41,12 +41,11 @@ function Play(){
   };
 
   
-if(creating_game_Session){
-  return(<p>Loading</p>)
-}
+//if(creating_game_Session){
+ // return(<p>Loading</p>)
+//}
 
   return (
-
   <div >
   <div className="lob">
   <h1>LOBBY CODE:{game_Session_ID}</h1>
@@ -54,6 +53,7 @@ if(creating_game_Session){
   <Container className='back'>
   <Row>
     <Col>
+
     <table className = "table">
         <thead> <tc> <th>no:</th><th>Player</th></tc></thead>
         <tbody>
@@ -61,7 +61,8 @@ if(creating_game_Session){
         </tbody>
       </table>
     </Col>
-    <Col className="settingscontainer">
+    <div className='col'>
+    <div className="settingscontainer">
     <div className="row-md-4">
       <div >
 
@@ -86,19 +87,22 @@ if(creating_game_Session){
               </div>
  
           </div>   
-          <form onSubmit={handleSubmit}>
-         
-          <button className='styledbutton3'>Play</button>  
-          
-          </form>
+
         </div>
     
-      </div>
+      </div>          
     </div>
-    </Col>
+    </div>
+    </div>
     </Row>
+    <form className='form' onSubmit={handleSubmit}>
+         
+    <button className='styledbutton3'>Play</button>  
+          
+    </form>
     </Container>
   </div>
+  
   );
 };
 

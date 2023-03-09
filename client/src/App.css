@@ -6,6 +6,7 @@
   }
 
 .App {
+  background-image: url(./Pages/Home/starry2.png);
   min-height: 80vh;
 }
 
