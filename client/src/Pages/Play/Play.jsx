@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import "./Play.css";
 
 
+
 function Play(){
   // on load create new game session
   const [creating_game_Session, setSessionCreationState] = useState(true);
@@ -37,6 +38,8 @@ function Play(){
     console.log('Number of Rounds:', NumberOfRounds, 'Time per Round', TimePerRound);
     fetch(`/api/SubmitGameSettings?session_id=${game_Session_ID}&num_of_questions=${ NumberOfRounds }&max_guesses=${10}&time_limit=${ TimePerRound }`,{method: "POST"}).then(res=>{
     });
+
+    fetch(`/api/startGame?sessionID=${game_Session_ID}`,{method: "GET"});
     window.location.href = "/#/Game";
   };
 
@@ -95,11 +98,15 @@ function Play(){
     </div>
     </div>
     </Row>
-    <form className='form' onSubmit={handleSubmit}>
+    <div>
+    <div>
+    <form  onSubmit={handleSubmit}>
          
     <button className='styledbutton3'>Play</button>  
           
     </form>
+    </div>
+    </div>
     </Container>
   </div>
   
