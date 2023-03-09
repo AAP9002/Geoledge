@@ -11,7 +11,6 @@ import End_game from './End_game/End_game'
 const Game = () => {
 
     const [status, setStatus] = useState("Loading")
-    asd
 
     useEffect(() => {
 
