@@ -37,6 +37,8 @@ function Play(){
     console.log('Number of Rounds:', NumberOfRounds, 'Time per Round', TimePerRound);
     fetch(`/api/SubmitGameSettings?session_id=${game_Session_ID}&num_of_questions=${ NumberOfRounds }&max_guesses=${10}&time_limit=${ TimePerRound }`,{method: "POST"}).then(res=>{
     });
+
+    fetch(`/api/startGame?sessionID=${game_Session_ID}`,{method: "GET"});
     window.location.href = "/#/Game";
   };
 
