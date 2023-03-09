@@ -36,6 +36,7 @@ const SignUpPage = () => {
         .then(res => res.json())
         .then(status => {
           console.log(status);
+          window.location.href = "/#/AccountPage";
         });
     } else {
       alert('Please accept the terms and conditions to continue.');
