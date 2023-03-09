@@ -45,7 +45,7 @@ module.exports = function (app, connection) {
                     res.status(401).send( { "status": "Could not get leaderboards"} );
                 } else {
                     // Sending leaderboards back to client
-                    res.status(201).send( {"leaderboards": response} );
+                    res.status(200).send( {"leaderboards": response} );
                 }
             });
         }
