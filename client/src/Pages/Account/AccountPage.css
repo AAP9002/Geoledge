@@ -37,13 +37,18 @@
   }
 
 
-  .wrapper Credentials {
+  .Credentials {
     background-color: rgb(122, 39, 206);
     padding: 20px;
     border-radius: 20px;
+
     position:relative;
-    left: -300px;
+    left: -100px;
+   
 
 
 
+  }
+  .wrapper credentialsAccount{
+    align-items: center;
   }

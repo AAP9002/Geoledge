@@ -33,11 +33,11 @@ function ScoreBoard(){
       </table>
         
 
-        
+        {/* table for userinfo basics */}
       <table className='Credentials'>
        <thead className='CredentialsHead'>
         <tr>
-          <th>Username:</th>
+          <th align="center">Username:</th>
         </tr>
        </thead>
        <tbody className='CredentialsBody'>

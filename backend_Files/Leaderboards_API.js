@@ -2,6 +2,7 @@ module.exports = function (app, connection) {
     app.get('/api/leaderboards', function (req, res) {
         // Getting sort order defined by client
         let sort = req.query.sort;
+        console.log("SORT: " + sort);
         let query = "";
 
         if (sort == "wins") {

@@ -5,29 +5,26 @@
 background-color: rgb(108, 25, 104);
 align-items: center;
 position: relative;
-
-
 padding: 40px;
 border-radius: 20px;
 position:relative;
-left: -50px; 
-
-
-
-    
-
+left: -50px;  
+overflow-y:scroll;
+height:500px;
+display:block;  
 }
 
 
-.myTable{
-    
+.myTable{ 
     color: antiquewhite;
-    font-size:200%;
+    font-size:170%;   
     
+       
+     
 }
 .columns{
     color: antiquewhite;
-    font-size:200%;
+    font-size:170%;
    
     padding: 100px;
     width: 300px;
@@ -36,12 +33,6 @@ left: -50px;
     
 }
 
-.wrapper{
-    height: 100vh;
-    display: flex;
-    
-    align-items: center;
-    flex-direction: column;
-}
+
 
 
