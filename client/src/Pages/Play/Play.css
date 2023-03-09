@@ -16,8 +16,8 @@
   text-align: left;
   box-shadow: 0px 2px 2px lightgray;
   transition: ease background-color 250ms;
-  height: 10vh;
-  width: 0vh;
+  height: 100%;
+  width: 0%;
   opacity: 70%;
 }
 
@@ -62,8 +62,8 @@ opacity: 70%;
   text-align: left;
   box-shadow: 0px 2px 2px lightgray;
   transition: ease background-color 250ms;
-  height: 10vh;
-  width: 30vh;
+  height: 100%;
+  width: 50%;
   text-align: center;
 
 }
@@ -92,7 +92,7 @@ opacity: 70%;
   }
 
 .lobby{
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -123,17 +123,15 @@ opacity: 70%;
 .table td{
     color: aliceblue;
     padding:30px;
-    border-radius: 10px;
-    border-color: aliceblue;
-    border-style: solid;
+
 
   }
 
 .table{
     background-color: #4E2461;
-    height: 40vh;
+    height: 100%;
     text-decoration-color: white;
-    border-radius: 20px;
+
     border-color: aliceblue;
     border-style: solid;
     width: 100%;
@@ -141,7 +139,7 @@ opacity: 70%;
 
   }
   .leaderboard{
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -159,12 +157,11 @@ opacity: 70%;
 
 .settings{
     background-color: #4E2461;
-    height: 40vh;
+    height: 100%;
     width: 100%;
-
-    border-radius: 20px;
     border-color: aliceblue;
     border-style: solid;
+
 }
 
 .settings h2{
@@ -188,4 +185,8 @@ opacity: 70%;
 
 .container{
   background-image: url(../Home/starry2.png);
+}
+
+.form{
+  width: 10vh;
 }
