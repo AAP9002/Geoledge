@@ -94,10 +94,13 @@ module.exports = function (app, connection) {
         let num_of_questions = req.query.num_of_questions;
         let countries;
         let quiz_id;
+        let max_guesses = req.query.max_guesses;
+        let time_limit = req.query.time_limit;
+
         // Country Set Creation:
-        let myPromise = new Promise(function (myResolve, myReject) {
-            let query = `SELECT quiz_id FROM session WHERE session_id=${session_id};`
-            console.log(query);
+        let myPromise = new Promise(function(myResolve, myReject) {
+            let query =`SELECT quiz_id FROM session WHERE session_id=${session_id};`
+           // console.log(query);
             connection.query(query, (err, result) => {
                 if (err) {
                     myReject(err);
@@ -133,20 +136,20 @@ module.exports = function (app, connection) {
                                 }
                             });
                         }
-                    }, function (error) { console.log(error) }
+                    }, function(error){console.log(error)}
                 );
-            }, function (error) { console.log(error) }
-        )
+            }, function(error){console.log(error)}
+        );
+
         // Game Config:
-        let max_guesses = req.query.max_guesses;
-        let time_limit = req.query.time_limit;
-        let query = "call game_config(?,?,?)"
-        connection.query(query, [session_id, max_guesses, time_limit], (err, result) => {
+        let query = "call game_config(?,?,?,?)"
+        connection.query(query, [session_id, max_guesses, time_limit, num_of_questions], (err, result) => {
             if (err) {
                 console.log("sql broken: " + err)
                 res.status(500).send(err);
             }
         })
+
         res.status(200).send("Ready to start game");
     });
 }
