@@ -12,7 +12,7 @@ import Home from './Pages/Home/Home'
 import JoinLobby from './Pages/JoinLobby/JoinLobby';
 import LoginPage from './Pages/Sign-up/LoginPage.jsx'
 import Game from './Pages/Gameloop/Game';
-import Searchbar from './Pages/Gameloop/searchbar';
+import Searchbar from './Pages/Searchbar/searchbar';
 
 function App() {
   return (
