@@ -12,6 +12,7 @@ import Home from './Pages/Home/Home'
 import JoinLobby from './Pages/JoinLobby/JoinLobby';
 import LoginPage from './Pages/Sign-up/LoginPage.jsx'
 import Game from './Pages/Gameloop/Game';
+import Searchbar from './Pages/Gameloop/searchbar';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path='/AccountPage' element={<Account/>} />
             <Route path='/JoinLobby' element={<JoinLobby/>}/>
             <Route path='/Game' element={<Game/>}/>
+            <Route path='/Search' element={<Searchbar/>}/>
             
 
           </Routes>
