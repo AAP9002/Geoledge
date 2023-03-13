@@ -16,10 +16,15 @@ function LeaderBoard() {
   useEffect(() => {
     fetch('/api/leaderboards?sort=wins').then(res => res.json()).then(fetchedData =>{
 
-      setLeaderboard(fetchedData.LeaderBoard);
+      setLeaderboard(fetchedData.leaderboards);
       console.log(Leaderboard);
     });
     }, []);
+    if (Account.status == "client not logged") {
+      // Redirecting client to login page
+      <meta http-equiv="refresh" content="delay_time; URL=new_website_url" />
+      
+    }
 
   return (
     
