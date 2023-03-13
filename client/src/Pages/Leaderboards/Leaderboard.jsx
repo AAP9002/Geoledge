@@ -20,6 +20,7 @@ function LeaderBoard() {
       console.log(Leaderboard);
     });
     }, []);
+  
 
   return (
     
