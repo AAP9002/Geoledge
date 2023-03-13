@@ -15,6 +15,11 @@ function ScoreBoard(){
     fetch('/api/viewAccount').then(res => res.json()).then(Account =>{
       console.log(Account);
       SetAccount(Account);
+
+      if (Account.status == "client not logged") {
+        // Redirecting client to login page
+        
+      }
     });
     }, []);
 
