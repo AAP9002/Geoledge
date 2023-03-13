@@ -11,19 +11,32 @@ import End_game from './End_game/End_game'
 const Game = () => {
 
     const [status, setStatus] = useState("Loading")
+    const [loading, setloading] = useState(true);
+    const [sessionID, setSessionID] = useState();
 
     useEffect(() => {
-
         let timer;
-        setTimeout(() => {
-            timer = setInterval(() => {
-                fetch('/api/CurrentGameState').then(res => res.json()).then(stateJson => {
-                    setStatus(stateJson.status);
-                })
-            }, 3000);
-        }, 4000);
+
+        if (!loading) {
+            setTimeout(() => {
+                timer = setInterval(() => {
+                    fetch('/api/CurrentGameState').then(res => res.json()).then(stateJson => {
+                        setStatus(stateJson.status);
+                    })
+                }, 1000);
+            }, 2000);
+        }
         return () => clearInterval(timer);
     });
+
+    useEffect(() => {
+        setloading(true);
+        fetch('/api/getSessionID').then(res => res.json()).then(idData => {
+            console.log(idData.session_code)
+            setSessionID(idData.session_code);
+            setloading(false);
+        });
+    },[]);
 
     /* ==============  INFORMATION ON GAME_STATE  ==============
        Game states held by game_state:
@@ -35,7 +48,8 @@ const Game = () => {
             6. "starting next question"
             7. "Showing final scores"
     */
-
+    if (loading)
+        return <><h1>Loading...</h1></>;
 
     switch (status) {
         case "waiting for players":
@@ -53,7 +67,7 @@ const Game = () => {
             );
         case "revealing answer":
             return (
-                <Reveal_answer />
+                <Reveal_answer sessionID ={sessionID} />
             );
 
         case "showing current scores":
@@ -66,11 +80,11 @@ const Game = () => {
             );
         case "Loading":
             return (
-                <p>Loading innit</p>
+                <h1>Loading...</h1>
             );
         default:
             return (
-                <p>Not in recognized state😔, Login or not in game</p>
+                <h1>Not in recognized state😔, Login or not in game</h1>
             );
     }
 };

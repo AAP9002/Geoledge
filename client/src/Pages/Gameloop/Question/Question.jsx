@@ -10,7 +10,6 @@ const Question = () => {
     const [correctStatus, setcorrectStatus] = useState(false);
 
 
-
     const [populationUPDOWN, setPopulationUPDOWN] = useState();
     const [populationColour, setPopulationColour] = useState();
     const [saUPDOWN, setSaUPDOWN] = useState();
@@ -26,8 +25,6 @@ const Question = () => {
     useEffect(() => {
         fetch('/api/countryNames').then(res => res.json()).then(names => {
             setCountryNames(names);
-            setloading(false);
-            console.log(names);
         });
     }, []);
 
