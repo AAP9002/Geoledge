@@ -14,9 +14,10 @@ function LeaderBoard() {
   // API Fetch to get all players
   useEffect(() => {
     fetch('/api/leaderboards?sort=wins').then(res => res.json()).then(fetchedData =>{
-      console.log(fetchedData);
-      setLeaderboard(fetchedData);
-      console.log(Leaderboard);
+
+      
+
+      setLeaderboard(fetchedData.leaderboards);
     });
     }, []);
 
