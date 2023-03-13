@@ -8,7 +8,7 @@ function ScoreBoard(){
   const [GamePlayed,setGamePlayed ] =  useState(0)
   const [WinRate, SetWinrate] = useState(0)
   const [Account, SetAccount] = useState({})
-  const[Username, SetUsername] = useState("Hi")
+  const[Username, SetUsername] = useState("Username")
 
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function ScoreBoard(){
       <table className='Credentials'>
        <thead className='CredentialsHead'>
         <tr>
-          <th align="center">Username:</th>
+          <th className='Username'>{Username}</th>
         </tr>
        </thead>
        <tbody className='CredentialsBody'>
