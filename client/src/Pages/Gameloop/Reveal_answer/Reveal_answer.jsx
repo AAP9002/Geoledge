@@ -22,7 +22,7 @@ const Reveal_answer = (props) => {
 
     function Change_State_Current_Score() {
         setloading(true)
-        fetch("api/nextQuestion?sessionID="+sessionID).then(res => res.json()).then(stateJson => {
+        fetch("/api/scoreState?sessionID="+sessionID,{method: "POST"}).then(res => res.json()).then(stateJson => {
             setloading(false)
         })
     }
@@ -33,7 +33,7 @@ const Reveal_answer = (props) => {
         if (userIsHost)
             return (<div className='reveal_answer_container'>
                 <h1>Answer: {correctAnswer}</h1>
-                <a className='btn btn-success' onClick={Change_State_Current_Score}>Next Question</a>
+                <a className='btn btn-success' onClick={Change_State_Current_Score}>Next</a>
             </div>);
         else
             return (<div className='reveal_answer_container'>

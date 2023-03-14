@@ -107,11 +107,12 @@ module.exports = function (app, connection) {
                     // client is the host of the session. Now checking if the game_state is in "displaying answer"
                     let promise2 = new Promise((resolve, reject) => {
                         let query = `SELECT game_state FROM session WHERE session_id = "${ sessionID }"`;
-
+                        console.log(sessionID)
                         connection.query(query, (err, result) => {
                             if(err) {
                                 reject("Error");
                             } else {
+                                console.log(result, sessionID);
                                 resolve(result[0].game_state);  // returns the game_state of the sessionID
                             }
                         });
