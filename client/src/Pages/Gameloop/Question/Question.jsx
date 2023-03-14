@@ -67,7 +67,7 @@ const Question = () => {
     }
 
     return (
-        <div style={{ padding: '30px', color:"white" }}>
+        <div className="question-container" style={{ padding: '30px', color:"white" }}>
             <br />
             <br />
             <div><h2 style={{ textAlign: 'right' }}>Time Left: XXXXX</h2></div>
