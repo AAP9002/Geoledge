@@ -35,9 +35,7 @@ const Question = () => {
         setValue(event.target.value);
     }
 
-    // search bar stuff end
-
-    function check_guess(country_code) {
+    const check_guess=(country_code)=>{
         setloading(true);
         fetch('/api/make_a_guess?answer_submitted=' + country_code).then(res => res.json()).then(resp => {
             setcorrectStatus(resp.correct_status);
@@ -97,12 +95,15 @@ const Question = () => {
                     })
                         .slice(0, 10)
                         .map((item) => (
-                            <div
-                                className='drowdown-row'
+                            <button
+                                onClick={() => check_guess(item.country_id)}
+                                value={item.country_id}
+                                className='btn btn-secondary btn-sm w-100'
                                 key={item.country_id}
+                                style={{padding:"5px"}}
                             >
-                                <p onClick={check_guess(item.country_id)}>{item.country_name}</p>
-                            </div>
+                                {item.country_name}
+                            </button>
                         ))}
                 </div>
             </div>

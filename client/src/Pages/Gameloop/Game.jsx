@@ -30,6 +30,9 @@ const Game = () => {
             timer = setInterval(() => {
                 fetch('/api/CurrentGameState').then(res => res.json()).then(stateJson => {
                     setStatus(stateJson.status);
+                    if (stateJson.status == "showing final scores") {
+                        clearInterval(timer);
+                    }
                 })
             }, 1000);
         }, 3000);
@@ -70,15 +73,15 @@ const Game = () => {
 
         case "showing current scores":
             return (
-                <Current_scores />
+                <Current_scores sessionID={sessionID} />
             );
-        case "Showing final scores":
+        case "showing final scores":
             return (
                 <End_game />
             );
         case "Loading":
             return (
-                <h1>Loading...</h1>
+                <p className="waiting">Loading Game...</p>
             );
         default:
             return (
