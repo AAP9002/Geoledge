@@ -4,7 +4,7 @@ import "./Question.css";
 import { useState, useEffect } from 'react';
 
 
-const Question = () => {
+const Question = (props) => {
     const [loading, setloading] = useState(false);
     const [otherCountryData, setOtherCountryData] = useState("");
     const [correctStatus, setcorrectStatus] = useState(true);
@@ -19,8 +19,15 @@ const Question = () => {
     const [locationDistance, setlocationDistance] = useState();
 
 
-    // search bar stuff start
     const [countryNames, setCountryNames] = useState([]);
+    const [timeNumber, setTimeNumber] = useState(props.timeLeft);
+
+    useEffect(() => {
+        if(timeNumber > 0)
+        {
+            setTimeout(() => setTimeNumber(timeNumber - 1), 1000)
+        }
+      }, [timeNumber]);
 
     useEffect(() => {
         fetch('/api/countryNames').then(res => res.json()).then(names => {
@@ -35,7 +42,7 @@ const Question = () => {
         setValue(event.target.value);
     }
 
-    const check_guess=(country_code)=>{
+    const check_guess = (country_code) => {
         setloading(true);
         fetch('/api/make_a_guess?answer_submitted=' + country_code).then(res => res.json()).then(resp => {
             setcorrectStatus(resp.correct_status);
@@ -63,10 +70,10 @@ const Question = () => {
     }
 
     return (
-        <div className="question-container" style={{ padding: '30px', color:"white" }}>
+        <div className="question-container" style={{ padding: '30px', color: "white" }}>
             <br />
             <br />
-            <div><h2 style={{ textAlign: 'right' }}>Time Left: XXXXX</h2></div>
+            <div><h2 style={{ textAlign: 'right' }}>Time Left: {timeNumber}s</h2></div>
             <br />
             <br />
             <div id="country_stats" style={{ display: 'flex', justifyContent: 'space-around' }}>
@@ -100,7 +107,7 @@ const Question = () => {
                                 value={item.country_id}
                                 className='btn btn-secondary btn-sm w-100'
                                 key={item.country_id}
-                                style={{padding:"5px"}}
+                                style={{ padding: "5px" }}
                             >
                                 {item.country_name}
                             </button>

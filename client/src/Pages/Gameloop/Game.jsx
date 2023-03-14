@@ -7,12 +7,17 @@ import Starting_game from './Starting_Game/Starting_game';
 import Reveal_answer from './Reveal_answer/Reveal_answer';
 import Current_scores from './Current_scores/Current_scores';
 import End_game from './End_game/End_game'
+import Starting_Question from './Starting_Question/Starting_Question';
 
 const Game = () => {
 
     const [status, setStatus] = useState("Loading")
     const [loading, setloading] = useState(true);
     const [sessionID, setSessionID] = useState();
+    const [shownTimer, setShownTimer] = useState(30);
+    const [previousState, setPreviousState] = useState();
+
+
 
 
 
@@ -29,9 +34,14 @@ const Game = () => {
         setTimeout(() => {
             timer = setInterval(() => {
                 fetch('/api/CurrentGameState').then(res => res.json()).then(stateJson => {
-                    setStatus(stateJson.status);
-                    if (stateJson.status == "showing final scores") {
-                        clearInterval(timer);
+                    if (previousState != stateJson.status) {
+                        setPreviousState(stateJson.status)
+                        setStatus(stateJson.status);
+                        if (stateJson.status == "showing final scores") {
+                            clearInterval(timer);
+                        }
+                        else if (stateJson.status == "displaying question")
+                            setShownTimer(30)
                     }
                 })
             }, 1000);
@@ -50,7 +60,7 @@ const Game = () => {
             7. "Showing final scores"
     */
     if (loading)
-        return <><h1>Loading...</h1></>;
+        return <><p className="waiting">Connecting...</p></>;
 
     switch (status) {
         case "waiting for players":
@@ -62,10 +72,11 @@ const Game = () => {
                 <Starting_game />
             );
         case "displaying question":
-        case "starting next question":
             return (
-                <Question />
+                <Question timeLeft={shownTimer} />
             );
+        case "starting next question":
+            return(<Starting_Question/>);
         case "revealing answer":
             return (
                 <Reveal_answer sessionID={sessionID} />
@@ -85,7 +96,7 @@ const Game = () => {
             );
         default:
             return (
-                <h1>Not in recognized state😔, Login or not in game</h1>
+                <p className="waiting">Not in recognized state😔, Login or not in game</p>
             );
     }
 };
