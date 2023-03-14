@@ -24,26 +24,28 @@ module.exports = function (app, connection) {
     */
 
     // ====================   API   =======================
-    app.post('/api/createLobby', (req, res) => {
-        // check if logged in 
-        if (req.loggedIn == "false") {
-            res.status(401).send("User is not logged in")
-        } 
-        else {
-            let host_id = req.userID;
-            let query = "call create_lobby(?)"
-            connection.query(query, [host_id], (err, result) => {
-                if (err) {
-                    console.log("sql broken: " + err)
-                    res.status(500).send(err);
-                } else {
-                    console.log(((Object.entries(result[2][0])[0])[1]))
-                    res.status(200).send({ 
-                        id: ((Object.entries(result[2][0])[0])[1])
-                    });
-                }
-            })
+    app.get('/api/checkLoggedIn', (req, res) => {
+        if (req.loggedIn == "true") {
+            res.status(200).send("User is logged in.")
+        } else {
+            res.status(401).send("Error: User is unauthorised/not logged in. Try logging in.")
         }
+    });
+
+    app.post('/api/createLobby', (req, res) => {
+        let host_id = req.userID;
+        let query = "call create_lobby(?)"
+        connection.query(query, [host_id], (err, result) => {
+            if (err) {
+                console.log("sql broken: " + err)
+                res.status(500).send(err);
+            } else {
+                console.log(((Object.entries(result[2][0])[0])[1]))
+                res.status(200).send({ 
+                    id: ((Object.entries(result[2][0])[0])[1])
+                });
+            }
+        })
     });
 
     app.post('/api/joinLobby', (req, res) => {
