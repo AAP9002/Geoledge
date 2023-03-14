@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 const Question = (props) => {
     const [loading, setloading] = useState(false);
     const [otherCountryData, setOtherCountryData] = useState("");
-    const [correctStatus, setcorrectStatus] = useState(true);
+    const [correctStatus, setcorrectStatus] = useState(false);
 
 
     const [populationUPDOWN, setPopulationUPDOWN] = useState();
@@ -66,7 +66,11 @@ const Question = (props) => {
     }
 
     if (loading) {
-        return (<h1>Loading...</h1>);
+        return (<p className='waiting'>Loading...</p>);
+    }
+
+    if (correctStatus) {
+        return (<p className='waiting'>CORRECT!</p>);
     }
 
     return (
@@ -115,7 +119,6 @@ const Question = (props) => {
                 </div>
             </div>
             <br />
-            <h1>Correct? ... {String(correctStatus)}</h1>
         </div>
     );
 };

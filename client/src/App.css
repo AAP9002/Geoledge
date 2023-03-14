@@ -2,7 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 10;
-    font-family: 'PT Sans', sans-serif;
+    font-family: "Comic Sans MS", cursive, sans-serif;
   }
 
 .App {
@@ -10,5 +10,14 @@
   min-height: 80vh;
 }
 
-
+.waiting {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: rgb(122, 228, 122);
+  text-shadow: -3px -3px 0 skyblue, 3px -3px 0 skyblue, -3px 3px 0 skyblue, 3px 3px 0 skyblue;
+  font-size: 100px;
+}
 

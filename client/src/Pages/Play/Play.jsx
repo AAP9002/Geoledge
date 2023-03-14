@@ -51,9 +51,9 @@ function Play() {
     };
 
 
-    //if(creating_game_Session){
-    // return(<p>Loading</p>)
-    //}
+    if(creating_game_Session){
+        return(<p className='waiting'>Creating New Game Session...</p>)
+    }
 
     return (
         <div >
