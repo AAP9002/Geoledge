@@ -5,10 +5,9 @@ import { useState, useEffect } from 'react';
 
 
 const Question = () => {
-    const [loading, setloading] = useState(true);
+    const [loading, setloading] = useState(false);
     const [otherCountryData, setOtherCountryData] = useState("");
-    const [correctStatus, setcorrectStatus] = useState(false);
-
+    const [correctStatus, setcorrectStatus] = useState(true);
 
 
     const [populationUPDOWN, setPopulationUPDOWN] = useState();
@@ -26,9 +25,8 @@ const Question = () => {
     useEffect(() => {
         fetch('/api/countryNames').then(res => res.json()).then(names => {
             setCountryNames(names);
-            setloading(false);
-            console.log(names);
         });
+        setloading(false);
     }, []);
 
     const [value, setValue] = useState('');
