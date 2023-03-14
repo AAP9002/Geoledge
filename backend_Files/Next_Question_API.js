@@ -75,6 +75,9 @@ module.exports = function (app, connection) {
     }
     
     // ====================   API   =======================
+    app.get('/api/checkLoggedIn', (req, res) => {
+        res.json(req.userID != null);
+    });
 
     app.get('/api/nextQuestion', (req, res) => {
         // This API is called to move game_state from "showing current scores" to "starting next question"
