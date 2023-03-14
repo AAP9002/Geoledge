@@ -2,37 +2,73 @@
 
 
 .board{
-background-color: rgb(108, 25, 104);
+background-color: #5b0ca5;
+border-radius: 10px;
 align-items: center;
 position: relative;
-padding: 40px;
-border-radius: 20px;
+width: 800px;
+
 position:relative;
 left: -50px;  
 overflow-y:scroll;
+scrollbar-width: thin;
 height:500px;
 display:block;  
+
 }
 
 
 .myTable{ 
-    color: antiquewhite;
-    font-size:170%;   
+    font-family:  Comic Sans MS;
+    font-size:200%;   
     
-       
-     
+    width: 700px; 
 }
 .columns{
-    color: antiquewhite;
-    font-size:170%;
-   
-    padding: 100px;
-    width: 300px;
-    align-items: center;
+    font-family:  Comic Sans MS;
+    font-size:10%;
+   align-items: center;
+    
+    width: 800px;
+    
     
     
 }
+.data{
+    width: 700px;
+}
+tr:nth-child(odd){
+    background:#782ad1;}
 
 
+.columns:nth-child(odd){
+    background:#5b0ca5;}
 
+.columns:nth-child(even){
+    background:#7d29dd;}
+.wrapper h1{
+    font-family:  Comic Sans MS;
+    text-decoration-line: underline;
+    position: relative;
+    left: -50px;
+
+}
+.wrapper td {
+    color: aliceblue;
+}
+
+body::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: rgb(120, 28, 206);        /* color of the tracking area */
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background-color: rgb(230, 215, 228);    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 3px solid rgb(194, 182, 159);  /* creates padding around scroll thumb */
+
+  }
 
