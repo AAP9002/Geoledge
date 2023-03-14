@@ -97,11 +97,12 @@ const Question = () => {
                     })
                         .slice(0, 10)
                         .map((item) => (
-                            <div onClick={() => check_guess(item.country_id)}
+                            <div
                                 className='drowdown-row'
                                 key={item.country_id}
                             >
-                                {item.country_name}</div>
+                                <p onClick={check_guess(item.country_id)}>{item.country_name}</p>
+                            </div>
                         ))}
                 </div>
             </div>
