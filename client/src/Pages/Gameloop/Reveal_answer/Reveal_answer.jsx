@@ -46,5 +46,4 @@ const Reveal_answer = (props) => {
             </div>);
     }
 }
-
 export default Reveal_answer;

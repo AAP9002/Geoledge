@@ -14,21 +14,7 @@ const Game = () => {
     const [loading, setloading] = useState(true);
     const [sessionID, setSessionID] = useState();
 
-    useEffect(() => {
-        let timer;
 
-        if (!loading) {
-            setTimeout(() => {
-                timer = setInterval(() => {
-                    fetch('/api/CurrentGameState').then(res => res.json()).then(stateJson => {
-                        setStatus(stateJson.status);
-                    })
-                }, 1000);
-            }, 2000);
-        }
-        return () => clearInterval(timer);
-    });
-  
 
     useEffect(() => {
         setloading(true);
@@ -37,7 +23,18 @@ const Game = () => {
             setSessionID(idData.session_code);
             setloading(false);
         });
-    },[]);
+
+        let timer;
+
+        setTimeout(() => {
+            timer = setInterval(() => {
+                fetch('/api/CurrentGameState').then(res => res.json()).then(stateJson => {
+                    setStatus(stateJson.status);
+                })
+            }, 1000);
+        }, 3000);
+        return () => clearInterval(timer);
+    }, []);
 
     /* ==============  INFORMATION ON GAME_STATE  ==============
        Game states held by game_state:
@@ -68,7 +65,7 @@ const Game = () => {
             );
         case "revealing answer":
             return (
-                <Reveal_answer sessionID ={sessionID} />
+                <Reveal_answer sessionID={sessionID} />
             );
 
         case "showing current scores":

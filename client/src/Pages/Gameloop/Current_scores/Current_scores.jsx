@@ -46,5 +46,4 @@ const Current_scores = (props) => {
             </div>);
     }
 }
-
 export default Current_scores;
