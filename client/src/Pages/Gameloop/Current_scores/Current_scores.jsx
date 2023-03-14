@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 
 
 const Current_scores = () => {
-    return(<><p>Current scores</p></>);
+    return(<><p className="score">Current scores</p></>);
 
 };
 

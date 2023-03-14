@@ -24,7 +24,7 @@ const Game = () => {
         }, 4000);
         return () => clearInterval(timer);
     });
-
+    
     /* ==============  INFORMATION ON GAME_STATE  ==============
        Game states held by game_state:
             1. "waiting for players"

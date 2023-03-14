@@ -1,130 +1,89 @@
 .join-lobby-wrapper {
-  background-image: url(./starry2.png);
-  background-color: #1c2331;
+  background-color: #0f2027;
+  background-image: linear-gradient(315deg, #0f2027 0%, #203a43 74%);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: 100vh;
 }
 
-.join-lobby-wrapper h1 {
-  font-size: 36px;
-  margin: 50px 0 0;
-  color: #fff;
-}
-
 .join-lobby-container {
-  background-color: #f1f1f1;
+  background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-  height: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 40px;
   width: 400px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.join-lobby-content {
-  padding: 50px;
-  width: 80%;
+  max-width: 90%;
 }
 
 .join-lobby-header {
-  background-color: #1c2331;
-  color: #fff;
-  padding: 20px;
+  margin-bottom: 20px;
   text-align: center;
 }
 
 .join-lobby-header h2 {
+  color: #3f51b5;
+  font-size: 1.5rem;
   margin: 0;
-  font-size: 24px;
 }
 
 .join-lobby-form {
-  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
 }
 
 .join-lobby-input-group {
-  display: flex;
-  flex-direction: column;
   margin-bottom: 20px;
 }
 
 .join-lobby-input-group label {
-  font-size: 18px;
+  color: #3f51b5;
+  display: block;
+  font-size: 1.2rem;
   margin-bottom: 5px;
-  color: #1c2331;
 }
 
-.join-lobby-input-group input {
-  border: 2px solid #1c2331;
+.join-lobby-input-group input[type="text"] {
+  border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 1.2rem;
   padding: 10px;
+  width: 100%;
 }
 
 .join-lobby-button-group {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .join-lobby-button {
-  background-color: #1c2331;
+  background-color: #3f51b5;
   border: none;
   border-radius: 5px;
   color: #fff;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 1.2rem;
   padding: 10px 20px;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .join-lobby-button:hover {
-  background-color: #0b0d13;
+  background-color: #2c3e50;
 }
 
 .return-home-button {
   background-color: #fff;
-  border: 2px solid #1c2331;
+  border: none;
   border-radius: 5px;
-  color: #1c2331;
+  color: #3f51b5;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 1.2rem;
   padding: 10px 20px;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .return-home-button:hover {
-  background-color: #1c2331;
-  color: #fff;
-}
-
-@media screen and (max-width: 600px) {
-  .join-lobby-container {
-    width: 90%;
-    height: 350px;
-  }
-
-  .join-lobby-content {
-    width: 90%;
-    padding: 30px;
-  }
-
-  .join-lobby-header h2 {
-    font-size: 20px;
-  }
-
-  .join-lobby-input-group label {
-    font-size: 16px;
-  }
-
-  .join-lobby-input-group input {
-    font-size: 14px;
-  }
-
-  .join-lobby-button {
-    font-size: 16px;
-    padding: 8px 16px;
-  }
+  background-color: #e3e3e3;
 }
