@@ -45,10 +45,5 @@ const Reveal_answer = (props) => {
                 <h1>Loading...</h1>
             </div>);
     }
-
-const Reveal_answer = () => {
-    return(<><p className="answer">Reveal Answer</p></>);
-
-};
-}   
+}
 export default Reveal_answer;
