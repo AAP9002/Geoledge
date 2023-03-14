@@ -2,37 +2,55 @@ import React from 'react';
 import './Leaderboard.css';
 import { useState, useEffect } from 'react';
 
+
+
 function LeaderBoard() {
-  const [No, setNo] = useState(0)
-  const [Wins,setWins ] =  useState(0)
-  const [Player, SetPlayer] = useState(0)
-  const [Games, SetGameplayed] = useState(0)
-  const [WP, SetWP] = useState(0)
+  
 
   const [Leaderboard, setLeaderboard] = useState([]);
 
-  // API Fetch to get all players
+
+
+  // API Fetch to get all
+   
   useEffect(() => {
     fetch('/api/leaderboards?sort=wins').then(res => res.json()).then(fetchedData =>{
-      console.log(fetchedData);
-      setLeaderboard(fetchedData);
+
+      setLeaderboard(fetchedData.leaderboards);
+      console.log(Leaderboard);
     });
     }, []);
-
-  // populate Players array with all the players fetched 
-  let playerInfo = [{no:"",username: "", wins: "",Games:"",WP:"",}, , , ];
+  
 
   return (
-    <div className="leaderboard">
-      <h1>Leader Board</h1>
-      <table>
-        <thead> <tr> <th>no:</th><th>Player</th><th>Wins</th><th>Games</th><th>WP%</th></tr></thead>
-        <tbody>
-          <tr><td>{No}</td><td>{Player}</td><td>{Wins}</td><td>{Games}</td><td>{WP}%</td></tr>
-        </tbody>
+    
+    
+   
+    <div className='wrapper'>
+      <table className='board' align='center'>
+        <tr>
+          <th className='columns'>Player</th>
+          <th className='columns'>Wins</th>
+        </tr>
+        
 
-      </table>
-    </div>
+
+        <tbody className='myTable'>
+        {Leaderboard.map((row)=> <tr><td align='center'>{row.username}</td><td align='center'>{row.wins}</td></tr>)}
+        </tbody>
+        </table>
+        
+        
+        
+        </div>
+
+        
+
+
+      
+   
+      
+      
   )
 }
 

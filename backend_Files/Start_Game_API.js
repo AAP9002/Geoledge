@@ -8,7 +8,14 @@ module.exports = function (app, connection) {
             5. "showing current scores"
             6. "starting next question"
             7. "Showing final scores"
+
+
+            Start game api: 1, 2, 3, 4, 5 or 7
+            Next question api: 5, 6, 3, 4, 5 or 7
+    
     */
+
+    
 
     // http://localhost:5000/api/startGame?sessionID=35
 
@@ -47,7 +54,7 @@ module.exports = function (app, connection) {
 
             promise2.then( 
                 function (timeLimit) {
-                    setTimeout(function() { roundEnd(res, sessionID) }, timeLimit);
+                    setTimeout(function() { roundEnd(res, sessionID) }, (timeLimit*1000));
                 }
             );
         });
@@ -67,6 +74,7 @@ module.exports = function (app, connection) {
          })
     }
 
+    
 
     // ====================   API   =======================
     app.get('/api/startGame', (req, res) => {

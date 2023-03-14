@@ -1,24 +1,31 @@
 
 .wrapper h1{
   color: rgb(39, 223, 174);
-  font-size: 80px;
+  font-size: 70px;
+  position:relative;
+  right: -200px;
+  
 }
 .wrapper th{
     color: rgb(39, 223, 174);
-    font-size: 40px;
+    font-size: 30px;
     padding:30px;
   }
   
   .wrapper td{
     color: rgb(39, 223, 174);
-    padding:30px;
+    padding:10px;
     font-size: 30px;
   }
   
-  .wrapper table{
+  .Wins{
     background-color: rgb(122, 39, 206);
-    padding: 50px;
+    padding: 60px;
     border-radius: 20px;
+    position:relative;
+    right: -200px;
+    width: 700px;
+   ;
 
   }
 
@@ -29,4 +36,28 @@
     align-items: center;
     flex-direction: column;
     background-image: url(../Account/Images/uni1.jpg);
+  }
+
+
+  .Credentials {
+    background-color: rgb(122, 39, 206);
+    padding: 20px;
+    border-radius: 20px;
+
+    position:relative;
+    left: -400px;
+    top: -150px;
+    
+    
+
+  }
+  .Username{
+    color: aqua;
+    align-items: center;
+  }
+  .wrapper credentialsAccount{
+    align-items: center;
+  }
+  .Winsbody{
+    height: 300px
   }

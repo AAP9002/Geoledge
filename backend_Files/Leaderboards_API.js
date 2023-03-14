@@ -2,6 +2,7 @@ module.exports = function (app, connection) {
     app.get('/api/leaderboards', function (req, res) {
         // Getting sort order defined by client
         let sort = req.query.sort;
+        console.log("SORT: " + sort);
         let query = "";
 
         if (sort == "wins") {
@@ -44,7 +45,7 @@ module.exports = function (app, connection) {
                     res.status(401).send( { "status": "Could not get leaderboards"} );
                 } else {
                     // Sending leaderboards back to client
-                    res.status(201).send( {"leaderboards": response} );
+                    res.status(200).send( {"leaderboards": response} );
                 }
             });
         }
