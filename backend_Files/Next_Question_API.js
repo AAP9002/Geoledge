@@ -56,7 +56,7 @@ module.exports = function (app, connection) {
     
             promise2.then( 
                 function (timeLimit) {
-                    setTimeout(function() { roundEnd(res, sessionID) }, timeLimit);
+                    setTimeout(function() { roundEnd(res, sessionID) }, timeLimit * 1000);
                 }
             );
         });
@@ -75,6 +75,7 @@ module.exports = function (app, connection) {
     }
     
     // ====================   API   =======================
+
     app.get('/api/nextQuestion', (req, res) => {
         // This API is called to move game_state from "showing current scores" to "starting next question"
         let userID = req.userID;
@@ -117,7 +118,7 @@ module.exports = function (app, connection) {
                         if (result == "showing current scores") {
                             let promise3 = new Promise(function(resolve, reject) {
                                 let query2 = `UPDATE session SET game_state = "starting next question" WHERE session_id = "${ sessionID }" AND
-                                    game_state = "displaying current scores"`;
+                                    game_state = "showing current scores"`;
 
                                 connection.query(query2, (err, result) => {
                                     if (err) {
@@ -165,4 +166,37 @@ module.exports = function (app, connection) {
         );
     });
 
+    // API to decide what happens after "revealing answer" -> show current|final scores 
+    app.post('/api/scoreState', (req, res) => {
+        let sessionID = req.query.sessionID;
+        let myPromise = new Promise(function(myResolve, myReject) {
+            let query = `SELECT if(session.current_question = quiz.num_of_questions, 1, 0) AS value FROM session INNER JOIN quiz ON session.quiz_id = quiz.quiz_id where session_id = ${sessionID};`
+            connection.query(query, (err, result) => {
+                if (err) {
+                    myReject(err);
+                } else {
+                    myResolve(result)
+                }
+            });
+        });
+
+        myPromise.then(
+            function(result) {
+                let wasfinalQ = (result[0].value);
+                let state = wasfinalQ ? "final" : "current"
+                let query = `update session set game_state = "showing ${state} scores" where session_id = ${sessionID}`;
+                connection.query(query, (err) => {
+                    if (err) {
+                        res.status(500).send("sql broken");
+                    } else {
+                        res.status(200).send(state);
+                    }
+                });
+            },
+            function(err) {
+                console.log(err);
+                res.status(500).send("sql broken");
+            }
+        );
+    });
 }

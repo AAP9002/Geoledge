@@ -46,6 +46,8 @@ const Reveal_answer = (props) => {
             </div>);
     }
 
+const Reveal_answer = () => {
+    return(<><p className="answer">Reveal Answer</p></>);
 
 };
 

@@ -28,6 +28,7 @@ const Game = () => {
         }
         return () => clearInterval(timer);
     });
+  
 
     useEffect(() => {
         setloading(true);
