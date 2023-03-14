@@ -56,7 +56,7 @@ module.exports = function (app, connection) {
     
             promise2.then( 
                 function (timeLimit) {
-                    setTimeout(function() { roundEnd(res, sessionID) }, timeLimit);
+                    setTimeout(function() { roundEnd(res, sessionID) }, timeLimit * 1000);
                 }
             );
         });
@@ -118,7 +118,7 @@ module.exports = function (app, connection) {
                         if (result == "showing current scores") {
                             let promise3 = new Promise(function(resolve, reject) {
                                 let query2 = `UPDATE session SET game_state = "starting next question" WHERE session_id = "${ sessionID }" AND
-                                    game_state = "displaying current scores"`;
+                                    game_state = "showing current scores"`;
 
                                 connection.query(query2, (err, result) => {
                                     if (err) {
