@@ -14,8 +14,11 @@ const Game = () => {
     const [status, setStatus] = useState("Loading")
     const [loading, setloading] = useState(true);
     const [sessionID, setSessionID] = useState();
-    const [shownTimer, setShownTimer] = useState(30);
+    const [gameTimeLimit, setGameTimeLimit] = useState();
+
     const [previousState, setPreviousState] = useState();
+    const [maxGuesses, setMaxGuesses] = useState();
+
 
 
 
@@ -23,25 +26,30 @@ const Game = () => {
 
     useEffect(() => {
         setloading(true);
-        fetch('/api/getSessionID').then(res => res.json()).then(idData => {
-            console.log(idData.session_code)
-            setSessionID(idData.session_code);
-            setloading(false);
-        });
 
         let timer;
 
         setTimeout(() => {
             timer = setInterval(() => {
-                fetch('/api/CurrentGameState').then(res => res.json()).then(stateJson => {
-                    if (previousState != stateJson.status) {
-                        setPreviousState(stateJson.status)
-                        setStatus(stateJson.status);
-                        if (stateJson.status == "showing final scores") {
+                fetch('/api/getSessionID').then(res => res.json()).then(stateJson => {
+                    if (previousState != stateJson.game_state) {
+                        setPreviousState(stateJson.game_state)
+                        setStatus(stateJson.game_state);
+                        setSessionID(stateJson.session_id);
+                        setGameTimeLimit(stateJson.time_limit);
+                        setMaxGuesses(stateJson.max_guesses);
+                        setloading(false);
+
+
+                        if (stateJson.game_state == "showing final scores") {
                             clearInterval(timer);
                         }
-                        else if (stateJson.status == "displaying question")
-                            setShownTimer(30)
+
+
+                        if(!window.location.endsWith("/#/Game")){
+                            clearInterval(timer);
+                        }
+
                     }
                 })
             }, 1000);
@@ -73,7 +81,7 @@ const Game = () => {
             );
         case "displaying question":
             return (
-                <Question timeLeft={shownTimer} />
+                <Question timeLeft={gameTimeLimit} maxGuesses={maxGuesses}/>
             );
         case "starting next question":
             return(<Starting_Question/>);

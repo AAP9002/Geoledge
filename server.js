@@ -61,7 +61,7 @@ const authenticateToken = function(req, res, next) {
                 req.username = userData.username;
                 req.userID = userData.userID;
                 req.clientHash = userData.clientHash;
-                console.log("JWT verified");
+                //console.log("JWT verified");
             }
         })
     }
