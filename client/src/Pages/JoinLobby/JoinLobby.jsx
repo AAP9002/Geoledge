@@ -10,7 +10,7 @@ function JoinLobby() {
     const [lobby_code, setLobbyCode] = useState("");
     function submitJoinCode() {
         fetch('/api/checkLoggedIn', { method: "GET" }).then((res) => {
-            if (res.status == 401) {
+            if (res.status === 401) {
                 window.location.href = "/#/Log-in";
             } else {
                 fetch(`/api/joinLobby?session_id=${lobby_code}`, { method: "POST" }).then(res => {

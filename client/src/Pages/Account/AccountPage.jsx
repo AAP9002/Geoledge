@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import "./AccountPage.css";
 import { useState } from 'react';
-import LoginPage from "../Sign-up/LoginPage";
 
 
 function ScoreBoard() {
@@ -13,7 +12,7 @@ function ScoreBoard() {
 
   useEffect(() => {
     fetch('/api/viewAccount').then(res => res.json()).then(Account => {
-      if (Account.status == "client not logged") {
+      if (Account.status === "client not logged") {
         // Redirecting client to login page
         console.log("reached");
         window.location = "/#/Log-in";
@@ -22,7 +21,7 @@ function ScoreBoard() {
       SetUsername(Account.username)
       setWins(Account.wins)
       setGamePlayed(Account.games_played)
-      if (Number(Account.games_played) == 0) {
+      if (Number(Account.games_played) === 0) {
         SetWinrate(1)
       }
       else {

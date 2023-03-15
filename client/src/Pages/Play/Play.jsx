@@ -14,7 +14,7 @@ function Play() {
 
     useEffect(() => {
         fetch('/api/checkLoggedIn', { method: "GET" }).then((res) => {
-            if (res.status == 401) {
+            if (res.status === 401) {
                 window.location.href = "/#/Log-in";
             } else {
                 fetch('/api/createLobby', { method: "POST" }).then(res => res.json()).then(stateJson => {

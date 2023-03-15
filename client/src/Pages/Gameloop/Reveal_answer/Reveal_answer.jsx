@@ -33,7 +33,7 @@ const Reveal_answer = (props) => {
         if (userIsHost)
             return (<div className='reveal_answer_container'>
                 <h1>Answer: {correctAnswer}</h1>
-                <a className='btn btn-success' onClick={Change_State_Current_Score}>Next</a>
+                <btn className='btn btn-success' onClick={Change_State_Current_Score}>Next</btn>
             </div>);
         else
             return (<div className='reveal_answer_container'>

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 import "./Game.css";
 import Question from './Question/Question';
-import Waiting_for_players from './Waiting_for_players/Waiting_for_players';
-import Starting_game from './Starting_Game/Starting_game';
-import Reveal_answer from './Reveal_answer/Reveal_answer';
-import Current_scores from './Current_scores/Current_scores';
-import End_game from './End_game/End_game'
-import Starting_Question from './Starting_Question/Starting_Question';
+import WaitingForPlayers from './Waiting_for_players/Waiting_for_players';
+import StartingGame from './Starting_Game/Starting_game';
+import RevealAnswer from './Reveal_answer/Reveal_answer';
+import CurrentScores from './Current_scores/Current_scores';
+import EndGame from './End_game/End_game'
+import StartingQuestion from './Starting_Question/Starting_Question';
 
 const Game = () => {
 
@@ -32,7 +32,7 @@ const Game = () => {
         setTimeout(() => {
             timer = setInterval(() => {
                 fetch('/api/getSessionID').then(res => res.json()).then(stateJson => {
-                    if (previousState != stateJson.game_state) {
+                    if (previousState !== stateJson.game_state) {
                         setPreviousState(stateJson.game_state)
                         setStatus(stateJson.game_state);
                         setSessionID(stateJson.session_id);
@@ -41,7 +41,7 @@ const Game = () => {
                         setloading(false);
 
 
-                        if (stateJson.game_state == "showing final scores") {
+                        if (stateJson.game_state === "showing final scores") {
                             clearInterval(timer);
                         }
 
@@ -73,30 +73,30 @@ const Game = () => {
     switch (status) {
         case "waiting for players":
             return (
-                <Waiting_for_players />
+                <WaitingForPlayers />
             );
         case "starting game":
             return (
-                <Starting_game />
+                <StartingGame />
             );
         case "displaying question":
             return (
                 <Question timeLeft={gameTimeLimit} maxGuesses={maxGuesses}/>
             );
         case "starting next question":
-            return(<Starting_Question/>);
+            return(<StartingQuestion/>);
         case "revealing answer":
             return (
-                <Reveal_answer sessionID={sessionID} />
+                <RevealAnswer sessionID={sessionID} />
             );
 
         case "showing current scores":
             return (
-                <Current_scores sessionID={sessionID} />
+                <CurrentScores sessionID={sessionID} />
             );
         case "showing final scores":
             return (
-                <End_game />
+                <EndGame />
             );
         case "Loading":
             return (
