@@ -93,9 +93,8 @@ module.exports = function (app, connection) {
                     console.log("sql broken: " + err)
                     res.status(500).send(err);
                 } else {
-                    console.log(result)
-                    let session_code = result[0][0].session_id;
-                    res.status(200).send({ session_code });
+                    console.log( result[1][0].session_id)
+                    res.status(200).send( result[1][0] );
                 }
             })
         } else {
