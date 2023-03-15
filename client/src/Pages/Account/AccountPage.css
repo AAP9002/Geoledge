@@ -2,8 +2,7 @@
 .wrapper h1{
   color: rgb(39, 223, 174);
   font-size: 70px;
-  position:relative;
-  right: -200px;
+  text-align: center;
   
 }
 .wrapper th{
@@ -22,11 +21,6 @@
     background-color: rgb(122, 39, 206);
     padding: 60px;
     border-radius: 20px;
-    position:relative;
-    right: -200px;
-    width: 700px;
-   ;
-
   }
 
   .wrapper{
@@ -43,13 +37,12 @@
     background-color: rgb(122, 39, 206);
     padding: 20px;
     border-radius: 20px;
+  }
 
-    position:relative;
-    left: -400px;
-    top: -150px;
-    
-    
-
+  .credentials-Wrapper{
+    min-height: 200px;
+    align-items: center;
+    display: flex;
   }
   .Username{
     color: aqua;

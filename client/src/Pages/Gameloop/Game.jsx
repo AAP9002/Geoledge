@@ -2,28 +2,60 @@ import React, { useEffect, useState } from 'react';
 
 import "./Game.css";
 import Question from './Question/Question';
-import Waiting_for_players from './Waiting_for_players/Waiting_for_players';
-import Starting_game from './Starting_Game/Starting_game';
-import Reveal_answer from './Reveal_answer/Reveal_answer';
-import Current_scores from './Current_scores/Current_scores';
-import End_game from './End_game/End_game'
+import WaitingForPlayers from './Waiting_for_players/Waiting_for_players';
+import StartingGame from './Starting_Game/Starting_game';
+import RevealAnswer from './Reveal_answer/Reveal_answer';
+import CurrentScores from './Current_scores/Current_scores';
+import EndGame from './End_game/End_game'
+import StartingQuestion from './Starting_Question/Starting_Question';
 
 const Game = () => {
 
     const [status, setStatus] = useState("Loading")
+    const [loading, setloading] = useState(true);
+    const [sessionID, setSessionID] = useState();
+    const [gameTimeLimit, setGameTimeLimit] = useState();
+
+    const [previousState, setPreviousState] = useState();
+    const [maxGuesses, setMaxGuesses] = useState();
+
+
+
+
+
 
     useEffect(() => {
+        setloading(true);
 
         let timer;
+
         setTimeout(() => {
             timer = setInterval(() => {
-                fetch('/api/CurrentGameState').then(res => res.json()).then(stateJson => {
-                    setStatus(stateJson.status);
+                fetch('/api/getSessionID').then(res => res.json()).then(stateJson => {
+                    if (previousState !== stateJson.game_state) {
+                        setPreviousState(stateJson.game_state)
+                        setStatus(stateJson.game_state);
+                        setSessionID(stateJson.session_id);
+                        setGameTimeLimit(stateJson.time_limit);
+                        setMaxGuesses(stateJson.max_guesses);
+                        setloading(false);
+
+
+                        if (stateJson.game_state === "showing final scores") {
+                            clearInterval(timer);
+                        }
+
+
+                        if(!window.location.endsWith("/#/Game")){
+                            clearInterval(timer);
+                        }
+
+                    }
                 })
-            }, 3000);
-        }, 4000);
+            }, 1000);
+        }, 3000);
         return () => clearInterval(timer);
-    });
+    }, []);
 
     /* ==============  INFORMATION ON GAME_STATE  ==============
        Game states held by game_state:
@@ -35,42 +67,44 @@ const Game = () => {
             6. "starting next question"
             7. "Showing final scores"
     */
-
+    if (loading)
+        return <><p className="waiting">Connecting...</p></>;
 
     switch (status) {
         case "waiting for players":
             return (
-                <Waiting_for_players />
+                <WaitingForPlayers />
             );
         case "starting game":
             return (
-                <Starting_game />
+                <StartingGame />
             );
         case "displaying question":
-        case "starting next question":
             return (
-                <Question />
+                <Question timeLeft={gameTimeLimit} maxGuesses={maxGuesses}/>
             );
+        case "starting next question":
+            return(<StartingQuestion/>);
         case "revealing answer":
             return (
-                <Reveal_answer />
+                <RevealAnswer sessionID={sessionID} />
             );
 
         case "showing current scores":
             return (
-                <Current_scores />
+                <CurrentScores sessionID={sessionID} />
             );
-        case "Showing final scores":
+        case "showing final scores":
             return (
-                <End_game />
+                <EndGame />
             );
         case "Loading":
             return (
-                <p>Loading innit</p>
+                <p className="waiting">Loading Game...</p>
             );
         default:
             return (
-                <p>Not in recognized state😔, Login or not in game</p>
+                <p className="waiting">Not in recognized state😔, Login or not in game</p>
             );
     }
 };

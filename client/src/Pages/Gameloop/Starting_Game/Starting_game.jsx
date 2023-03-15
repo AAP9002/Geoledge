@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 
 
 const Starting_game = () => {
-    return(<><p>Starting Game</p></>);
+    return(<><p className="waiting">Starting Game</p></>);
 
 };
 
