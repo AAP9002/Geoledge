@@ -3,6 +3,7 @@
     margin: 0;
     padding: 10;
     font-family: "Comic Sans MS", cursive, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
 
 .App {
