@@ -15,7 +15,7 @@ var connection = mysql.createPool({
 
 // copy .env.TEMPLATE into a new file called .env (this file will not be send to git, so real passwords can be set to the .env).
 
-// get secret value from .env file
+// get secret value from .env
 
 console.log("Database is connected:",process.env.DBNAME);
 

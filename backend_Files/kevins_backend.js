@@ -24,33 +24,47 @@ module.exports = function (app, connection) {
     */
 
     // ====================   API   =======================
+    app.get('/api/checkLoggedIn', (req, res) => {
+        if (req.loggedIn == "true") {
+            res.status(200).send("User is logged in.")
+        } else {
+            res.status(401).send("Error: User is unauthorised/not logged in. Try logging in.")
+        }
+    });
+
     app.post('/api/createLobby', (req, res) => {
         let host_id = req.userID;
         let query = "call create_lobby(?)"
         connection.query(query, [host_id], (err, result) => {
             if (err) {
-                bvc
                 console.log("sql broken: " + err)
                 res.status(500).send(err);
             } else {
                 console.log(((Object.entries(result[2][0])[0])[1]))
-                res.status(200).send({ id: ((Object.entries(result[2][0])[0])[1]) });
+                res.status(200).send({ 
+                    id: ((Object.entries(result[2][0])[0])[1])
+                });
             }
         })
     });
 
     app.post('/api/joinLobby', (req, res) => {
-        let username = req.username;
-        let session_id = req.query.session_id;
-        let query = "call join_lobby(?,?)"
-        connection.query(query, [username, session_id], (err, result) => {
-            if (err) {
-                console.log("sql broken: " + err)
-                res.status(500).send(err);
-            } else {
-                res.status(200).send('participent added.');
-            }
-        })
+        if (req.userID == null) {
+            res.status(401).send({ "status": "Not logged in mate." })
+        }
+        else {
+            let username = req.username;
+            let session_id = req.query.session_id;
+            let query = "call join_lobby(?,?)"
+            connection.query(query, [username, session_id], (err, result) => {
+                if (err) {
+                    console.log("sql broken: " + err)
+                    res.status(500).send(err);
+                } else {
+                    res.status(200).send('participent added.');
+                }
+            })
+        }
     });
 
     app.get('/api/getLobbyPlayers', (req, res) => {
@@ -71,15 +85,16 @@ module.exports = function (app, connection) {
     });
 
     app.get('/api/getSessionID', (req, res) => {
-        let user_id = req.user_id;
-        if (user_id) {
-            let query = `SELECT session_id FROM participents WHERE user_id = ${user_id};`
-            connection.query(query, (err, result) => {
+        let user_id = req.userID;
+        if (user_id != undefined) {
+            let query = `call get_curren_session_id(?)`
+            connection.query(query,[user_id], (err, result) => {
                 if (err) {
                     console.log("sql broken: " + err)
                     res.status(500).send(err);
                 } else {
-                    let session_code = result[0].session_id;
+                    console.log(result)
+                    let session_code = result[0][0].session_id;
                     res.status(200).send({ session_code });
                 }
             })
