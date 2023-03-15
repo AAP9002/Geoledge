@@ -1,17 +1,62 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import './End_game.css';
+import { useState, useEffect } from 'react';
 
-import { useState } from 'react';
+
+
+function FinishBoard() {
+  
+
+  const [Finishboard, setFinishboard] = useState([]);
+
+
+
+   
  
 
+  return (
+    
+    
+   
+    <div className='wrapper'>
+      <h1>Game set!!</h1>
+      <table className='Ranking'>
+        <thead>
+        <tr>
+            <th className='columns'>No</th>
+          <th className='columns'>Player(Username)</th>
+          <th className='columns'>Points</th>
+        </tr>
+        </thead>
+        
 
-function ScoreBoard(){
-  const [Points, SetPoints] = useState(0)
-  const [Place, SetPlace] = useState(0)
-  const[Username, SetUsername] = useState("Username")
 
+        <tbody className='RankingTable'>
+        {Finishboard.map((row)=> <tr><td className='data' align='center'>{row.No}</td><td className='data' align='center'>{row.username}</td><td className='data' align='center'>{row.wins}</td></tr>)}
+        </tbody>
+        </table>
+        <button onclicked>Back to Home</button>
+        
+        
+        
+        </div>
+      
 
+  )
+}
 
-const End_game = () => {
-    return(<><p>End game</p></>);
-
+const About = () => {
+  return (
+    <div>
+          <div>
+            
+            <FinishBoard/>
+          
+          </div>
+    </div>
+ 
+  );
 };
+
+
+export default About;
