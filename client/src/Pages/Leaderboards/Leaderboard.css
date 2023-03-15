@@ -2,9 +2,10 @@
 
 
 .board{
+    align-self: center;
 background-color: #5b0ca5;
 border-radius: 10px;
-align-items: center;
+
 position: relative;
 width: 800px;
 
