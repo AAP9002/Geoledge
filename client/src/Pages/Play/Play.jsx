@@ -14,7 +14,7 @@ function Play() {
 
     useEffect(() => {
         fetch('/api/checkLoggedIn', { method: "GET" }).then((res) => {
-            if (res.status == 401) {
+            if (res.status === 401) {
                 window.location.href = "/#/Log-in";
             } else {
                 fetch('/api/createLobby', { method: "POST" }).then(res => res.json()).then(stateJson => {
@@ -27,8 +27,8 @@ function Play() {
     }, []);
     //
 
-    const [NumberOfRounds, setNOR] = useState(0)
-    const [TimePerRound, setTPR] = useState(0)
+    const [NumberOfRounds, setNOR] = useState(5)
+    const [TimePerRound, setTPR] = useState(30)
     const [Players, setPlayers] = useState([]);
     const [No, setNo] = useState(0)
 
@@ -51,9 +51,9 @@ function Play() {
     };
 
 
-    //if(creating_game_Session){
-    // return(<p>Loading</p>)
-    //}
+    if(creating_game_Session){
+        return(<p className='waiting'>Creating New Game Session...</p>)
+    }
 
     return (
         <div >
@@ -110,6 +110,9 @@ function Play() {
                 </Row>
                 <div>
                     <div>
+                        <p>Number of rounds: {NumberOfRounds}</p>
+                        <p>Time Limit: {TimePerRound}</p>
+
                         <form onSubmit={handleSubmit}>
 
                             <button className='styledbutton3'>Play</button>

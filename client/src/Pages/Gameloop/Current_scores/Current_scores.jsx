@@ -7,7 +7,6 @@ const Current_scores = (props) => {
 
     const sessionID = props.sessionID;
     const [userIsHost, setUserIsHost] = useState(true)
-    const [correctAnswer, setCorrectAnswer] = useState("HERE")
     const [loading, setloading] = useState(true)
     useEffect(() => {
         //check if current user is host
@@ -33,7 +32,7 @@ const Current_scores = (props) => {
         if (userIsHost)
             return (<div className='reveal_answer_container'>
                 <h1> Scores</h1>
-                <a className='btn btn-success' onClick={Change_State_to_next_question}>Next Question</a>
+                <btn className='btn btn-success' onClick={Change_State_to_next_question}>Next Question</btn>
             </div>);
         else
             return (<div className='reveal_answer_container'>

@@ -17,7 +17,7 @@ var connection = mysql.createPool({
 
 // get secret value from .env
 
-console.log("Database is connected:",process.env.DBNAME);
+console.log("Database is connected:", process.env.DBNAME);
 
 // This displays message that the server running and listening to specified port
 app.listen(port, () => console.log(`Listening on port ${port}`));
@@ -61,7 +61,7 @@ const authenticateToken = function(req, res, next) {
                 req.username = userData.username;
                 req.userID = userData.userID;
                 req.clientHash = userData.clientHash;
-                console.log("JWT verified");
+                //console.log("JWT verified");
             }
         })
     }
@@ -92,4 +92,5 @@ require('./backend_Files/Start_Game_API')(app, connection);
 require('./backend_Files/Next_Question_API')(app, connection);
 require('./backend_Files/Game_State')(app, connection);
 require('./backend_Files/Game_End')(app, connection);
+require('./backend_Files/Join_Online_Game_API')(app, connection);
 //////////////////////////////////////////////////////

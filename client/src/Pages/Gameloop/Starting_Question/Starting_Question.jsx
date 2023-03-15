@@ -5,6 +5,14 @@ import { useState, useEffect } from 'react';
 
 
 const Starting_Question = () => {
-    return(<><p className="waiting">Starting Question</p></>);}
+    const [timeNumber, setTimeNumber] = useState(5);
+
+    useEffect(() => {
+        if(timeNumber > 0)
+        {
+            setTimeout(() => setTimeNumber(timeNumber - 1), 1000)
+        }
+      }, [timeNumber]);
+    return(<><p className="waiting">Starting Question in {timeNumber}s</p></>);}
 
 export default Starting_Question;
