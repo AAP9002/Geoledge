@@ -77,7 +77,7 @@ const Question = (props) => {
 
     return (
         <div className="question-container" style={{ padding: '30px', color: "white" }}>
-            <div><p style={{ textAlign: 'right' }}>Time Left: {timeNumber}s</p></div>
+            <div><p style={{ textAlign: 'right' , color: 'black'}}>Time Left: {timeNumber}s</p></div>
             <h2 style={{textAlign:'center'}}>{lastGuess}</h2>
             <div id="country_stats" style={{ display: 'flex', justifyContent: 'space-around' }}>
                 <b style={{ color: populationColour }}>Population: {populationUPDOWN}</b>
