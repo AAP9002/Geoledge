@@ -1,24 +1,19 @@
 
 
-
+.wrapper{
+    display: flex;
+    justify-content: center;
+}
      
     
     .board{
-        position: absolute;
-     right: -400px;
-    
-    
+    position: absolute;
     background-color: #5b0ca5;
     border-radius: 10px;
-    
-    position: relative;
-    width: 800px;
-    
-    position:relative;
-     
+    max-width: 800px;     
     overflow-y:scroll;
     scrollbar-width: thin;
-    height:500px;
+    height:400px;
     display:block; 
     
     }
@@ -31,7 +26,7 @@
      width: 70px; 
     }
     .wrapper columns{
-     font-family:  Comic Sans MS;
+     font-family: Comic Sans MS;
     font-size:200%;
     align-items: center;
     
@@ -61,21 +56,14 @@
      color: aliceblue;
      font-size: 30px;
     }
-    .wrapper h1{
+    .leaderboardH1{
      font-family: Comic Sans MS;
      text-decoration-line: underline;
      color: aliceblue;
      font-size: 80px;
-     position: absolute;
-     right: -1000px;
+     text-align: center;
+     padding-bottom: 20px;
     }
-    
-    
-    
-    
-    
-    
-    
     
     body::-webkit-scrollbar {
      width: 12px; /* width of the entire scrollbar */

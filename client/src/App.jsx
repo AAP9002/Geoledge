@@ -12,14 +12,14 @@ import Home from './Pages/Home/Home'
 import JoinLobby from './Pages/JoinLobby/JoinLobby';
 import LoginPage from './Pages/Sign-up/LoginPage.jsx'
 import Game from './Pages/Gameloop/Game';
-import End_game from '.\Pages\Gameloop\End_game';
+
 
 function App() {
-  return (
+  return (  
     <>
       <Router>
        
-        <Navbar />
+      {Location.pathname !== '/Game' &&  <Navbar /> }
            <div className='App'>
             <Routes>
             <Route exact path='/' element={<Home/>} />
@@ -34,15 +34,11 @@ function App() {
             <Route path='/AccountPage' element={<Account/>} />
             <Route path='/JoinLobby' element={<JoinLobby/>}/>
             <Route path='/Game' element={<Game/>}/>
-            <Route path='/Endgame' element={<End_game/>}/>
-            
-
-
           </Routes>
         </div>
       
         
-        <Footer />
+        {window.location.pathname !== '/Game'?  <Footer /> :null }
       
         
       </Router>
