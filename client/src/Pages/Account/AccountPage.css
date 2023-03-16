@@ -1,63 +1,7 @@
-
-.wrapper h1{
-  color: rgb(39, 223, 174);
-  font-size: 70px;
-  position:relative;
-  right: -200px;
-  
-}
-.wrapper th{
-    color: rgb(39, 223, 174);
-    font-size: 30px;
-    padding:30px;
-  }
-  
-  .wrapper td{
-    color: rgb(39, 223, 174);
-    padding:10px;
-    font-size: 30px;
-  }
-  
-  .Wins{
-    background-color: rgb(122, 39, 206);
-    padding: 60px;
-    border-radius: 20px;
-    position:relative;
-    right: -200px;
-    width: 700px;
-   ;
-
-  }
-
-  .wrapper{
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-image: url(../Account/Images/uni1.jpg);
-  }
-
-
-  .Credentials {
-    background-color: rgb(122, 39, 206);
-    padding: 20px;
-    border-radius: 20px;
-
-    position:relative;
-    left: -400px;
-    top: -150px;
-    
-    
-
-  }
-  .Username{
-    color: aqua;
-    align-items: center;
-  }
-  .wrapper credentialsAccount{
-    align-items: center;
-  }
-  .Winsbody{
-    height: 300px
-  }
+ .Credentials {
+  background-color: lightgrey;
+  width: 300px;
+  border: 15px solid green;
+  padding: 50px;
+  margin: 20px;
+ }

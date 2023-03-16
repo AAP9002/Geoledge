@@ -1,10 +1,19 @@
 import React from 'react';
 import "./Waiting_for_players.css";
 
-import { useState, useEffect } from 'react';
 
 
-const Waiting_for_players = () => {
-    return(<><p className="waiting">Waiting for players</p></>);}
+const Waiting_for_players = (props) => {
+    function leaveGame() {
+        fetch(`/api/leaveSession?sessionID=${ props.sessionID }`).then(res => res.json()).then(res => {
+            console.log(res.status);
+            window.location = "/#/Home";
+        })
+    }
+
+    return(<>
+            <p className="waiting">Waiting for players</p>
+            <button className="styledbutton" onClick={ leaveGame }> Leave </button>
+        </>);}
 
 export default Waiting_for_players;

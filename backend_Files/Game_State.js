@@ -32,6 +32,7 @@ module.exports = function (app, DBconnection) {
                         res.status(200).send({
                             auth_status: user_verified,
                             status: results[1][0].game_state
+                            
                         }
                             );
                     }

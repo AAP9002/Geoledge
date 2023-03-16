@@ -14,7 +14,7 @@ module.exports = function (app, connection) {
         } else {
             // Fetching account details from SQL
             let promise = new Promise(function(resolve) {
-                let query = `SELECT username, games_played, wins, losses FROM geo2002.users WHERE username = ${ username }`;
+                let query = `SELECT username, games_played, wins, losses FROM users WHERE username = '${ username }'`;
 
                 connection.query(query, (err, result) => {
                     if (err) {
@@ -25,11 +25,11 @@ module.exports = function (app, connection) {
                         // Reading SQL query results
                         if (result.length == 0) {
                             // No account under such username (very unusual result);
-                            console.log("User attempted to get account information but failed");
+                            console.log("User attempted to get account information but failed (hacker?)");
                             res.status(401).send({ "status":"client not logged" });
                         } else {
                             // Account found and returning account with specified username
-                            resolve(result[0].result);
+                            resolve(result[0]);
                         }
                     }
                 });
@@ -39,7 +39,7 @@ module.exports = function (app, connection) {
                 
                 if (!(response == null)) {
                     // sending user account details to user
-                    res.status(200).send({ "games_played": response.games_played, "wins": response.wins, "losses": response.losses });
+                    res.status(200).send({"username":response.username, "games_played": response.games_played, "wins": response.wins, "losses": response.losses });
                 }
             });
         }

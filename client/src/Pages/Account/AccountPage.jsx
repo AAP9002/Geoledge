@@ -1,68 +1,68 @@
 import React, { useEffect } from 'react';
-import "./AccountPage.css";
+
 import { useState } from 'react';
-import LoginPage from "../Sign-up/LoginPage";  
 
 
-function ScoreBoard(){
+function ScoreBoard() {
   const [wins, setWins] = useState(0)
-  const [GamePlayed,setGamePlayed ] =  useState(0)
+  const [GamePlayed, setGamePlayed] = useState(0)
   const [WinRate, SetWinrate] = useState(0)
-  const [Account, SetAccount] = useState({})
-  const[Username, SetUsername] = useState("Username")
+  const [Username, SetUsername] = useState("Username")
 
 
   useEffect(() => {
-    fetch('/api/viewAccount').then(res => res.json()).then(Account =>{
-      if (Account.status == "client not logged") {
+    fetch('/api/viewAccount').then(res => res.json()).then(Account => {
+      if (Account.status === "client not logged") {
         // Redirecting client to login page
         console.log("reached");
-        window.location="/#/Log-in";
+        window.location = "/#/Log-in";
       }
 
-      console.log(Account);
-      SetAccount(Account);
+      SetUsername(Account.username)
+      setWins(Account.wins)
+      setGamePlayed(Account.games_played)
+      if (Number(Account.games_played) === 0) {
+        SetWinrate(1)
+      }
+      else {
+        SetWinrate(Number(Account.wins) / Number(Account.games_played))
+      }
     });
-    }, []);
+  }, []);
 
-  return (<div className='wrapper'>
-          <h1>My Account { Account.status }</h1>
-          <table className='Wins'>
-          <thead className='WinsHead'>
-          <tr>
-              <th>Wins</th>
-              <th>Game Played</th>
-              <th>Win rate</th>
-          </tr>
-      </thead>
-          <tbody className='WinsBody'><tr><td align="center">{wins}</td><td align="center">{GamePlayed}</td><td align="center">{WinRate}</td></tr></tbody>
-      </table>
-        
+  return (
+    <div className='Credentials'>
+      <h1>Credentials</h1> <br />
+    
+      <h2>Username</h2> <br />
+      <div className='Container'><p>Username</p></div> <br />
+      <h2>Password</h2> <br />
+      <button onclicked>Change Password</button>
 
-        {/* table for userinfo basics */}
-      <table className='Credentials'>
-       <thead className='CredentialsHead'>
-        <tr>
-          <th className='Username'>{Username}</th>
-        </tr>
-       </thead>
-       <tbody className='CredentialsBody'>
-        <tr>Username</tr>
-       </tbody>
-      </table>
-  </div>)
+
+
+
+    </div>
+
+
+
+
+
+
+
+  )
 }
 
 const About = () => {
   return (
     <div>
-          <div>
-            
-            <ScoreBoard/>
-          
-          </div>
+      <div>
+
+        <ScoreBoard />
+
+      </div>
     </div>
- 
+
   );
 };
 

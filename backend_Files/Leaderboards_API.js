@@ -7,15 +7,15 @@ module.exports = function (app, connection) {
 
         if (sort == "wins") {
             // sorted by wins
-            query = `SELECT username, wins FROM geo2002.users ORDER BY wins ASC LIMIT 50;`;
+            query = `SELECT username, wins FROM geo2002.users ORDER BY wins DESC LIMIT 50;`;
 
         } else if (sort == "gamesPlayed") {
             // sorting by no of wins
-            query = `SELECT username, games_played FROM geo2002.users ORDER BY games_played ASC LIMIT 50;`
+            query = `SELECT username, games_played FROM geo2002.users ORDER BY games_played DESC LIMIT 50;`
 
         } else if (sort == "winRate") {
             // sorting by win rate
-            query = `SELECT username, win_rate FROM geo2002.users ORDER BY win_rate ASC LIMIT 50;`
+            query = `SELECT username, win_rate FROM geo2002.users ORDER BY win_rate DESC LIMIT 50;`
         }
 
         // if query empty, sort invalid

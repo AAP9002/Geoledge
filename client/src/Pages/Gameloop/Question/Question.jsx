@@ -4,10 +4,12 @@ import "./Question.css";
 import { useState, useEffect } from 'react';
 
 
-const Question = () => {
+const Question = (props) => {
     const [loading, setloading] = useState(false);
     const [otherCountryData, setOtherCountryData] = useState("");
-    const [correctStatus, setcorrectStatus] = useState(true);
+    const [correctStatus, setcorrectStatus] = useState(false);
+    const [lastGuess, setLastGuess] = useState();
+
 
 
     const [populationUPDOWN, setPopulationUPDOWN] = useState();
@@ -18,9 +20,15 @@ const Question = () => {
     const [locationDirection, setlocationDirection] = useState();
     const [locationDistance, setlocationDistance] = useState();
 
-
-    // search bar stuff start
     const [countryNames, setCountryNames] = useState([]);
+    const [timeNumber, setTimeNumber] = useState(props.timeLeft);
+
+    useEffect(() => {
+        if(timeNumber > 0)
+        {
+            setTimeout(() => setTimeNumber(timeNumber - 1), 1000)
+        }
+      }, [timeNumber]);
 
     useEffect(() => {
         fetch('/api/countryNames').then(res => res.json()).then(names => {
@@ -35,10 +43,9 @@ const Question = () => {
         setValue(event.target.value);
     }
 
-    // search bar stuff end
-
-    function check_guess(country_code) {
+    const check_guess = (country_code,countryName) => {
         setloading(true);
+        setLastGuess(countryName+"❌")
         fetch('/api/make_a_guess?answer_submitted=' + country_code).then(res => res.json()).then(resp => {
             setcorrectStatus(resp.correct_status);
             setPopulationUPDOWN(resp.actual_country.population.directionupdown);
@@ -61,16 +68,17 @@ const Question = () => {
     }
 
     if (loading) {
-        return (<h1>Loading...</h1>);
+        return (<p className='waiting'>Loading...</p>);
+    }
+
+    if (correctStatus) {
+        return (<p className='waiting'>CORRECT!</p>);
     }
 
     return (
-        <div className="question-container" style={{ padding: '30px', color:"white" }}>
-            <br />
-            <br />
-            <div><h2 style={{ textAlign: 'right' }}>Time Left: XXXXX</h2></div>
-            <br />
-            <br />
+        <div className="question-container" style={{ padding: '30px', color: "white" }}>
+            <div><p style={{ textAlign: 'right' , color: 'black'}}>Time Left: {timeNumber}s</p></div>
+            <h2 style={{textAlign:'center'}}>{lastGuess}</h2>
             <div id="country_stats" style={{ display: 'flex', justifyContent: 'space-around' }}>
                 <b style={{ color: populationColour }}>Population: {populationUPDOWN}</b>
                 <b style={{ color: saColour }}>Surface Area: {saUPDOWN}</b>
@@ -97,17 +105,19 @@ const Question = () => {
                     })
                         .slice(0, 10)
                         .map((item) => (
-                            <div
-                                className='drowdown-row'
+                            <button
+                                onClick={() => check_guess(item.country_id,item.country_name)}
+                                value={item.country_id}
+                                className='btn btn-secondary btn-sm w-100'
                                 key={item.country_id}
+                                style={{ padding: "5px" }}
                             >
-                                <p onClick={check_guess(item.country_id)}>{item.country_name}</p>
-                            </div>
+                                {item.country_name}
+                            </button>
                         ))}
                 </div>
             </div>
             <br />
-            <h1>Correct? ... {String(correctStatus)}</h1>
         </div>
     );
 };

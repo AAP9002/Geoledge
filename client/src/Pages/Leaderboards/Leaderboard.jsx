@@ -27,30 +27,27 @@ function LeaderBoard() {
     
    
     <div className='wrapper'>
-      <table className='board' align='center'>
+      <h1>Leaderboard</h1>
+      <table className='board'align='center'>
+        <thead>
         <tr>
-          <th className='columns'>Player</th>
-          <th className='columns'>Wins</th>
+          <th className='columns'>Player(Username)</th>
+          <th className='columns'>Number of Wins</th>
         </tr>
+        </thead>
         
 
 
         <tbody className='myTable'>
-        {Leaderboard.map((row)=> <tr><td align='center'>{row.username}</td><td align='center'>{row.wins}</td></tr>)}
+        {Leaderboard.map((row)=> <tr><td className='data' align='center'>{row.username}</td><td className='data' align='center'>{row.wins}</td></tr>)}
         </tbody>
         </table>
         
         
         
         </div>
-
-        
-
-
       
-   
-      
-      
+
   )
 }
 

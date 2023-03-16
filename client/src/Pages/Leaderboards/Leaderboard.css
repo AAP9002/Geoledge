@@ -1,38 +1,8 @@
-
-
-
-.board{
-background-color: rgb(108, 25, 104);
-align-items: center;
-position: relative;
-padding: 40px;
-border-radius: 20px;
-position:relative;
-left: -50px;  
-overflow-y:scroll;
-height:500px;
-display:block;  
-}
-
-
-.myTable{ 
-    color: antiquewhite;
-    font-size:170%;   
-    
-       
-     
-}
-.columns{
-    color: antiquewhite;
-    font-size:170%;
-   
-    padding: 100px;
-    width: 300px;
+.wrapper{
     align-items: center;
-    
-    
 }
 
-
-
-
+.wrapper h1{
+    align-items: center;
+    font-size: 30px;
+}
