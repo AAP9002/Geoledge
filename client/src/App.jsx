@@ -19,7 +19,7 @@ function App() {
     <>
       <Router>
        
-        <Navbar />
+      {Location.pathname !== '/Game' &&  <Navbar /> }
            <div className='App'>
             <Routes>
             <Route exact path='/' element={<Home/>} />
@@ -38,7 +38,7 @@ function App() {
         </div>
       
         
-        <Footer />
+        {window.location.pathname !== '/Game'?  <Footer /> :null }
       
         
       </Router>
