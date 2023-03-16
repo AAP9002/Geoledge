@@ -44,7 +44,7 @@ module.exports = function(app, connection) {
             },
             function(error){
                 console.log("sql broken: " + error)
-                res.status(500).send(error);
+                res.status(500).send("Server error");
             }
         )
     }
@@ -102,7 +102,7 @@ module.exports = function(app, connection) {
 
         myPromise.then(
             function(result) {
-                let match = result[0][0].result;
+                let match = result[0][0].result; // boolean value
                 if (match == 1) {
                     changeScoreState(sessionID, res);
                 } else {
@@ -111,7 +111,7 @@ module.exports = function(app, connection) {
             }
             ,function(error) {
                 console.log("Problem getting game state.")
-                res.status(500).send(error);
+                res.status(500).send("Server failed to get game state");
             }
         );
     });
@@ -122,7 +122,7 @@ module.exports = function(app, connection) {
         connection.query(query, [session_id], (err, result) => {
             if (err) {
                 console.log("sql broken: " + err)
-                res.status(500).send(err);
+                res.status(500).send("Server couldn't get scores");
             } else {
                 res.status(200).send(result[0]);
             }
@@ -136,7 +136,7 @@ module.exports = function(app, connection) {
         connection.query(query, [session_id], (err) => {
             if (err) {
                 console.log("couldn't drop game: " + err)
-                res.status(500).send(err);
+                res.status(500).send("Server couldn't drop game");
             } else {
                 res.status(200).send("game dropped");
             }
