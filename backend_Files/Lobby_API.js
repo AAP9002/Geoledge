@@ -48,9 +48,9 @@ module.exports = function (app, connection) {
         })
     });
 
-    app.post('/api/joinLobby', (req, res) => {
+    app.get('/api/joinLobby', (req, res) => {
         if (req.userID == null) {
-            res.status(401).send({ "status": "Not logged in mate." })
+            res.status(401).json({ "status": "Not logged in mate." })
         }
         else {
             let username = req.username;
@@ -74,7 +74,7 @@ module.exports = function (app, connection) {
                 function(result) {
                     if (result[0].length == 0) {
                         // no such sessionID exists
-                        res.resolve({ "status": "no such sessionID exists" });
+                        res.status(200).json({ "status": "no such sessionID exists" });
                     } else {
                         if (result[0][0].num_of_participents < result[0][0].max_participents) {
                             // the session is not full. adding client to session
@@ -83,21 +83,21 @@ module.exports = function (app, connection) {
                             connection.query(query, [username, session_id], (err, result) => {
                                 if (err) {
                                     console.log("sql broken: " + err)
-                                    res.status(500).send({ "status": "error occurred on the server" });
+                                    res.status(500).json({ "status": "error occurred on the server" });
                                 } else {
-                                    res.status(200).send({ "status": 'participent added.' });
+                                    res.status(200).json({ "status": 'participent added' });
                                 }
                             })
                         } else {
                             // the session is full
-                            res.status(200).send({ "status": "session is full" });
+                            res.status(200).json({ "status": "session is full" });
                         }
                     }
                 },
 
                 function(reject) {
                     // SQL error when checking if session is full
-                    res.status(200).send({ "status": "error occurred on the server" });
+                    res.status(200).json({ "status": "error occurred on the server" });
                 }
             );
         }

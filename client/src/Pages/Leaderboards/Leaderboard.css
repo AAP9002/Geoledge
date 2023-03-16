@@ -26,6 +26,7 @@
      width: 70px; 
     }
     .wrapper columns{
+        margin-left: 30px;
      font-family: Comic Sans MS;
     font-size:200%;
     align-items: center;
