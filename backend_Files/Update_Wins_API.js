@@ -84,7 +84,7 @@ module.exports = function(app, connection) {
 
     //============================= API ===============================cd c
     // Decide what happens after "revealing answer" -> show current|final scores 
-    app.get('/api/scoreState', (req, res) => {
+    app.post('/api/scoreState', (req, res) => {
         let sessionID = req.query.sessionID;
         let userID = req.userID;
         let msg = "revealing answer"
