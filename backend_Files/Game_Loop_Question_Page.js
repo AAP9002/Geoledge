@@ -140,4 +140,35 @@ module.exports = function (app, DBconnection) {
         res.sendFile(`${__dirname}/static_files/country_name_list.json`);
     });
 
+    // Sends country name answer of current question
+    app.get('/api/revealAnswer', (req, res) => {
+        let sessionID = req.query.sessionID;
+        let myPromise = new Promise(function (myResolve, myReject) {
+            let query = `call answer(?)`
+            DBconnection.query(query, [sessionID], (err, result) => {
+                if (err) {
+                    myReject(err);
+                } else {
+                    myResolve(result); // pass countries to next promise
+                }
+            })
+        });
+
+        myPromise.then(
+            function(result) {
+                let i = result[0][0].current_question-1
+                let game_state = result[0][0].game_state
+                let answer = result[1][i].country_name
+                if (game_state == "revealing answer") {
+                    res.status(200).send(answer)
+                } else {
+                    res.status(401).send("game state not in revealing answer yet")
+                }
+            }
+            , function(err) {
+                console.log("sql broken: " + err)
+                res.status(500).send()
+            }
+        )
+    });
 }
