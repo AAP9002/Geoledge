@@ -25,10 +25,12 @@ function LeaderBoard() {
   return (
     
     
-   
-    <div className='wrapper'>
-      <h1>Leaderboard</h1>
-      <table className='board'>
+   <>
+    <h1 className='leaderboardH1'>Leaderboard</h1>
+
+    <div className='wrapper w-100'>
+      
+      <table className='board w-100'>
         <thead>
         <tr>
           <th className='columns'>Player(Username)</th>
@@ -46,7 +48,7 @@ function LeaderBoard() {
         
         
         </div>
-      
+        </>      
 
   )
 }
