@@ -35,8 +35,10 @@ function App() {
             <Route path='/Game' element={<Game/>}/>
             
 
-          </Routes>
+          </Routes>  
         </div>
+      
+        
         <Footer />
       
         
