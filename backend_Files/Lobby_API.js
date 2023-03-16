@@ -146,6 +146,8 @@ module.exports = function (app, connection) {
         let quiz_id;
         let max_guesses = req.query.max_guesses;
         let time_limit = req.query.time_limit;
+        console.log(time_limit)
+
 
         // Country Set Creation:
         let myPromise = new Promise(function(myResolve, myReject) {

@@ -19,7 +19,7 @@ module.exports = function (app, DBconnection) {
                     console.log(results);
                     if (error) {
                         console.log(error);
-                        res.status(500).status()
+                        res.status(500).status({errorMessage:error});
                     }
                     else {
                         try {
@@ -31,17 +31,6 @@ module.exports = function (app, DBconnection) {
                             //console.log(actual_docted);
                             status_of_correct = guess.country_id == actual_docted.country_id;
 
-                            if (status_of_correct) {
-                                score = 100;
-                                DBconnection.query("call setScore(?,?)", [score,user], function (error, results) {
-                                    if (error) {
-
-                                    }
-                                    else {
-
-                                    }
-                                })
-                            }
                             res.status(200).send({
                                 auth_status: user_verified,
                                 correct_status: status_of_correct,
@@ -133,7 +122,7 @@ module.exports = function (app, DBconnection) {
     // SELECT COUNT(answered) from participants where quiz_session_id={session_id} and answered = 0
     // in JS if == 0, return TRUE else FALSE
     app.get('/api/has_everyone_answered', (req, res) => {
-        let quiz_session_id = "19";
+        let quiz_session_id = req.query.session_id;
         DBconnection.query("call check_if_all_participants_have_answered(?)", [quiz_session_id], function (error, results) {
 
             if (error) {

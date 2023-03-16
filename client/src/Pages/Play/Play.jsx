@@ -28,7 +28,7 @@ function Play() {
     //
 
     const [NumberOfRounds, setNOR] = useState(5)
-    const [TimePerRound, setTPR] = useState(30)
+    const [TimePerRound, setTPR] = useState(120)
     const [Players, setPlayers] = useState([]);
     const [No, setNo] = useState(0)
 
