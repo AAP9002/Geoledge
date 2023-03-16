@@ -35,11 +35,10 @@ function App() {
             <Route path='/JoinLobby' element={<JoinLobby/>}/>
             <Route path='/Game' element={<Game/>}/>
             <Route path='/Endgame' element={<End_game/>}/>
-            
-
-
           </Routes>
         </div>
+      
+        
         <Footer />
       
         

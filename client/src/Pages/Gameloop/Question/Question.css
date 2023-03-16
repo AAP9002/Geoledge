@@ -30,7 +30,7 @@ body {
 .question-container {
   margin: 0 auto;
   padding: 30px;
-  background-color:  rgb(122, 228, 122);
+  background-color:  rgb(163, 10, 168);
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: absolute;
@@ -70,6 +70,8 @@ body {
   justify-content: space-around;
   margin-top: 30px;
 }
+
+
 
 .question-container #country_stats b {
   font-size: 24px;
