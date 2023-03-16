@@ -1,4 +1,5 @@
 module.exports = function(app, connection) {
+    //========================== FUNCTIONS ============================
     function updateWins(sessionID, res) {
         let myPromise = new Promise(function(myResolve, myReject) {
             let query = `SELECT user_id FROM participents WHERE session_id = ${sessionID} ORDER BY player_score DESC;`
@@ -48,7 +49,6 @@ module.exports = function(app, connection) {
         )
     }
     
-    // API to decide what happens after "revealing answer" -> show current|final scores 
     function changeScoreState(sessionID, res) {
         let myPromise = new Promise(function(myResolve, myReject) {
             let query = `SELECT if(session.current_question = quiz.num_of_questions, 1, 0) AS value FROM session INNER JOIN quiz ON session.quiz_id = quiz.quiz_id where session_id = ${sessionID};`
@@ -81,19 +81,21 @@ module.exports = function(app, connection) {
             }
         );
     }
+
+    //============================= API ===============================
+    // Decide what happens after "revealing answer" -> show current|final scores 
     app.get('/api/scoreState', (req, res) => {
         let sessionID = req.query.sessionID;
         let userID = req.userID;
         let msg = "revealing answer"
+        // check if we score state change is valid for current game state
         let myPromise = new Promise(function(myResolve, myReject) {
-            // checks if the call is made by the host, and sees whether current game state
-            // is revealing answer 
             let query = `call host_check_game_state(?,?,?)`;
             connection.query(query, [sessionID, userID, msg], (err, result) => {
                 if (err) {
                     myReject(err);
                 } else {
-                    myResolve(result);
+                    myResolve(result); // returns bool(host == id AND game_state == "revealing answer")
                 }
             });         
         });
@@ -113,4 +115,31 @@ module.exports = function(app, connection) {
             }
         );
     });
+
+    app.get('/api/getScores', (req, res) => {
+        let session_id = req.query.session_id;
+        let query = "call get_scores(?)"
+        connection.query(query, [session_id], (err, result) => {
+            if (err) {
+                console.log("sql broken: " + err)
+                res.status(500).send(err);
+            } else {
+                res.status(200).send(result[0]);
+            }
+        })
+    }); 
+
+    // Deletes a game session and all related component records
+    app.post('/api/dropGame', (req, res) => {
+        let session_id = req.query.session_id;
+        let query = "call drop_game(?)"
+        connection.query(query, [session_id], (err) => {
+            if (err) {
+                console.log("couldn't drop game: " + err)
+                res.status(500).send(err);
+            } else {
+                res.status(200).send("game dropped");
+            }
+        })
+    }); 
 }
