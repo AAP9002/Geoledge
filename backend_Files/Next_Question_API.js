@@ -165,38 +165,4 @@ module.exports = function (app, connection) {
             }
         );
     });
-
-    // API to decide what happens after "revealing answer" -> show current|final scores 
-    app.post('/api/scoreState', (req, res) => {
-        let sessionID = req.query.sessionID;
-        let myPromise = new Promise(function(myResolve, myReject) {
-            let query = `SELECT if(session.current_question = quiz.num_of_questions, 1, 0) AS value FROM session INNER JOIN quiz ON session.quiz_id = quiz.quiz_id where session_id = ${sessionID};`
-            connection.query(query, (err, result) => {
-                if (err) {
-                    myReject(err);
-                } else {
-                    myResolve(result)
-                }
-            });
-        });
-
-        myPromise.then(
-            function(result) {
-                let wasfinalQ = (result[0].value);
-                let state = wasfinalQ ? "final" : "current"
-                let query = `update session set game_state = "showing ${state} scores" where session_id = ${sessionID}`;
-                connection.query(query, (err) => {
-                    if (err) {
-                        res.status(500).send("sql broken");
-                    } else {
-                        res.status(200).send(state);
-                    }
-                });
-            },
-            function(err) {
-                console.log(err);
-                res.status(500).send("sql broken");
-            }
-        );
-    });
 }
