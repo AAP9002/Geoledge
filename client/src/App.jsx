@@ -12,7 +12,7 @@ import Home from './Pages/Home/Home'
 import JoinLobby from './Pages/JoinLobby/JoinLobby';
 import LoginPage from './Pages/Sign-up/LoginPage.jsx'
 import Game from './Pages/Gameloop/Game';
-import End_game from '.\Pages\Gameloop\End_game';
+import End_game from './Pages/Gameloop/End_game';
 
 function App() {
   return (
