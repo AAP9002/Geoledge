@@ -1,8 +1,97 @@
-.wrapper{
-    align-items: center;
-}
 
-.wrapper h1{
+
+
+     
+    
+    .board{
+        position: absolute;
+     right: -400px;
+    
+    
+    background-color: #5b0ca5;
+    border-radius: 10px;
+    
+    position: relative;
+    width: 800px;
+    
+    position:relative;
+     
+    overflow-y:scroll;
+    scrollbar-width: thin;
+    height:500px;
+    display:block; 
+    
+    }
+    
+    
+    .wrapper myTable{ 
+     font-family: Comic Sans MS;
+    font-size:200%;  
+    
+     width: 70px; 
+    }
+    .wrapper columns{
+     font-family:  Comic Sans MS;
+    font-size:200%;
     align-items: center;
-    font-size: 30px;
-}
+    
+     width: 80px;
+     
+ 
+     
+    }
+    .wrapper data{
+    width: 700px;
+    }
+    tr:nth-child(odd){
+     background:#782ad1;}
+    
+    
+    .columns:nth-child(odd){
+     background:#5b0ca5;}
+    
+    .columns:nth-child(even){
+     background:#7d29dd;}
+   
+    .wrapper td {
+     color: aliceblue;
+     font-size: 30px;
+    }
+    .wrapper th {
+     color: aliceblue;
+     font-size: 30px;
+    }
+    .wrapper h1{
+     font-family: Comic Sans MS;
+     text-decoration-line: underline;
+     color: aliceblue;
+     font-size: 80px;
+     position: absolute;
+     right: -1000px;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    body::-webkit-scrollbar {
+     width: 12px; /* width of the entire scrollbar */
+     }
+     
+    body::-webkit-scrollbar-track {
+    background: rgb(120, 28, 206); /* color of the tracking area */
+    }
+    
+     body::-webkit-scrollbar-thumb {
+    background-color: rgb(230, 215, 228); /* color of the scroll thumb */
+     border-radius: 20px;  /* roundness of the scroll thumb */
+     border: 3px solid rgb(194, 182, 159); /* creates padding around scroll thumb */
+    
+    }
+    
+    
+    
+   
