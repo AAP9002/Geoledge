@@ -15,7 +15,7 @@ import Game from './Pages/Gameloop/Game';
 
 
 function App() {
-  return (
+  return (  
     <>
       <Router>
        
@@ -34,7 +34,6 @@ function App() {
             <Route path='/AccountPage' element={<Account/>} />
             <Route path='/JoinLobby' element={<JoinLobby/>}/>
             <Route path='/Game' element={<Game/>}/>
-
           </Routes>
         </div>
       
