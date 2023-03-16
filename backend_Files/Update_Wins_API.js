@@ -82,7 +82,7 @@ module.exports = function(app, connection) {
         );
     }
 
-    //============================= API ===============================
+    //============================= API ===============================cd c
     // Decide what happens after "revealing answer" -> show current|final scores 
     app.get('/api/scoreState', (req, res) => {
         let sessionID = req.query.sessionID;
