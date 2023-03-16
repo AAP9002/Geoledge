@@ -13,48 +13,59 @@ module.exports = function (app, DBconnection) {
                 auth_status: user_verified
             });
         }
-        else{
+        else {
             DBconnection.query("call check_country_guess_correct(?,?)",
-            [answer_submitted, user], function (error, results) {
-                console.log(results);
-                if (error) {
-                    console.log(error);
-                    res.status(500).status()
-                }
-                else {
-                    try {
-                        //console.log(results);
+                [answer_submitted, user], function (error, results) {
+                    console.log(results);
+                    if (error) {
+                        console.log(error);
+                        res.status(500).status()
+                    }
+                    else {
+                        try {
+                            //console.log(results);
 
-                        guess = results[0][0]
+                            guess = results[0][0]
 
-                        actual_docted = results[4][0];
-                        //console.log(actual_docted);
-                        status_of_correct = guess.country_id == actual_docted.country_id;
+                            actual_docted = results[4][0];
+                            //console.log(actual_docted);
+                            status_of_correct = guess.country_id == actual_docted.country_id;
 
-                        res.status(200).send({
-                            auth_status: user_verified,
-                            correct_status: status_of_correct,
-                            guess_country: guess,
-                            actual_country: {
-                                independent: (actual_docted["independent"] == guess["independent"]),
-                                unMember: (actual_docted["unMember"] == guess["unMember"]),
-                                region: (actual_docted["region"] == guess["region"]),
-                                proximity: compare_and_give_direction(guess["latitude"], guess["longitude"], actual_docted["latitude"], actual_docted["longitude"]),
-                                surface_area: value_distance_score(guess["surface_area"], actual_docted["surface_area"]),
-                                population: value_distance_score(guess["population"], actual_docted["population"]),
-                                time_diff_hours_off: Number(guess["timezone"].substring(3, 6)) - Number(actual_docted["timezone"].substring(3, 6)),
-                                driving_side: (actual_docted["driving_side"] == guess["driving_side"]),
-                                capital: (actual_docted["capital"] == guess["capital"]),
-                                language: (actual_docted["language"] == guess["language"]),
-                                currency: (actual_docted["currency"] == guess["currency"]),
+                            if (status_of_correct) {
+                                score = 100;
+                                DBconnection.query("call setScore(?,?)", [score,user], function (error, results) {
+                                    if (error) {
+
+                                    }
+                                    else {
+
+                                    }
+                                })
                             }
-                        });
+                            res.status(200).send({
+                                auth_status: user_verified,
+                                correct_status: status_of_correct,
+                                guess_country: guess,
+                                actual_country: {
+                                    independent: (actual_docted["independent"] == guess["independent"]),
+                                    unMember: (actual_docted["unMember"] == guess["unMember"]),
+                                    region: (actual_docted["region"] == guess["region"]),
+                                    proximity: compare_and_give_direction(guess["latitude"], guess["longitude"], actual_docted["latitude"], actual_docted["longitude"]),
+                                    surface_area: value_distance_score(guess["surface_area"], actual_docted["surface_area"]),
+                                    population: value_distance_score(guess["population"], actual_docted["population"]),
+                                    time_diff_hours_off: Number(guess["timezone"].substring(3, 6)) - Number(actual_docted["timezone"].substring(3, 6)),
+                                    driving_side: (actual_docted["driving_side"] == guess["driving_side"]),
+                                    capital: (actual_docted["capital"] == guess["capital"]),
+                                    language: (actual_docted["language"] == guess["language"]),
+                                    currency: (actual_docted["currency"] == guess["currency"]),
+                                }
+                            });
+                        }
+                        catch {
+                            res.status(500).send("Error when processing data, may be not in game or not in question state")
+                        }
                     }
-                    catch {
-                        res.status(500).send("Error when processing data, may be not in game or not in question state")
-                    }
-                }
-            })
+                })
         }
     });
 
