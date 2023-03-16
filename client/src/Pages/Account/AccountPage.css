@@ -6,21 +6,21 @@
 
 
  .b1{   
-    background-color: rgb(91, 50, 179);
+    background-color: #7145C9;
   
-    border: 7px solid rgb(134, 73, 233);
+    border: 7px solid #472B7E;
     width: 300px;
     height: 350px;
     position: relative;
     left: -400px;
     margin-top: 100px;
-    
+    border-radius: 30px;
 
 }
 .Container{
     display: flex;
    justify-content: center;
-    background-color: rgb(102, 36, 179);
+    background-color: #472B7E;
     width: 200px;
     height: 70px;
     position: relative;
@@ -67,9 +67,16 @@ h2{
      margin-top: 15px;
 }
 
-
+.cpw{
+    
+    color: aliceblue;
+    font-size: 15px;
+}
 .button1{
-   margin-left: 70px;
+   margin-left: 80px;
    margin-top: 20px;
+   background-color: #af2ecc;
+   
+   border-radius: 30px;
 
 }
