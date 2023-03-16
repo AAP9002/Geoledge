@@ -55,15 +55,51 @@ module.exports = function (app, connection) {
         else {
             let username = req.username;
             let session_id = req.query.session_id;
-            let query = "call join_lobby(?,?)"
-            connection.query(query, [username, session_id], (err, result) => {
-                if (err) {
-                    console.log("sql broken: " + err)
-                    res.status(500).send(err);
-                } else {
-                    res.status(200).send('participent added.');
+
+            // Checking to see if session is full
+            let promise = new Promise(function(resolve, reject) {
+                let query = "call check_if_session_is_full(?)"
+
+                connection.query(query, [session_id], (err, result) => {
+                    if (err) {
+                        console.log("ERROR WHEN CHECKING IF SESSION IS FULL: " + err);
+                        reject(null);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            });
+
+            promise.then(
+                function(result) {
+                    if (result[0].length == 0) {
+                        // no such sessionID exists
+                        res.resolve({ "status": "no such sessionID exists" });
+                    } else {
+                        if (result[0][0].num_of_participents < result[0][0].max_participents) {
+                            // the session is not full. adding client to session
+                            let query = "call join_lobby(?,?)"
+
+                            connection.query(query, [username, session_id], (err, result) => {
+                                if (err) {
+                                    console.log("sql broken: " + err)
+                                    res.status(500).send({ "status": "error occurred on the server" });
+                                } else {
+                                    res.status(200).send({ "status": 'participent added.' });
+                                }
+                            })
+                        } else {
+                            // the session is full
+                            res.status(200).send({ "status": "session is full" });
+                        }
+                    }
+                },
+
+                function(reject) {
+                    // SQL error when checking if session is full
+                    res.status(200).send({ "status": "error occurred on the server" });
                 }
-            })
+            );
         }
     });
 

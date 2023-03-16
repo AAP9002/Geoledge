@@ -25,7 +25,7 @@ module.exports = function (app, connection) {
                         // Reading SQL query results
                         if (result.length == 0) {
                             // No account under such username (very unusual result);
-                            console.log("User attempted to get account information but failed");
+                            console.log("User attempted to get account information but failed (hacker?)");
                             res.status(401).send({ "status":"client not logged" });
                         } else {
                             // Account found and returning account with specified username

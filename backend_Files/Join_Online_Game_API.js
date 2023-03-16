@@ -32,7 +32,6 @@ module.exports = function(app, connection) {
                             res.status(200).send({ "status": "no avaiable sessions" });
                         } else {
                             // taking the first available session and returning the sessionID of that session to the client
-                            console.log(result);
                             res.status(200).send({ "status": "sessionID found", "sessionID": result[0][0].session_id })
                         }
                     }

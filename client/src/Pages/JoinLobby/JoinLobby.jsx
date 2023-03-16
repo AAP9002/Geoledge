@@ -9,14 +9,15 @@ function JoinLobby() {
     }
     const [lobby_code, setLobbyCode] = useState("");
     function submitJoinCode() {
-        fetch('/api/checkLoggedIn', { method: "GET" }).then((res) => {
+        fetch('/api/checkLoggedIn', { method: "GET" }).then((res) => res.json).then(res => {
             if (res.status === 401) {
                 window.location.href = "/#/Log-in";
             } else {
+                // -------- what if joining fails  ---------
                 fetch(`/api/joinLobby?session_id=${lobby_code}`, { method: "POST" }).then(res => {
                     console.log(res)
-                });
-                window.location.href = "/#/Game";
+                });window.location.href = "/#/Game";
+                
             }
         })
     }
