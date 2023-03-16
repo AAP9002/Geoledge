@@ -8,16 +8,11 @@ import { useState, useEffect } from 'react';
 function FinishBoard() {
   
 
-  const [Finishboard, setFinishboard] = useState([]);
+  const [Finishboard, setFinishboard] = useState([{no:"1",username:"fdfdf", scores:"200"},{no:"1",username:"fdfdf", scores:"200"},{no:"2",username:"asass", scores:"100"}
+  ,{no:"3",username:"jkjkj", scores:"50"}]);
 
 
-  useEffect(() => {
-    fetch('').then(res => res.json()).then(fetchedData =>{
-
-      setFinishboard(fetchedData.Finishboards);
-      console.log(Finishboard);
-    });
-    }, []);
+ 
 
 
 
@@ -44,7 +39,7 @@ function FinishBoard() {
 
 
         <tbody className='RankingTable'>
-        {Finishboard.map((row)=> <tr><td className='data' align='center'>{row.no}</td><td className='data' align='center'>{row.username}</td><td className='data' align='center'>{row.scores}</td></tr>)}
+        {Finishboard.map((row)=> <tr><td className='data'>{row.no}</td><td className='data'>{row.username}</td><td className='data'>{row.scores}</td></tr>)}
         </tbody>
         </table>
         <button onClick={ returnToHome }>Back to Home</button>
