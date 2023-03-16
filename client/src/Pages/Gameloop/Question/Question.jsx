@@ -96,7 +96,9 @@ const Question = (props) => {
     }
 
     if (correctStatus) {
-        return (<p className='waiting'>CORRECT!</p>);
+        return (<> <div><p style={{color: 'black',position:"relative",top:"-22px"}}>Time Left: {timeNumber}s</p></div>
+        <p className='waiting'>Correct!</p>
+        </>);
     }
 
     return (
