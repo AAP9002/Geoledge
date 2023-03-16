@@ -7,7 +7,58 @@ const SignUpPage = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [showLoginPage, setShowLoginPage] = useState(false);
-  const [termsAccepted, setTermsAccepted] = useState(false); 
+  const [termsAccepted, setTermsAccepted] = useState(false);
+
+  // ======================= FUNCTIONS =========================
+  // USERNAME VALIDATION METHOD
+  function validateUsername() {
+    // checking if username is of a valid length (USERNAME CANNOT BE SHORTER THAN 5 AND LONGER THAN 32 CHARACTERS LONG)
+    if(name.length < 5 || name.length > 32) {
+    return false;
+    }
+
+    // checking if username only contains valid characters (alphanumeric and special characters)
+    for(let i=0; i<name.length; i++) {
+        let ASCIICode = name.charCodeAt(i);
+        
+        if (!(ASCIICode >= 33 && ASCIICode <= 126)) {
+            return false;
+        }
+    }
+
+    return true;
+  }
+
+  // PASSWORD VALIDATION METHOD
+  function validatePassword() {
+    // checking if password is of valid length (PASSWORD CANNOT BE LONGER SHORTER THAN 8 AND LONGER THAN 64 CHARACTERS)
+    if(password.length < 8 || password.length > 64) {
+        // password length of invalid size
+        return false;
+    }
+
+    // checking if password only contains valid characters (alphanumeric and special characters)
+    for(let i=0; i<password.length; i++) {
+        let ASCIICode = password.charCodeAt(i);
+        
+        if (!(ASCIICode >= 33 && ASCIICode <= 126)) {
+            console.log("char not valid: " + ASCIICode);
+            return false;
+        }
+    }
+
+    return true;  // password valid
+  }
+
+
+  // EMAIL VALIDATION METHOD
+  function validateEmail() {
+      // Checking if email matches regular expression
+      return (email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      ));
+  }
+
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -29,8 +80,27 @@ const SignUpPage = () => {
     event.preventDefault();
 
     console.log('Name:', name, 'Email:', email, 'Password:', password, 'Terms Accepted:', termsAccepted);
+    let valid = true;
 
-    if (termsAccepted) {
+    if (!validateUsername()) {
+      // username not valid
+      console.log("username invalid");
+      valid = false;
+    }
+
+    if (!validatePassword()) {
+      // password not valid
+      console.log("password invalid");
+      valid = false;
+    }
+
+    if (!validateEmail()) {
+      // email not valid
+      console.log("email invalid");
+      valid = false;
+    }
+
+    if (termsAccepted && valid) {
       // API Call to create account
       fetch(`/api/createAccount?username=${ name }&password=${ password }&email=${ email }&privacy_policy=1&terms_conditions=1`)
         .then(res => res.json())

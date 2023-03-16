@@ -21,7 +21,9 @@ function FinishBoard() {
 
 
 
-   
+   function returnToHome() {
+    window.location.href = "/#/Home";
+   }
  
 
   return (
@@ -45,7 +47,7 @@ function FinishBoard() {
         {Finishboard.map((row)=> <tr><td className='data' align='center'>{row.no}</td><td className='data' align='center'>{row.username}</td><td className='data' align='center'>{row.scores}</td></tr>)}
         </tbody>
         </table>
-        <button onclicked>Back to Home</button>
+        <button onClick={ returnToHome }>Back to Home</button>
         
         
         
