@@ -80,3 +80,77 @@ h2{
    border-radius: 30px;
 
 }
+
+
+
+
+
+.Statistics{
+    display: flex;
+    justify-content: center;
+    margin-top: -49vh;
+}
+
+.b2{
+    background-color: #7145C9;
+
+  
+    border: 7px solid #472B7E;
+    width: 700px;
+    height: 350px;
+    position: relative;
+    right: -200px;
+    
+    border-radius: 30px;
+}
+
+.title2{
+    font-size: 400%;
+
+}
+.gpd{
+    position: relative;
+    left: -170px;
+    font-size: 40px;
+}
+.wr{
+    position: relative;
+    right:-150px;
+    margin-top: -5vh;
+    font-size: 40px;
+}
+.Container2{
+    display: flex;
+    justify-content: center;
+     background-color: #472B7E;
+     width: 250px;
+     height: 150px;
+     position: relative;
+     right: -40px;
+     margin-top: 3vh;
+}
+.Gameplayed{
+    display: flex;
+    justify-content: center;
+    margin-top: 7vh;
+    font-size: 30px;
+}
+
+.Container3{
+    display: flex;
+    justify-content: center;
+     background-color: #472B7E;
+     width: 250px;
+     height: 150px;
+     position: relative;
+     right: -370px;
+     margin-top: -21vh;   
+}
+
+
+.rate{
+    display: flex;
+    justify-content: center;
+    margin-top: 7vh;
+    font-size: 30px;
+}
