@@ -93,4 +93,5 @@ require('./backend_Files/Next_Question_API')(app, connection);
 require('./backend_Files/Game_State')(app, connection);
 require('./backend_Files/Game_End')(app, connection);
 require('./backend_Files/Join_Online_Game_API')(app, connection);
+require('./backend_Files/Leave_Game_API')(app, connection);
 //////////////////////////////////////////////////////

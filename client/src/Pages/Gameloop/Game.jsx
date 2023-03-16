@@ -73,7 +73,7 @@ const Game = () => {
     switch (status) {
         case "waiting for players":
             return (
-                <WaitingForPlayers />
+                <WaitingForPlayers sessionID={ sessionID }/>
             );
         case "starting game":
             return (
