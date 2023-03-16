@@ -22,11 +22,22 @@ const Question = (props) => {
 
     const [countryNames, setCountryNames] = useState([]);
     const [timeNumber, setTimeNumber] = useState(props.timeLeft);
+    
+    // scoring
+    const MAX_TIME = props.timeLeft;
+    const MAX_GUESS = props.maxGuesses;
+    const [numberOfGuessesUsed, setNumberOfGuessesUsed] = useState(0);
+    const [Score, setScore] = useState(10000);
+
+
 
     useEffect(() => {
         if(timeNumber > 0)
         {
             setTimeout(() => setTimeNumber(timeNumber - 1), 1000)
+            if(!correctStatus){
+                setScore(Math.floor(10000-((5000*((MAX_TIME-timeNumber)/MAX_TIME))+(5000*(numberOfGuessesUsed/MAX_GUESS)))))
+            }
         }
       }, [timeNumber]);
 
@@ -64,7 +75,20 @@ const Question = (props) => {
             setOtherCountryData(others);
             setValue("");
             setloading(false);
+
+            if(!correctStatus)
+            {
+                setNumberOfGuessesUsed(numberOfGuessesUsed+1)
+                setScore(Math.floor(10000-((5000*((MAX_TIME-timeNumber)/MAX_TIME))+(5000*(numberOfGuessesUsed/MAX_GUESS)))))
+            }
+            
         });
+    }
+
+    if (numberOfGuessesUsed == MAX_GUESS) {
+        return (<> <div><p style={{color: 'black',position:"relative",top:"-22px"}}>Time Left: {timeNumber}s</p></div>
+        <p className='waiting'>Out Of Guesses</p>
+        </>);
     }
 
     if (loading) {
@@ -77,19 +101,19 @@ const Question = (props) => {
 
     return (
         <div className="question-container" style={{ padding: '30px', color: "white" }}>
-            <div><p style={{ textAlign: 'right' , color: 'black'}}>Time Left: {timeNumber}s</p></div>
+            <div>
+                <p style={{ textAlign: 'right' , color: 'black'}}>
+                Time Left: {timeNumber}s<br/>
+                Guesses Left: {MAX_GUESS-numberOfGuessesUsed}<br/>
+                Score: {Score}
+                </p>
+            </div>
             <h2 style={{textAlign:'center'}}>{lastGuess}</h2>
             <div id="country_stats" style={{ display: 'flex', justifyContent: 'space-around' }}>
                 <b style={{ color: populationColour }}>Population: {populationUPDOWN}</b>
                 <b style={{ color: saColour }}>Surface Area: {saUPDOWN}</b>
                 <b>Location: [{locationDirection},{locationDistance}]</b>
                 <b>Time Difference {timeUPDOWN}</b>
-            </div>
-            <br />
-            <br />
-            <b>Other</b>
-            <div id="country_other_stats" style={{ display: 'flex', justifyContent: 'space-around' }}>
-                {Object.keys(otherCountryData).map(key => (<small>{key} : {String(otherCountryData[key])}</small>))}
             </div>
             <br />
             <br />
@@ -118,6 +142,10 @@ const Question = (props) => {
                 </div>
             </div>
             <br />
+            <b>Other</b>
+            <div id="country_other_stats" style={{ display: 'flex', justifyContent: 'space-around' }}>
+                {Object.keys(otherCountryData).map(key => (<small>{key} : {String(otherCountryData[key])}</small>))}
+            </div>
         </div>
     );
 };
