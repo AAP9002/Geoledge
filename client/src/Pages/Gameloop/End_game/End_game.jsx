@@ -11,6 +11,15 @@ function FinishBoard() {
   const [Finishboard, setFinishboard] = useState([]);
 
 
+  useEffect(() => {
+    fetch('').then(res => res.json()).then(fetchedData =>{
+
+      setFinishboard(fetchedData.Finishboards);
+      console.log(Finishboard);
+    });
+    }, []);
+
+
 
    
  
@@ -33,7 +42,7 @@ function FinishBoard() {
 
 
         <tbody className='RankingTable'>
-        {Finishboard.map((row)=> <tr><td className='data' align='center'>{row.No}</td><td className='data' align='center'>{row.username}</td><td className='data' align='center'>{row.wins}</td></tr>)}
+        {Finishboard.map((row)=> <tr><td className='data' align='center'>{row.no}</td><td className='data' align='center'>{row.username}</td><td className='data' align='center'>{row.scores}</td></tr>)}
         </tbody>
         </table>
         <button onclicked>Back to Home</button>
