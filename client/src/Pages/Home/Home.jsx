@@ -11,8 +11,10 @@ const About = () => {
     <div className ="column">
       <div className ="top">
       <div className ="row-md-8">
+        <div className='home-headers'>
         <h1>GEOLEDGE</h1>
         <h2>Prepared to test your geographical knowledge?</h2>
+        </div>
         <div className = "btns">
         <a className ="styledbutton" href='./#/Play'> Host Game</a>
         <a className ="styledbutton" href='./#/Play'> Play Online</a>

@@ -15,11 +15,12 @@ function JoinLobby() {
   }
   return (
     <div className="join-lobby-wrapper">
-      <h1 style={{ color: "#fff" }}>Join Lobby</h1>
-      <div className="join-lobby-container">
+ 
+      <div className="join-lobby-container"> 
         <div className="join-lobby-content">
           <div className="join-lobby-header">
-            <h2 style={{ color: "#fff" }}>Enter Lobby Code:</h2>
+            <h1 style={{ color: "#000" }}>Join Lobby</h1>
+            <h2 style={{ color: "#000" }}>Enter Lobby Code:</h2>
           </div>
           <form className="join-lobby-form">
             <div className="join-lobby-input-group">

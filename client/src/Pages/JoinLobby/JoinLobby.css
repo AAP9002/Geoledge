@@ -1,6 +1,5 @@
 .join-lobby-wrapper {
-  background-color: #0f2027;
-  background-image: linear-gradient(315deg, #0f2027 0%, #203a43 74%);
+
   display: flex;
   flex-direction: column;
   align-items: center;
