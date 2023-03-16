@@ -51,7 +51,7 @@ body {
   right: 0;
   width:150px;
   height: 60px;
-  background-color: #ff0000;
+  background-color: #eeff00;
   z-index: -1;
 }
 
@@ -77,7 +77,7 @@ body {
   font-size: 24px;
   font-weight: bold;
   position: relative;
-  color: var(--tertiary-color);
+  color:#ffffff;
 }
 
 .question-container #country_stats b:after {
