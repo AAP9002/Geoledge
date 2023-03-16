@@ -10,6 +10,7 @@ function ScoreBoard() {
   const [Username, SetUsername] = useState("Username")
 
 
+
   useEffect(() => {
     fetch('/api/viewAccount').then(res => res.json()).then(Account => {
       if (Account.status === "client not logged") {
@@ -17,7 +18,7 @@ function ScoreBoard() {
         console.log("reached");
         window.location = "/#/Log-in";
       }
-
+      
       SetUsername(Account.username)
       setWins(Account.wins)
       setGamePlayed(Account.games_played)
@@ -25,26 +26,47 @@ function ScoreBoard() {
         SetWinrate(1)
       }
       else {
-        SetWinrate(Number(Account.wins) / Number(Account.games_played))
+        SetWinrate((Account.wins / Account.games_played) * 100)
       }
     });
   }, []);
 
   return (
+    <div className='all'>
     <div className='Credentials'>
       <div className='b1'>
       <h1>Credentials</h1> 
     
       <h2>Username</h2> 
-      <div className='Container'><p className='username'>Username</p></div> 
+      <div className='Container'><p className='username'>{Username}</p></div> 
       <h2>Password</h2> 
       <button className='button1'> <p className='cpw'>Change Password</p></button>
       </div>
-
-
-
-
     </div>
+
+    <div className='Statistics'>
+    <div className='b2'>
+      <h1 className='title2'>Statistics</h1> 
+      <h2 className='gpd'>Gameplayed</h2>
+      <h2 className='wr'>Winrate</h2>
+    
+      <div className='Container2'><p className='Gameplayed'>{GamePlayed}</p></div> 
+      
+      <div className='Container3'><p className='rate'>{WinRate}</p></div> 
+
+      
+      
+      </div>
+    </div>
+
+
+
+      
+    </div>
+
+   
+
+    
 
 
 
