@@ -28,7 +28,7 @@ function LeaderBoard() {
    
     <div className='wrapper'>
       <h1>Leaderboard</h1>
-      <table className='board'align='center'>
+      <table className='board'>
         <thead>
         <tr>
           <th className='columns'>Player(Username)</th>
