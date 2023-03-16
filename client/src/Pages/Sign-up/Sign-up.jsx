@@ -153,16 +153,17 @@ const SignUpPage = () => {
               onChange={handlePasswordChange}
             />
           </div>
-          <div className="input-group">
+
+            <label htmlFor="termsAccepted">
+              I accept the &nbsp;<a href="/#/TermsandConditions">Terms and Conditions</a> &nbsp;and&nbsp; <a href="/#/PrivacyPolicy">Privacy Policy</a>.
+            </label>
+            <div className="input-group">
             <input
               type="checkbox"
               id="termsAccepted"
               checked={termsAccepted}
               onChange={handleTermsAccepted}
             />
-            <label htmlFor="termsAccepted">
-              I accept the <a href="/#/TermsandConditions">Terms and Conditions</a> and <a href="/#/PrivacyPolicy">Privacy Policy</a>.
-            </label>
           </div>
           <button type="submit">Sign Up</button>
           <p>Already have an account <a href="/#/Log-in"> <button type="button" onClick={handleLoginClick}>Log In</button> </a></p>

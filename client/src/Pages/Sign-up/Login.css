@@ -19,16 +19,16 @@
     align-items: center;
   }
   
-  .form {
+  .formh {
     background-color: #1F2329;
     border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 10px #8A2BE2;
     padding: 40px;
     width: 400px;
   }
   
-  .form h1 {
-    color: #00F5FF;
+  .formh h1 {
+    color: #ffffff;
     margin-bottom: 30px;
     text-align: center;
   }
@@ -40,46 +40,47 @@
   }
   
   .input-group label {
-    color: #00F5FF;
+    color: #ffffff;
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 5px;
   }
   
   .input-group input {
-    background-color: #333;
-    border: 2px solid #00F5FF;
+    background-color: #ffffff;
+    border: 2px solid #8A2BE2;
     border-radius: 5px;
-    color: #00F5FF;
+    color: #8A2BE2;
     font-size: 16px;
     padding: 10px;
   }
   
   button[type="submit"] {
-    background-color: #00F5FF;
+    background-color: #8A2BE2;
     border: none;
     border-radius: 5px;
-    color: #333;
+    color: #ffffff;
     cursor: pointer;
     font-size: 16px;
     padding: 10px;
     transition: background-color 0.2s ease;
     width: 100%;
+    box-shadow: 0 2px 5px #ffffff;
   }
   
   button[type="submit"]:hover {
-    background-color: #80E0FF;
+    background-color: #b875f7;
   }
   
   p {
-    color: #00F5FF;
+    color: #ffffff;
     font-size: 14px;
     margin-top: 20px;
     text-align: center;
   }
   
   a {
-    color: #00F5FF;
+    color: #8A2BE2;
     text-decoration: none;
   }
   
@@ -90,14 +91,14 @@
   button[type="button"] {
     background-color: transparent;
     border: none;
-    color: #00F5FF;
+    color: #ffffff;
     cursor: pointer;
     font-size: 14px;
     transition: color 0.2s ease;
   }
   
   button[type="button"]:hover {
-    color: #80E0FF;
+    color: #b875f7;
   }
   
   button[type="button"]:focus {
