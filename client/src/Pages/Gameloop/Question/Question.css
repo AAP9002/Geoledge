@@ -51,7 +51,7 @@ body {
   right: 0;
   width:150px;
   height: 60px;
-  background-color: #eeff00;
+  background-color: #ffffff;
   z-index: -1;
 }
 
@@ -226,6 +226,8 @@ body {
   .show-less-button {
   display: none;
   }
+
+  
 
   
   

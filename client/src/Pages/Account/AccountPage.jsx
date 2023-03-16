@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-
+import './AccountPage.css'
 import { useState } from 'react';
 
 
@@ -32,12 +32,14 @@ function ScoreBoard() {
 
   return (
     <div className='Credentials'>
-      <h1>Credentials</h1> <br />
+      <div className='b1'>
+      <h1>Credentials</h1> 
     
-      <h2>Username</h2> <br />
-      <div className='Container'><p>Username</p></div> <br />
-      <h2>Password</h2> <br />
-      <button onclicked>Change Password</button>
+      <h2>Username</h2> 
+      <div className='Container'><p className='username'>Username</p></div> 
+      <h2>Password</h2> 
+      <button className='button1'>Change Password</button>
+      </div>
 
 
 
