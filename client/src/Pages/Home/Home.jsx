@@ -19,7 +19,7 @@ const About = () => {
             let sessionID = res.sessionID;
             console.log(sessionID);
             
-            fetch(`/api/joinLobby?session_id=${ sessionID }`, { method: "POST" }).then(res => res.json()).then((res) => {
+            fetch(`/api/joinLobby?session_id=${ sessionID }`, { method: "GET" }).then(res => res.json()).then((res) => {
               console.log(res);
               window.location.href = "/#/Game";
             });
