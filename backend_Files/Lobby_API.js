@@ -49,8 +49,9 @@ module.exports = function (app, connection) {
 
         myPromise.then(
             function(result) {
-                // user has no exist, make new game
-                if (result[0].length==0) {
+                // user has no exist, make new game, OR
+                // user has exist but expired
+                if (result[0].length==0 || (result[0].length!=0 && result[0][0].expired == 1)) {
                     let query = "call create_lobby(?)"
                     connection.query(query, [host_id], (err, result) => {
                         if (err) {

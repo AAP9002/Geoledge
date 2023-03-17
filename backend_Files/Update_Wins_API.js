@@ -14,6 +14,13 @@ module.exports = function(app, connection) {
 
         myPromise.then(
             function(result){
+                let query = `UPDATE session SET expired = 1 WHERE session_id = ${sessionID};`
+                    connection.query(query, (err, result) => {
+                        if (err) {
+                            console.log("sql broken: " + err)
+                            res.status(500).send("server error");
+                        }
+                });
                 for (let i = 0; i < result.length; i++) {
                     let user_id = result[i].user_id;
                     let query = `UPDATE users SET games_played = (games_played + 1) WHERE user_id = ${user_id};`
@@ -22,7 +29,7 @@ module.exports = function(app, connection) {
                             console.log("You do not want this to show bc this error breaks the system.")
                             res.status(500).send("server error");
                         }
-                    })
+                    });
 
                     if (i == 0) { // first index has the highest score
                         let query = `UPDATE users SET wins = (wins + 1), win_rate = wins/losses WHERE user_id = ${user_id};`
