@@ -152,23 +152,29 @@ module.exports = function (app, connection) {
     app.get('/api/getLobbyPlayers', (req, res) => {
         let session_id = req.query.session_id;
         let query = "call get_lobby_players(?)"
-        connection.query(query, [session_id], (err, result) => {
-            if (err) {
-                console.log("sql broken: " + err)
-                res.status(500).send(err);
-            } else {
-                if (result[0][0] == null) {
-                    res.status(500).send("lobby players is empty or doesn't exist");
+
+        if (session_id == undefined) {
+            res.status(410).send("Invalid sessionID");
+        } else {
+
+            connection.query(query, [session_id], (err, result) => {
+                if (err) {
+                    console.log("sql broken: " + err)
+                    res.status(500).send(err);
                 } else {
-                    res.status(200).send({ players: result[0]});
+                    if (result[0][0] == null) {
+                        res.status(500).send("lobby players is empty or doesn't exist");
+                    } else {
+                        res.status(200).send({ players: result[0]});
+                    }
                 }
-            }
-        })
+            })
+        }
     });
 
     app.get('/api/getSessionID', (req, res) => {
         let user_id = req.userID;
-        if (user_id != undefined) {
+        if (user_id != null) {
             let query = `call get_curren_session_id(?)`
             connection.query(query,[user_id], (err, result) => {
                 if (err) {
