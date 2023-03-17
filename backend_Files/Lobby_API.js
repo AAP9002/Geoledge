@@ -118,17 +118,22 @@ module.exports = function (app, connection) {
                         res.status(200).json({ "status": "no such sessionID exists" });
                     } else {
                         if (result[0][0].num_of_participents < result[0][0].max_participents) {
-                            // the session is not full. adding client to session
-                            let query = "call join_lobby(?,?)"
-
-                            connection.query(query, [userID, session_id], (err, result) => {
-                                if (err) {
-                                    console.log("sql broken: " + err)
-                                    res.status(500).json({ "status": "error occurred on the server" });
-                                } else {
-                                    res.status(200).json({ "status": 'participent added' });
-                                }
-                            })
+                            // the session is not full. check if session expired
+                            if (result[0][0].expired == 1) {
+                                res.status(401).json({ "status": "session has expired" });
+                            } else {
+                                // adding client to session
+                                let query = "call join_lobby(?,?)"
+    
+                                connection.query(query, [userID, session_id], (err, result) => {
+                                    if (err) {
+                                        console.log("sql broken: " + err)
+                                        res.status(500).json({ "status": "error occurred on the server" });
+                                    } else {
+                                        res.status(200).json({ "status": 'participent added' });
+                                    }
+                                })
+                            }
                         } else {
                             // the session is full
                             res.status(200).json({ "status": "session is full" });

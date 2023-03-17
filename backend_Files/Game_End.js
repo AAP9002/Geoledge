@@ -12,30 +12,30 @@ updateUserStats
 (Drops session and all related parts to prevent multiple user stat updating)
 
 */
-module.exports = function(app, connection) {
-    app.get('/api/getScores', (req, res) => {
-        let session_id = req.query.session_id;
-        let query = "call get_scores(?)"
-        connection.query(query, [session_id], (err, result) => {
-            if (err) {
-                console.log("sql broken: " + err)
-                res.status(500).send(err);
-            } else {
-                res.status(200).send(result[0]);
-            }
-        })
-    }); 
+// module.exports = function(app, connection) {
+//     app.get('/api/getScores', (req, res) => {
+//         let session_id = req.query.session_id;
+//         let query = "call get_scores(?)"
+//         connection.query(query, [session_id], (err, result) => {
+//             if (err) {
+//                 console.log("sql broken: " + err)
+//                 res.status(500).send(err);
+//             } else {
+//                 res.status(200).send(result[0]);
+//             }
+//         })
+//     }); 
 
-    app.post('/api/dropGame', (req, res) => {
-        let session_id = req.query.session_id;
-        let query = "call drop_game(?)"
-        connection.query(query, [session_id], (err) => {
-            if (err) {
-                console.log("couldn't drop game: " + err)
-                res.status(500).send(err);
-            } else {
-                res.status(200).send("game dropped");
-            }
-        })
-    }); 
-}
+//     app.post('/api/dropGame', (req, res) => {
+//         let session_id = req.query.session_id;
+//         let query = "call drop_game(?)"
+//         connection.query(query, [session_id], (err) => {
+//             if (err) {
+//                 console.log("couldn't drop game: " + err)
+//                 res.status(500).send(err);
+//             } else {
+//                 res.status(200).send("game dropped");
+//             }
+//         })
+//     }); 
+// }

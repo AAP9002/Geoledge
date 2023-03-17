@@ -124,23 +124,23 @@ module.exports = function(app, connection) {
     });
 
     app.get('/api/getScores', (req, res) => {
-        let session_id = req.query.session_id;
+        let sessionID = req.query.sessionID;
         let query = "call get_scores(?)"
-        connection.query(query, [session_id], (err, result) => {
+        connection.query(query, [sessionID], (err, result) => {
             if (err) {
                 console.log("sql broken: " + err)
                 res.status(500).send("Server couldn't get scores");
             } else {
-                res.status(200).send(result[0]);
+                res.status(200).send({ scores: result[0]});
             }
         })
     }); 
 
     // Deletes a game session and all related component records
     app.post('/api/dropGame', (req, res) => {
-        let session_id = req.query.session_id;
+        let sessionID = req.query.sessionID;
         let query = "call drop_game(?)"
-        connection.query(query, [session_id], (err) => {
+        connection.query(query, [sessionID], (err) => {
             if (err) {
                 console.log("couldn't drop game: " + err)
                 res.status(500).send("Server couldn't drop game");
