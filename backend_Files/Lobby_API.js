@@ -34,18 +34,58 @@ module.exports = function (app, connection) {
 
     app.post('/api/createLobby', (req, res) => {
         let host_id = req.userID;
-        let query = "call create_lobby(?)"
-        connection.query(query, [host_id], (err, result) => {
-            if (err) {
-                console.log("sql broken: " + err)
-                res.status(500).send(err);
-            } else {
-                console.log(((Object.entries(result[2][0])[0])[1]))
-                res.status(200).send({ 
-                    id: ((Object.entries(result[2][0])[0])[1])
-                });
+        let myPromise = new Promise(function(myResolve, myReject) {
+            // try find game where user is already a host (resuming)
+            let query = "call host_game_exists(?)"
+            connection.query(query, [host_id], (err, result) => {
+                if (err) {
+                    console.log("sql broken: " + err);
+                    myReject(null);
+                } else {
+                    myResolve(result);
+                }
+            })            
+        });
+
+        myPromise.then(
+            function(result) {
+                // user has no exist, make new game
+                if (result[0].length==0) {
+                    let query = "call create_lobby(?)"
+                    connection.query(query, [host_id], (err, result) => {
+                        if (err) {
+                            console.log("sql broken: " + err)
+                            res.status(500).send(err);
+                        } else {
+                            console.log(((Object.entries(result[2][0])[0])[1]))
+                            res.status(200).send({ 
+                                id: ((Object.entries(result[2][0])[0])[1])
+                            });
+                        }
+                    })
+                } else {
+                    res.status(200).send({ 
+                        id: ((Object.entries(result[0][0])[0])[1])
+                    });
+                }
             }
-        })
+            , function(error) {
+                res.status(500).send(err);
+            }
+        );
+
+        // let query = "call create_lobby(?)"
+        // connection.query(query, [host_id], (err, result) => {
+        //     if (err) {
+        //         console.log("sql broken: " + err)
+        //         res.status(500).send(err);
+        //     } else {
+        //         console.log(((Object.entries(result[2][0])[0])[1]))
+        //         res.status(200).send({ 
+        //             id: ((Object.entries(result[2][0])[0])[1])
+        //         });
+        //     }
+        // })
     });
 
     app.get('/api/joinLobby', (req, res) => {
@@ -114,7 +154,7 @@ module.exports = function (app, connection) {
                 if (result[0][0] == null) {
                     res.status(500).send("lobby players is empty or doesn't exist");
                 } else {
-                    res.status(200).send(result);
+                    res.status(200).send({ players: result[0]});
                 }
             }
         })
