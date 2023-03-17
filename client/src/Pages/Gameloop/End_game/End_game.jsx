@@ -5,15 +5,20 @@ import { useState, useEffect } from 'react';
 
 
 
-function FinishBoard() {
+function FinishBoard(props) {
 
-
+    const sessionID = props.sessionID;
+    const [loading, setloading] = useState(true)
     const [Finishboard, setFinishboard] = useState([{ no: "1", username: "fdfdf", scores: "200" }, { no: "1", username: "fdfdf", scores: "200" }, { no: "2", username: "asass", scores: "100" }
         , { no: "3", username: "jkjkj", scores: "50" }]);
 
-
-
-
+    useEffect(() => {
+        fetch('/api/getScores?sessionID='+sessionID).then(res => res.json()).then(stateJson => {
+            setFinishboard(stateJson.scores)
+            setloading(false)
+        })
+        setloading(false)
+    }, []);
 
 
     function returnToHome() {
@@ -52,12 +57,12 @@ function FinishBoard() {
     )
 }
 
-const About = () => {
+const EndGame = (props) => {
     return (
         <div>
             <div>
 
-                <FinishBoard />
+                <FinishBoard sessionID={props.sessionID} />
 
             </div>
         </div>
@@ -66,4 +71,4 @@ const About = () => {
 };
 
 
-export default About;
+export default EndGame;

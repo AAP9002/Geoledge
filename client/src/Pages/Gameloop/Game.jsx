@@ -96,7 +96,7 @@ const Game = () => {
             );
         case "showing final scores":
             return (
-                <EndGame />
+                <EndGame sessionID={sessionID} />
             );
         case "Loading":
             return (
