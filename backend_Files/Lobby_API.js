@@ -53,7 +53,7 @@ module.exports = function (app, connection) {
             res.status(401).json({ "status": "Not logged in mate." })
         }
         else {
-            let username = req.username;
+            let userID = req.userID;
             let session_id = req.query.session_id;
 
             // Checking to see if session is full
@@ -80,7 +80,7 @@ module.exports = function (app, connection) {
                             // the session is not full. adding client to session
                             let query = "call join_lobby(?,?)"
 
-                            connection.query(query, [username, session_id], (err, result) => {
+                            connection.query(query, [userID, session_id], (err, result) => {
                                 if (err) {
                                     console.log("sql broken: " + err)
                                     res.status(500).json({ "status": "error occurred on the server" });
