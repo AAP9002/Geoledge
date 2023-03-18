@@ -77,30 +77,35 @@ module.exports = function (app, connection) {
 
                             promise3.then(function(result) {
                                 // SUCCESSFULLY REMOVED PARTICIPENT FROM DATABASE
-                                res.status(401).send({ "status": "successfully left the game" });
+                                res.status(200).send({ "status": "successfully left the game" });
                             }, 
                             function(reject) {
                                 // SQL error
+                                console.log("3");
                                 res.status(401).send({ "status": "failed to leave" })
                             });
 
                         } else {
                             // client not a participent
+                            console.log("2");
                             res.status(401).send({ "status": "failed to leave" })
                         }
                     }, 
                     function(reject) {
                         // SQL error
+                        console.log("1");
                         res.status(401).send({ "status": "failed to leave" })
                     })
 
                 } else {
                     // sessionID doesn't exist
+                    console.log("0");
                     res.status(401).send({ "status": "failed to leave" })
                 }
             },
             function(reject) {
                 // SQL error
+                console.log("-1");
                 res.status(401).send({ "status": "failed to leave" })
             });
         }

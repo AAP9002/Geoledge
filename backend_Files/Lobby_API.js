@@ -34,18 +34,59 @@ module.exports = function (app, connection) {
 
     app.post('/api/createLobby', (req, res) => {
         let host_id = req.userID;
-        let query = "call create_lobby(?)"
-        connection.query(query, [host_id], (err, result) => {
-            if (err) {
-                console.log("sql broken: " + err)
-                res.status(500).send(err);
-            } else {
-                console.log(((Object.entries(result[2][0])[0])[1]))
-                res.status(200).send({ 
-                    id: ((Object.entries(result[2][0])[0])[1])
-                });
+        let myPromise = new Promise(function(myResolve, myReject) {
+            // try find game where user is already a host (resuming)
+            let query = "call host_game_exists(?)"
+            connection.query(query, [host_id], (err, result) => {
+                if (err) {
+                    console.log("sql broken: " + err);
+                    myReject(null);
+                } else {
+                    myResolve(result);
+                }
+            })            
+        });
+
+        myPromise.then(
+            function(result) {
+                // user has no exist, make new game, OR
+                // user has exist but expired
+                if (result[0].length==0 || (result[0].length!=0 && result[0][0].expired == 1)) {
+                    let query = "call create_lobby(?)"
+                    connection.query(query, [host_id], (err, result) => {
+                        if (err) {
+                            console.log("sql broken: " + err)
+                            res.status(500).send(err);
+                        } else {
+                            console.log(((Object.entries(result[2][0])[0])[1]))
+                            res.status(200).send({ 
+                                id: ((Object.entries(result[2][0])[0])[1])
+                            });
+                        }
+                    })
+                } else {
+                    res.status(200).send({ 
+                        id: ((Object.entries(result[0][0])[0])[1])
+                    });
+                }
             }
-        })
+            , function(error) {
+                res.status(500).send(err);
+            }
+        );
+
+        // let query = "call create_lobby(?)"
+        // connection.query(query, [host_id], (err, result) => {
+        //     if (err) {
+        //         console.log("sql broken: " + err)
+        //         res.status(500).send(err);
+        //     } else {
+        //         console.log(((Object.entries(result[2][0])[0])[1]))
+        //         res.status(200).send({ 
+        //             id: ((Object.entries(result[2][0])[0])[1])
+        //         });
+        //     }
+        // })
     });
 
     app.get('/api/joinLobby', (req, res) => {
@@ -53,7 +94,7 @@ module.exports = function (app, connection) {
             res.status(401).json({ "status": "Not logged in mate." })
         }
         else {
-            let username = req.username;
+            let userID = req.userID;
             let session_id = req.query.session_id;
 
             // Checking to see if session is full
@@ -77,17 +118,22 @@ module.exports = function (app, connection) {
                         res.status(200).json({ "status": "no such sessionID exists" });
                     } else {
                         if (result[0][0].num_of_participents < result[0][0].max_participents) {
-                            // the session is not full. adding client to session
-                            let query = "call join_lobby(?,?)"
-
-                            connection.query(query, [username, session_id], (err, result) => {
-                                if (err) {
-                                    console.log("sql broken: " + err)
-                                    res.status(500).json({ "status": "error occurred on the server" });
-                                } else {
-                                    res.status(200).json({ "status": 'participent added' });
-                                }
-                            })
+                            // the session is not full. check if session expired
+                            if (result[0][0].expired == 1) {
+                                res.status(401).json({ "status": "session has expired" });
+                            } else {
+                                // adding client to session
+                                let query = "call join_lobby(?,?)"
+    
+                                connection.query(query, [userID, session_id], (err, result) => {
+                                    if (err) {
+                                        console.log("sql broken: " + err)
+                                        res.status(500).json({ "status": "error occurred on the server" });
+                                    } else {
+                                        res.status(200).json({ "status": 'participent added' });
+                                    }
+                                })
+                            }
                         } else {
                             // the session is full
                             res.status(200).json({ "status": "session is full" });
@@ -106,23 +152,29 @@ module.exports = function (app, connection) {
     app.get('/api/getLobbyPlayers', (req, res) => {
         let session_id = req.query.session_id;
         let query = "call get_lobby_players(?)"
-        connection.query(query, [session_id], (err, result) => {
-            if (err) {
-                console.log("sql broken: " + err)
-                res.status(500).send(err);
-            } else {
-                if (result[0][0] == null) {
-                    res.status(500).send("lobby players is empty or doesn't exist");
+
+        if (session_id == undefined) {
+            res.status(410).send("Invalid sessionID");
+        } else {
+
+            connection.query(query, [session_id], (err, result) => {
+                if (err) {
+                    console.log("sql broken: " + err)
+                    res.status(500).send(err);
                 } else {
-                    res.status(200).send(result);
+                    if (result[0][0] == null) {
+                        res.status(500).send("lobby players is empty or doesn't exist");
+                    } else {
+                        res.status(200).send({ players: result[0]});
+                    }
                 }
-            }
-        })
+            })
+        }
     });
 
     app.get('/api/getSessionID', (req, res) => {
         let user_id = req.userID;
-        if (user_id != undefined) {
+        if (user_id != null) {
             let query = `call get_curren_session_id(?)`
             connection.query(query,[user_id], (err, result) => {
                 if (err) {

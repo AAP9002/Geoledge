@@ -5,65 +5,70 @@ import { useState, useEffect } from 'react';
 
 
 
-function FinishBoard() {
-  
+function FinishBoard(props) {
 
-  const [Finishboard, setFinishboard] = useState([{no:"1",username:"fdfdf", scores:"200"},{no:"1",username:"fdfdf", scores:"200"},{no:"2",username:"asass", scores:"100"}
-  ,{no:"3",username:"jkjkj", scores:"50"}]);
+    const sessionID = props.sessionID;
+    const [loading, setloading] = useState(true)
+    const [Finishboard, setFinishboard] = useState([{ no: "1", username: "fdfdf", scores: "200" }, { no: "1", username: "fdfdf", scores: "200" }, { no: "2", username: "asass", scores: "100" }
+        , { no: "3", username: "jkjkj", scores: "50" }]);
 
-
- 
-
-
-
-   function returnToHome() {
-    window.location.href = "/#/Home";
-   }
- 
-
-  return (
-    
-    
-   
-    <div className='wrapper'>
-      <h1>Game set!!</h1>
-      <table className='Ranking'>
-        <thead>
-        <tr>
-            <th className='columns'>No</th>
-          <th className='columns'>Player(Username)</th>
-          <th className='columns'>Points</th>
-        </tr>
-        </thead>
-        
+    useEffect(() => {
+        fetch('/api/getScores?sessionID='+sessionID).then(res => res.json()).then(stateJson => {
+            setFinishboard(stateJson.scores)
+            setloading(false)
+        })
+        setloading(false)
+    }, []);
 
 
-        <tbody className='RankingTable'>
-        {Finishboard.map((row)=> <tr><td className='data'>{row.no}</td><td className='data'>{row.username}</td><td className='data'>{row.scores}</td></tr>)}
-        </tbody>
-        </table>
-        <button onClick={ returnToHome }>Back to Home</button>
-        
-        
-        
+    function returnToHome() {
+        window.location.href = "/#/Home";
+    }
+
+
+    return (
+
+
+
+        <div className='wrapper'>
+            <h1>Game set!!</h1>
+            <table className='Ranking'>
+                <thead>
+                    <tr>
+                        <th className='columns'>No</th>
+                        <th className='columns'>Player(Username)</th>
+                        <th className='columns'>Points</th>
+                    </tr>
+                </thead>
+
+
+
+                <tbody className='RankingTable'>
+                    {Finishboard.map((row) => <tr><td className='data'>{row.no}</td><td className='data'>{row.username}</td><td className='data'>{row.scores}</td></tr>)}
+                </tbody>
+            </table>
+            <button onClick={returnToHome}>Back to Home</button>
+
+
+
         </div>
-      
 
-  )
+
+    )
 }
 
-const About = () => {
-  return (
-    <div>
-          <div>
-            
-            <FinishBoard/>
-          
-          </div>
-    </div>
- 
-  );
+const EndGame = (props) => {
+    return (
+        <div>
+            <div>
+
+                <FinishBoard sessionID={props.sessionID} />
+
+            </div>
+        </div>
+
+    );
 };
 
 
-export default About;
+export default EndGame;

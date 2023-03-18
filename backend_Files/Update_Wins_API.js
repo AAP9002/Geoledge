@@ -14,6 +14,13 @@ module.exports = function(app, connection) {
 
         myPromise.then(
             function(result){
+                let query = `UPDATE session SET expired = 1 WHERE session_id = ${sessionID};`
+                    connection.query(query, (err, result) => {
+                        if (err) {
+                            console.log("sql broken: " + err)
+                            res.status(500).send("server error");
+                        }
+                });
                 for (let i = 0; i < result.length; i++) {
                     let user_id = result[i].user_id;
                     let query = `UPDATE users SET games_played = (games_played + 1) WHERE user_id = ${user_id};`
@@ -22,7 +29,7 @@ module.exports = function(app, connection) {
                             console.log("You do not want this to show bc this error breaks the system.")
                             res.status(500).send("server error");
                         }
-                    })
+                    });
 
                     if (i == 0) { // first index has the highest score
                         let query = `UPDATE users SET wins = (wins + 1), win_rate = wins/losses WHERE user_id = ${user_id};`
@@ -84,7 +91,7 @@ module.exports = function(app, connection) {
 
     //============================= API ===============================cd c
     // Decide what happens after "revealing answer" -> show current|final scores 
-    app.get('/api/scoreState', (req, res) => {
+    app.post('/api/scoreState', (req, res) => {
         let sessionID = req.query.sessionID;
         let userID = req.userID;
         let msg = "revealing answer"
@@ -117,23 +124,23 @@ module.exports = function(app, connection) {
     });
 
     app.get('/api/getScores', (req, res) => {
-        let session_id = req.query.session_id;
+        let sessionID = req.query.sessionID;
         let query = "call get_scores(?)"
-        connection.query(query, [session_id], (err, result) => {
+        connection.query(query, [sessionID], (err, result) => {
             if (err) {
                 console.log("sql broken: " + err)
                 res.status(500).send("Server couldn't get scores");
             } else {
-                res.status(200).send(result[0]);
+                res.status(200).send({ scores: result[0]});
             }
         })
     }); 
 
     // Deletes a game session and all related component records
     app.post('/api/dropGame', (req, res) => {
-        let session_id = req.query.session_id;
+        let sessionID = req.query.sessionID;
         let query = "call drop_game(?)"
-        connection.query(query, [session_id], (err) => {
+        connection.query(query, [sessionID], (err) => {
             if (err) {
                 console.log("couldn't drop game: " + err)
                 res.status(500).send("Server couldn't drop game");

@@ -160,7 +160,7 @@ module.exports = function (app, DBconnection) {
                 let game_state = result[0][0].game_state
                 let answer = result[1][i].country_name
                 if (game_state == "revealing answer") {
-                    res.status(200).send(answer)
+                    res.status(200).send({ country_name: answer})
                 } else {
                     res.status(401).send("game state not in revealing answer yet")
                 }
