@@ -14,7 +14,7 @@ module.exports = function (app, DBconnection) {
             });
         }
         else {
-            DBconnection.query("call check_country_guess_correct(?,?)",
+            DBconnection.query("call check_country_guess_correct2(?,?)",
                 [answer_submitted, user], function (error, results) {
                     console.log(results);
                     if (error) {
@@ -116,25 +116,6 @@ module.exports = function (app, DBconnection) {
             howClose: closeToCorrect
         })
     }
-
-    ///// /api/has_everyone_answered /////
-    // check if for that quiz, if there are any participants where answered = 0
-    // SELECT COUNT(answered) from participants where quiz_session_id={session_id} and answered = 0
-    // in JS if == 0, return TRUE else FALSE
-    app.get('/api/has_everyone_answered', (req, res) => {
-        let quiz_session_id = req.query.session_id;
-        DBconnection.query("call check_if_all_participants_have_answered(?)", [quiz_session_id], function (error, results) {
-
-            if (error) {
-                res.status(500).send();
-            }
-            else {
-                res.status(200).send({
-                    all_answered_current_question: (results[0][0]['COUNT(*)'] == 0),
-                });
-            }
-        })
-    });
 
     app.get('/api/countryNames', (req, res) => {
         res.sendFile(`${__dirname}/static_files/country_name_list.json`);

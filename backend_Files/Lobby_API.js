@@ -181,7 +181,7 @@ module.exports = function (app, connection) {
                     console.log("sql broken: " + err)
                     res.status(500).send(err);
                 } else {
-                    console.log( result[1][0].session_id)
+                    //console.log( result[1][0].session_id)
                     res.status(200).send( result[1][0] );
                 }
             })
