@@ -169,7 +169,7 @@ module.exports = function (app, connection) {
                     console.log("sql broken: " + err)
                     res.status(500).send(err);
                 } else {
-                    console.log( result[1][0].session_id)
+                    //console.log( result[1][0].session_id)
                     res.status(200).send( result[1][0] );
                 }
             })
@@ -186,6 +186,8 @@ module.exports = function (app, connection) {
         let quiz_id;
         let max_guesses = req.query.max_guesses;
         let time_limit = req.query.time_limit;
+        console.log(time_limit)
+
 
         // Country Set Creation:
         let myPromise = new Promise(function(myResolve, myReject) {

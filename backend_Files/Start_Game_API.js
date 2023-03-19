@@ -100,6 +100,12 @@ module.exports = function (app, connection) {
                         reject("SQL error");
                     } else {
                         // Evaluating result
+                        connection.query("call initialise_Values_On_Round_Start(?)", [sessionID], (err) => {
+                            if (err) {
+                                console.log("Couldn't Initialize Participant Round Limits: " + err)
+                                res.status(500).send("Error occured on the server - Couldn't Initialize Participant Round Limits");
+                            }
+                        })
                         resolve(result[0][0].result);
                     }
                 });
