@@ -14,7 +14,7 @@ module.exports = function (app, DBconnection) {
             });
         }
         else {
-            DBconnection.query("call check_country_guess_correct2(?,?)",
+            DBconnection.query("call check_country_guess_correct(?,?)",
                 [answer_submitted, user], function (error, results) {
                     console.log(results);
                     if (error) {
