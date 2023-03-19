@@ -19,6 +19,7 @@ function Play() {
                 window.location.href = "/#/Log-in";
             } else {
                 setGame_Session_ID(sessionID)
+                setSessionCreationState(false)
             }
         })
 
@@ -54,9 +55,9 @@ function Play() {
     };
 
 
-    // if(creating_game_Session){
-    //     return(<p className='waiting'>Creating New Game Session...</p>)
-    // }
+    if(creating_game_Session){
+        return(<p className='waiting'>Creating New Game Session...</p>)
+    }
 
     return (
         <div >
