@@ -16,7 +16,7 @@ module.exports = function (app, connection) {
                 - returns participents where session_id
         4. getSessionID
             - description:
-                - returns session_id where user
+                - returns session_iD where user
         5. startGame
             - description:
                 - creates country_set
@@ -74,19 +74,6 @@ module.exports = function (app, connection) {
                 res.status(500).send(err);
             }
         );
-
-        // let query = "call create_lobby(?)"
-        // connection.query(query, [host_id], (err, result) => {
-        //     if (err) {
-        //         console.log("sql broken: " + err)
-        //         res.status(500).send(err);
-        //     } else {
-        //         console.log(((Object.entries(result[2][0])[0])[1]))
-        //         res.status(200).send({ 
-        //             id: ((Object.entries(result[2][0])[0])[1])
-        //         });
-        //     }
-        // })
     });
 
     app.get('/api/joinLobby', (req, res) => {
@@ -95,13 +82,13 @@ module.exports = function (app, connection) {
         }
         else {
             let userID = req.userID;
-            let session_id = req.query.session_id;
+            let sessionID = req.query.sessionID ;
 
             // Checking to see if session is full
             let promise = new Promise(function(resolve, reject) {
                 let query = "call check_if_session_is_full(?)"
 
-                connection.query(query, [session_id], (err, result) => {
+                connection.query(query, [sessionID], (err, result) => {
                     if (err) {
                         console.log("ERROR WHEN CHECKING IF SESSION IS FULL: " + err);
                         reject(null);
@@ -125,7 +112,7 @@ module.exports = function (app, connection) {
                                 // adding client to session
                                 let query = "call join_lobby(?,?)"
     
-                                connection.query(query, [userID, session_id], (err, result) => {
+                                connection.query(query, [userID, sessionID], (err, result) => {
                                     if (err) {
                                         console.log("sql broken: " + err)
                                         res.status(500).json({ "status": "error occurred on the server" });
@@ -143,6 +130,7 @@ module.exports = function (app, connection) {
 
                 function(reject) {
                     // SQL error when checking if session is full
+                    console.log("sql broken: " + reject)
                     res.status(200).json({ "status": "error occurred on the server" });
                 }
             );
@@ -150,14 +138,14 @@ module.exports = function (app, connection) {
     });
 
     app.get('/api/getLobbyPlayers', (req, res) => {
-        let session_id = req.query.session_id;
+        let sessionID = req.query.sessionID ;
         let query = "call get_lobby_players(?)"
 
-        if (session_id == undefined) {
+        if (sessionID == undefined) {
             res.status(410).send("Invalid sessionID");
         } else {
 
-            connection.query(query, [session_id], (err, result) => {
+            connection.query(query, [sessionID], (err, result) => {
                 if (err) {
                     console.log("sql broken: " + err)
                     res.status(500).send(err);
@@ -192,7 +180,7 @@ module.exports = function (app, connection) {
 
     http://localhost:5000/api/SubmitGameSettings?session_id=&=107&num_of_questions=10&max_guesses=10&time_limit=6
     app.post('/api/SubmitGameSettings', (req, res) => {
-        let session_id = req.query.session_id;
+        let sessionID = req.query.sessionID ;
         let num_of_questions = req.query.num_of_questions;
         let countries;
         let quiz_id;
@@ -201,7 +189,7 @@ module.exports = function (app, connection) {
 
         // Country Set Creation:
         let myPromise = new Promise(function(myResolve, myReject) {
-            let query =`SELECT quiz_id FROM session WHERE session_id=${session_id};`
+            let query =`SELECT quiz_id FROM session WHERE session_id=${sessionID};`
            // console.log(query);
             connection.query(query, (err, result) => {
                 if (err) {
@@ -245,7 +233,7 @@ module.exports = function (app, connection) {
 
         // Game Config:
         let query = "call game_config(?,?,?,?)"
-        connection.query(query, [session_id, max_guesses, time_limit, num_of_questions], (err, result) => {
+        connection.query(query, [sessionID, max_guesses, time_limit, num_of_questions], (err, result) => {
             if (err) {
                 console.log("sql broken: " + err)
                 res.status(500).send(err);

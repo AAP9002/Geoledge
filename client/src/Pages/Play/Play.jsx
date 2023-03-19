@@ -4,32 +4,35 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import "./Play.css";
-
+import { Routes, Route, useParams } from 'react-router-dom';
 
 
 function Play() {
-    // on load create new game session
+    let { sessionID } = useParams();
     const [creating_game_Session, setSessionCreationState] = useState(true);
     const [game_Session_ID, setGame_Session_ID] = useState(true);
-
+    const [Players, setPlayers] = useState([]);
+    
     useEffect(() => {
         fetch('/api/checkLoggedIn', { method: "GET" }).then((res) => {
             if (res.status === 401) {
                 window.location.href = "/#/Log-in";
             } else {
-                fetch('/api/createLobby', { method: "POST" }).then(res => res.json()).then(stateJson => {
-                    setGame_Session_ID(stateJson.id);
-                    setSessionCreationState(false);
-                })
+                setGame_Session_ID(sessionID)
             }
         })
 
+        setTimeout(() => {
+            fetch('/api/getLobbyPlayers?sessionID='+sessionID, { method: "GET" }).then(res => res.json()).then(stateJson => {
+                setPlayers(stateJson.players);
+                console.log("Players will be blank, but not when you use players.map in return", Players)
+            })
+        }, 1000);
     }, []);
-    //
-
+    
     const [NumberOfRounds, setNOR] = useState(5)
-    const [TimePerRound, setTPR] = useState(30)
-    const [Players, setPlayers] = useState([]);
+    const [TimePerRound, setTPR] = useState(60)
+
     const [No, setNo] = useState(0)
 
     const changeNOR = (event) => {
@@ -43,7 +46,7 @@ function Play() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log('Number of Rounds:', NumberOfRounds, 'Time per Round', TimePerRound);
-        fetch(`/api/SubmitGameSettings?session_id=${game_Session_ID}&num_of_questions=${NumberOfRounds}&max_guesses=${10}&time_limit=${TimePerRound}`, { method: "POST" }).then(res => {
+        fetch(`/api/SubmitGameSettings?sessionID=${game_Session_ID}&num_of_questions=${NumberOfRounds}&max_guesses=${10}&time_limit=${TimePerRound}`, { method: "POST" }).then(res => {
         });
 
         fetch(`/api/startGame?sessionID=${game_Session_ID}`, { method: "GET" });
@@ -51,13 +54,12 @@ function Play() {
     };
 
 
-    if(creating_game_Session){
-        return(<p className='waiting'>Creating New Game Session...</p>)
-    }
+    // if(creating_game_Session){
+    //     return(<p className='waiting'>Creating New Game Session...</p>)
+    // }
 
     return (
         <div >
-
             <Container className='back'>
                 <Row>
                     <Row>
@@ -66,7 +68,6 @@ function Play() {
                         </div>
                     </Row>
                     <Col>
-
                         <table className="table">
                             <thead> <tc> <th>no:</th><th>Player</th></tc></thead>
                             <tbody>
@@ -82,7 +83,7 @@ function Play() {
                                     <div className="settings">
                                         <h2 className="h2"> Settings </h2>
                                         <div>
-
+                                            
                                             <h3>Number Of Rounds</h3>
                                             <div>
                                                 <button className="styledbutton2" id="1" onClick={changeNOR}>1</button><button className="styledbutton2" id="2" onClick={changeNOR}>2</button><button className="styledbutton2" id="3" onClick={changeNOR}>3</button>
