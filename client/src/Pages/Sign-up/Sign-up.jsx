@@ -24,7 +24,7 @@ const SignUpPage = () => {
 
   const checkIsValidPassword = () => {
     if (isInvalidPassword) {
-      return(<div style={{color: "#f85956"}}>PASSWORD <i id={"invalidMessage"}>- *password must be at least 8 characters long</i></div>);
+      return(<div style={{color: "#f85956"}}>PASSWORD <i id={"invalidMessage"}>- Password must be at least 8 characters long</i></div>);
     } else {
       return(<div>PASSWORD</div>);
     }
@@ -196,7 +196,7 @@ const SignUpPage = () => {
           </div>
 
             <label htmlFor="termsAccepted">
-              I accept the &nbsp;<a href="/#/TermsandConditions">Terms and Conditions</a> &nbsp;and&nbsp; <a href="/#/PrivacyPolicy">Privacy Policy</a>.
+              I accept the &nbsp;<a href="/#/TermsandConditions"> Terms and Conditions </a> &nbsp;and&nbsp; <a href="/#/PrivacyPolicy"> Privacy Policy </a>.
             </label>
             <div className="input-group">
             <input
