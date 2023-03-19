@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Signup.css';
 import LoginPage from './LoginPage';
 
@@ -8,6 +8,36 @@ const SignUpPage = () => {
   const [name, setName] = useState('');
   const [showLoginPage, setShowLoginPage] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
+  
+  const [isInvalidUsername, setIsInvalidUsername] = useState(false);
+  const [isInvalidEmail, setIsInvalidEmail] = useState(false);
+  const [isInvalidPassword, setIsInvalidPassword] = useState(false);
+
+
+  const checkIsValidUsername = () => {
+    if (isInvalidUsername) {
+      return(<div style={{color: "#f85956" }}>USERNAME <i id={"invalidMessage"}>- Username must be at least 5 characters long</i></div>);
+    } else {
+      return(<div>USERNAME</div>);
+    }
+  }
+
+  const checkIsValidPassword = () => {
+    if (isInvalidPassword) {
+      return(<div style={{color: "#f85956"}}>PASSWORD <i id={"invalidMessage"}>- *password must be at least 8 characters long</i></div>);
+    } else {
+      return(<div>PASSWORD</div>);
+    }
+  }
+
+  const checkIsValidEmail = () => {
+    if (isInvalidEmail) {
+      return(<div style={{color: "#f85956"}}>EMAIL <i id={"invalidMessage"}>- Email address is invalid</i></div>);
+    } else {
+      return(<div style={{size: 8}}>PASSWORD</div>);
+    }
+  }
+
 
   // ======================= FUNCTIONS =========================
   // USERNAME VALIDATION METHOD
@@ -85,29 +115,39 @@ const SignUpPage = () => {
     if (!validateUsername()) {
       // username not valid
       console.log("username invalid");
+      setIsInvalidUsername(true);
       valid = false;
+    } else {
+      setIsInvalidUsername(false);
     }
 
     if (!validatePassword()) {
       // password not valid
       console.log("password invalid");
+      setIsInvalidPassword(true);
       valid = false;
+    } else {
+      setIsInvalidUsername(false);
     }
 
     if (!validateEmail()) {
       // email not valid
       console.log("email invalid");
-      valid = false;
+      setIsInvalidEmail(true);
+    } else {
+      setIsInvalidUsername(false);
     }
 
-    if (termsAccepted && valid) {
-      // API Call to create account
-      fetch(`/api/createAccount?username=${ name }&password=${ password }&email=${ email }&privacy_policy=1&terms_conditions=1`)
-        .then(res => res.json())
-        .then(status => {
-          console.log(status);
-          window.location.href = "/#/AccountPage";
-        });
+    if (termsAccepted) {
+      if (valid) {
+        // API Call to create account
+        fetch(`/api/createAccount?username=${ name }&password=${ password }&email=${ email }&privacy_policy=1&terms_conditions=1`)
+          .then(res => res.json())
+          .then(status => {
+            console.log(status);
+            window.location.href = "/#/AccountPage";
+          });
+      }
     } else {
       alert('Please accept the terms and conditions to continue.');
     }
@@ -121,14 +161,15 @@ const SignUpPage = () => {
     return <LoginPage />;
   }
 
-  return (
+    return(
+    <>
     <div className="Signup">
       <div className="container">
         <form onSubmit={handleSubmit} className="forme" id="signup-form">
           <h1>SIGN UP</h1>
           <div className="input-group">
-            <label htmlFor="name">USERNAME</label>
-            <input
+            <label htmlFor="name">{ checkIsValidUsername() }</label>
+            <input  
               type="text"
               id="name"
               value={name}
@@ -136,7 +177,7 @@ const SignUpPage = () => {
             />
           </div>
           <div className="input-group">
-            <label htmlFor="email">EMAIL</label>
+            <label htmlFor="email">{ checkIsValidEmail() }</label>
             <input
               type="email"
               id="email"
@@ -145,7 +186,7 @@ const SignUpPage = () => {
             />
           </div>
           <div className="input-group">
-            <label htmlFor="password">PASSWORD</label>
+            <label htmlFor="password">{ checkIsValidPassword() }</label>
             <input
               type="password"
               id="password"
@@ -167,10 +208,13 @@ const SignUpPage = () => {
           </div>
           <button type="submit">Sign Up</button>
           <p>Already have an account <a href="/#/Log-in"> <button type="button" onClick={handleLoginClick}>Log In</button> </a></p>
+          
         </form>
+
       </div>  
     </div>
-  );
-};
+  </>
+  )
+}
 
 export default SignUpPage;
