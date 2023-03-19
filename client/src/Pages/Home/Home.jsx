@@ -42,7 +42,7 @@ const About = () => {
             } else {
                 fetch('/api/createLobby', { method: "POST" }).then(res => res.json()).then(stateJson => {
                     let sessionID = stateJson.id
-                    window.open(`#/Play/${sessionID}`);
+                    window.location.href =(`#/Play/${sessionID}`);
                 })
             }
         })
