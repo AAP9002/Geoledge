@@ -13,7 +13,7 @@ function JoinLobby() {
 
     function submitJoinCode() {
                 // -------- what if joining fails  ---------
-                fetch(`/api/joinLobby?session_id=${lobby_code}`, { method: "GET" }).then(res => res.json()).then(joinres => {
+                fetch(`/api/joinLobby?sessionID=${lobby_code}`, { method: "GET" }).then(res => res.json()).then(joinres => {
                     if (joinres.status === 401) {
                         window.location.href = "/#/Log-in";
                     } else {

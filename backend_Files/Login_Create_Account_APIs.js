@@ -103,7 +103,7 @@ module.exports = function (app, connection) {
         let email = req.query.email;
         let privacy_policy = req.query.privacy_policy;
         let terms_conditions = req.query.terms_conditions;
-        
+    
         // Validating username
         if(!validateUsername(username)) {
             // Credentials did not pass validation checks
