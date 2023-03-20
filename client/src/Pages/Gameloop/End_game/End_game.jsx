@@ -31,7 +31,8 @@ function FinishBoard(props) {
 
 
         <div className='wrapper'>
-            <h1>Game set!!</h1>
+            <h1> <p className='header1'> Gameset!!</p></h1>
+            <div className='alltable'>
             <table className='Ranking'>
                 <thead>
                     <tr>
@@ -40,6 +41,7 @@ function FinishBoard(props) {
                         <th className='columns'>Points</th>
                     </tr>
                 </thead>
+         
 
 
 
@@ -47,7 +49,10 @@ function FinishBoard(props) {
                     {Finishboard.map((row) => <tr><td className='data'>{row.no}</td><td className='data'>{row.username}</td><td className='data'>{row.scores}</td></tr>)}
                 </tbody>
             </table>
-            <button onClick={returnToHome}>Back to Home</button>
+            </div>
+            <div className='button'>
+            <button className='rtn' onClick={returnToHome}> <p className='fcolor'> Back to Home</p></button>
+            </div>
 
 
 

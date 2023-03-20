@@ -5,11 +5,21 @@ import { useState, useEffect } from 'react';
 
 
 function LeaderBoard() {
-  
 
   const [Leaderboard, setLeaderboard] = useState([]);
+  const [modeValue, setModeValue] = useState("")
+  
 
-
+  
+    const modes = [
+                        {value: "0", text: "Wins"}, 
+                        {value: "1", text: "Game Played"}, 
+                        {value: "2", text: "Winrate"}                      
+                      ]
+                      const options = modes.map((option) => {
+                        return <option value={option.value}>{option.text}</option>
+                      })
+  
 
   // API Fetch to get all
    
@@ -27,45 +37,56 @@ function LeaderBoard() {
     
    <>
     <h1 className='leaderboardH1'>Leaderboard</h1>
+    
        <div className='all'>
         <div className='box'>
         <label className='modes'></label>
       
-        <select name="modes" id="modes">
-        <option className='option' value="wins">Wins</option>
-        <option className='option' value="gameplayed">Game played</option>
-        <option className='option' value="winratess">Winrate</option>        
+        <select name="modes" value = "modeValue" onChange={(e) => setModeValue(e.target.value)}>
+          {options}
         </select>
         </div>
+        {/* <option className='option' value="wins">Wins</option> */}
+        <div className='opFunc'>
+        <button onClick={() => setModeValue("1")}>Wins</button>
+		      <button onClick={() => setModeValue("2")}>Gameplayed</button>
+		      <button onClick={() => setModeValue("3")}>Win rate</button>
+		      
+        </div>
+    
+
+      </div>
+            
+        
+        
         
 
-    <div className='wrapper'>
+     <div className='wrapper'>
       
-      <table className='board'>
-        <thead>
-        <tr>
-          <th className='columns'>Player(Username)</th>
-          <th className='columns'>Score</th>
-        </tr>
-        </thead>
+       <table className='board'>
+         <thead>
+         <tr>
+           <th className='columns'>Player(Username)</th>
+           <th className='columns'>Score</th>
+         </tr>
+         </thead>
         
 
 
-        <tbody className='myTable'>
-        {Leaderboard.map((row)=> <tr><td className='data' align='center'>{row.username}</td><td className='data' align='center'>{row.wins}</td></tr>)}
-        </tbody>
-        </table>
-
+         <tbody className='myTable'>
+         {Leaderboard.map((row)=> <tr><td className='data' align='center'>{row.username}</td><td className='data' align='center'>{row.wins}</td></tr>)}
+         </tbody>
+         </table>
+      
+         </div>
         
-        
-        
-        
-        </div>
-        </div>
+    
+         
         </>      
 
   )
 }
+
 
 const About = () => {
   return (
