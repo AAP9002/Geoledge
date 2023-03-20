@@ -30,7 +30,8 @@ module.exports = function (app, DBconnection) {
                             actual_docted = results[4][0];
                             //console.log(actual_docted);
                             status_of_correct = guess.country_id == actual_docted.country_id;
-
+                            console.log(Number(guess["timezone"].substring(3, 6)));
+                            console.log(Number(actual_docted["timezone"].substring(3, 6)));
                             res.status(200).send({
                                 auth_status: user_verified,
                                 correct_status: status_of_correct,
@@ -42,7 +43,7 @@ module.exports = function (app, DBconnection) {
                                     proximity: compare_and_give_direction(guess["latitude"], guess["longitude"], actual_docted["latitude"], actual_docted["longitude"]),
                                     surface_area: value_distance_score(guess["surface_area"], actual_docted["surface_area"]),
                                     population: value_distance_score(guess["population"], actual_docted["population"]),
-                                    time_diff_hours_off: Number(guess["timezone"].substring(3, 6)) - Number(actual_docted["timezone"].substring(3, 6)),
+                                    time_diff_hours_off: (Number(guess["timezone"].substring(3, 6))+12) - (Number(actual_docted["timezone"].substring(3, 6))+12),
                                     driving_side: (actual_docted["driving_side"] == guess["driving_side"]),
                                     capital: (actual_docted["capital"] == guess["capital"]),
                                     language: (actual_docted["language"] == guess["language"]),
