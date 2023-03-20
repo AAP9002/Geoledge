@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from './signupButton';
+import { LogoutButton } from './logoutButton';
+
 import './Navbar.css'
 
 
@@ -30,16 +32,16 @@ function Navbar() {
       console.log(res);
       if (res.status == "User is logged in.") {
         // Displaying the username and logout button
-        setIsLoggedIn(button && <Button buttonStyle='btn--outline' onClick={logout_of_account}>LOG OUT</Button>);
+        setIsLoggedIn(<LogoutButton buttonStyle='btn--outline' onClick={logout_of_account}>LOG OUT</LogoutButton>);
       } else {
         // Displaying sign up/log in button
-        setIsLoggedIn(button && <Button buttonStyle='btn--outline'>SIGN UP / LOG IN</Button>);
+        setIsLoggedIn(<Button buttonStyle='btn--outline'>SIGN UP / LOG IN</Button>);
       }
     });
   }, []);
 
   function logout_of_account() {
-    document.cookie = "JWT"+'=; Max-Age=-99999999;'; 
+    document.cookie = "JWT"+'=; Max-Age=-99999999;';
     window.location.reload();
   }
 
@@ -80,6 +82,7 @@ function Navbar() {
             
           </div>  
         </nav>
+        {/* <audio autoplay src="https://ld47.fds.im/42fa232a71ad99a4b312d746d656c54c.mp3" type="audio/mpeg" loop="loop"></audio> */}
     </>
   )
 }

@@ -1,6 +1,6 @@
 .home {
     color: purple;
-    background-image: url(./starry.png)
+    background-image: url(./starry2.png)
 }           
 
 
@@ -52,7 +52,12 @@
     text-align: center;
     width: 100%;
     justify-content: center;
+
     
+}
+
+.home-headers h1{
+    text-decoration: none;
 }
 
 .bottom h1{
@@ -71,7 +76,7 @@
     font-size: larger;
 }
 
-.styledbutton{
+.homestyledbutton{
     background-color: #ae00ff;
   color: white;
   padding: 5px 15px;
@@ -87,7 +92,7 @@
   text-decoration: none;
 }
 
-.styledbutton:hover{
+.homestyledbutton:hover{
     text-decoration: none;
     color: #4E2461;
 }

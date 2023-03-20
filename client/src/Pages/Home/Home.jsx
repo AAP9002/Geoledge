@@ -1,6 +1,7 @@
 import React from 'react';
 import "./Home.css";
-import Play from '../Play/Play';
+
+
 
 const About = () => {
 
@@ -14,7 +15,7 @@ const About = () => {
             } else {
                 //Finding an online game to join
                 fetch('/api/joinOnlineGame', { method: "GET" }).then(res => res.json()).then((res) => {
-                    if (res.status == "sessionID found") {
+                    if (res.status === "sessionID found") {
                         let sessionID = res.sessionID;
                         console.log(sessionID);
 
@@ -23,10 +24,10 @@ const About = () => {
                             window.location.href = "/#/Game";
                         });
 
-                    } else if (res.status == "no avaiable sessions") {
+                    } else if (res.status === "no avaiable sessions") {
                         // Show error message to user
 
-                    } else if (res.status == "error occurred on the server") {
+                    } else if (res.status === "error occurred on the server") {
                         // Show error message to user
                     }
                 });
@@ -49,6 +50,10 @@ const About = () => {
     }
 
 
+    function Joinlobby() {
+        window.location.href = "/#/JoinLobby"
+    }
+
     return (
         <div>
             <div>
@@ -62,9 +67,9 @@ const About = () => {
                             <h2>Prepared to test your geographical knowledge?</h2>
                         </div>
                         <div className="btns">
-                        <button className="styledbutton" onClick={HostLobby}> Host Game</button>
-                            <button className="styledbutton" onClick={findOnlineGame}> Play Online</button>
-                            <a className="styledbutton" href='./#/join-lobby'> Join Game</a>
+                        <button className="homestyledbutton" onClick={HostLobby}> Host Game</button>
+                            <button className="homestyledbutton" onClick={findOnlineGame}> Play Online</button>
+                            <button className="homestyledbutton" onClick={Joinlobby}> Join Game</button>
                         </div>
                     </div>
                 </div>
