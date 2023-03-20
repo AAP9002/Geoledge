@@ -1,0 +1,25 @@
+.waiting{
+    width: fit-content;
+    
+}
+
+.wfpstyledbutton{
+    background-color: #ae00ff;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    margin: 10px 5px 10px 20px;
+    cursor: pointer;
+    text-align: left;
+    transition: ease background-color 250ms;
+    height: fit-content;
+    width: fit-content;
+    opacity: 100%;
+    text-decoration: none;
+
+}
+
+.wfpstyledbutton:hover{
+    text-decoration: none;
+    color: #4E2461;
+}
