@@ -27,8 +27,10 @@ function LeaderBoard() {
     
    <>
     <h1 className='leaderboardH1'>Leaderboard</h1>
-    <label className='modes'></label>
-      <div className='box'>
+       <div className='all'>
+        <div className='box'>
+        <label className='modes'></label>
+      
         <select name="modes" id="modes">
         <option className='option' value="wins">Wins</option>
         <option className='option' value="gameplayed">Game played</option>
@@ -58,6 +60,7 @@ function LeaderBoard() {
         
         
         
+        </div>
         </div>
         </>      
 
