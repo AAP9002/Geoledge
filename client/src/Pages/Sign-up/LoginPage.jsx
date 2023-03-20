@@ -54,6 +54,7 @@ const LoginPage = () => {
         .then(res => {
           if (res.status == "Successfully logged in") {
             window.location.href = "/#/Home";
+            window.location.reload();
           } else {
             setIsInvalidUsername(true);
             setIsInvalidPassword(true);
