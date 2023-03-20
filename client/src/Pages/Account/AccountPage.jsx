@@ -23,7 +23,7 @@ function ScoreBoard() {
       setWins(Account.wins)
       setGamePlayed(Account.games_played)
       if (Number(Account.games_played) === 0) {
-        SetWinrate(1)
+        SetWinrate(0)
       }
       else {
         SetWinrate((Account.wins / Account.games_played) * 100)
