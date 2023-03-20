@@ -26,9 +26,9 @@ module.exports = function (app, connection) {
     // ====================   API   =======================
     app.get('/api/checkLoggedIn', (req, res) => {
         if (req.loggedIn == "true") {
-            res.status(200).send("User is logged in.")
+            res.status(200).send({ status:"User is logged in.", username: req.username });
         } else {
-            res.status(401).send("Error: User is unauthorised/not logged in. Try logging in.")
+            res.status(401).send({ status: "Error: User is unauthorised/not logged in. Try logging in." });
         }
     });
 

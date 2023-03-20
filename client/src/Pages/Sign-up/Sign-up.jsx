@@ -13,6 +13,8 @@ const SignUpPage = () => {
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isInvalidPassword, setIsInvalidPassword] = useState(false);
 
+  const [isInvalidTerms, setIsInvalidTerms] = useState(false);
+
 
   const checkIsValidUsername = () => {
     if (isInvalidUsername) {
@@ -34,7 +36,15 @@ const SignUpPage = () => {
     if (isInvalidEmail) {
       return(<div style={{color: "#f85956"}}>EMAIL <i id={"invalidMessage"}>- Email address is invalid</i></div>);
     } else {
-      return(<div style={{size: 8}}>PASSWORD</div>);
+      return(<div>EMAIL</div>);
+    }
+  }
+
+  const checkTermsAccepted = () => {
+    if (isInvalidTerms) {
+      return(<div style={{color: "#f85956"}}> - <i id={"invalidMessage"}> Please accept terms and conditions and privacy policy</i></div>);
+    } else {
+      return(<></>);
     }
   }
 
@@ -127,29 +137,34 @@ const SignUpPage = () => {
       setIsInvalidPassword(true);
       valid = false;
     } else {
-      setIsInvalidUsername(false);
+      setIsInvalidPassword(false);
     }
 
     if (!validateEmail()) {
       // email not valid
       console.log("email invalid");
       setIsInvalidEmail(true);
+      valid = false;
     } else {
-      setIsInvalidUsername(false);
+      setIsInvalidEmail(false);
     }
 
-    if (termsAccepted) {
-      if (valid) {
-        // API Call to create account
-        fetch(`/api/createAccount?username=${ name }&password=${ password }&email=${ email }&privacy_policy=1&terms_conditions=1`)
-          .then(res => res.json())
-          .then(status => {
-            console.log(status);
-            window.location.href = "/#/AccountPage";
-          });
-      }
+    if (!termsAccepted) {
+      console.log("terms not accepted");
+      setIsInvalidTerms(true);
+      valid = false;
     } else {
-      alert('Please accept the terms and conditions to continue.');
+      setIsInvalidTerms(false);
+    }
+
+    if (valid) {
+      // API Call to create account
+      fetch(`/api/createAccount?username=${ name }&password=${ password }&email=${ email }&privacy_policy=1&terms_conditions=1`)
+        .then(res => res.json())
+        .then(status => {
+          console.log(status);
+          window.location.href = "/#/Home";
+        });
     }
   };
 
@@ -177,10 +192,10 @@ const SignUpPage = () => {
             />
           </div>
           <div className="input-group">
-            <label htmlFor="email">{ checkIsValidEmail() }</label>
+            <label htmlFor="text">{ checkIsValidEmail() }</label>
             <input
-              type="email"
-              id="email"
+              type="text"
+              id="text"
               value={email}
               onChange={handleEmailChange}
             />
@@ -206,8 +221,11 @@ const SignUpPage = () => {
               onChange={handleTermsAccepted}
             />
           </div>
+
+          { checkTermsAccepted() };
+
           <button type="submit">Sign Up</button>
-          <p>Already have an account <a href="/#/Log-in"> <button type="button" onClick={handleLoginClick}>Log In</button> </a></p>
+          <p>Already have an account? <a href="/#/Log-in"> <button type="button" onClick={handleLoginClick}>Log In</button> </a></p>
           
         </form>
 
