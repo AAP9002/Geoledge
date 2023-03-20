@@ -244,4 +244,42 @@ module.exports = function (app, connection) {
 
         res.status(200).send("Ready to start game");
     });
+
+    app.get('/api/LobbyValidation', (req, res) => {
+        let sessionID = req.query.sessionID;
+        let userID = req.userID;
+        let query = `select * from session where session_id=${sessionID}`
+        connection.query(query, (err, session) => {
+            if (err) {
+                console.log("sql broken: " + err)
+                res.status(500).send(err);
+            } else {
+                // sql returns [] -> no ID exists.
+                if (session.length == 0) { 
+                    res.status(401).send(
+                        { status: "Incorrect lobby code. Session ID does not exist. Please check the session ID was entered correctly" }
+                    );
+                } else {
+                    // flags: user not host, session expired, state not waiting
+                    if (userID != session[0].host_user) {
+                        res.status(401).send(
+                            { status: "User is not the host of this session" }
+                        );
+                    } else if (session[0].expired == 1) {
+                        res.status(401).send(
+                            { status: "The lobby you are trying to access has expired. Please check the session ID was entered correctly" }
+                        );
+                    } else if (session[0].game_state != "waiting for players") {
+                        res.status(401).send(
+                            { status: "The lobby you are trying to access is in an invalid state. Please check the session ID was entered correctly" }
+                        );
+                    } else {
+                        res.status(200).send(
+                            { status: "Lobby Verification Successful" }
+                         );
+                    }
+                }
+            }
+        })
+    })
 }

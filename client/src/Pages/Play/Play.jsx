@@ -15,11 +15,21 @@ function Play() {
     
     useEffect(() => {
         fetch('/api/checkLoggedIn', { method: "GET" }).then((res) => {
+            console.log(res.status, "1")
             if (res.status === 401) {
                 window.location.href = "/#/Log-in";
             } else {
-                setGame_Session_ID(sessionID)
-                setSessionCreationState(false)
+                fetch('/api/LobbyValidation?sessionID='+sessionID, { method: "GET" }).then((res) => res.json()).then(stateJson => {
+                    console.log(stateJson.status, "2")
+                    if (stateJson.status != "Lobby Verification Successful") {
+                        console.log(stateJson.status)
+                        window.location.href = "/#/Home";
+                    } else {
+                        console.log("$%^&*")
+                        setGame_Session_ID(sessionID)
+                        setSessionCreationState(false)
+                    }
+                })
             }
         })
 
@@ -56,7 +66,7 @@ function Play() {
 
 
     if(creating_game_Session){
-        return(<p className='waiting'>Creating New Game Session...</p>)
+        return(<p className='waiting'>Loading... (Hosting Game)</p>)
     }
 
     return (
