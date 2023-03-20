@@ -50,7 +50,7 @@ function Navbar() {
         <nav className='navbar'>
           <div className='navbar-container'>
             <div className="menu-icon" onClick={handleClick}>
-              <i className={click ? 'fa-solid fa-xmark' : 'fas fa-bars'}></i>
+              <i style={{color:"white"}} className={click ? 'fa-solid fa-xmark' : 'fas fa-bars'}></i>
             </div>
             <ul className={click ? 'nav-menu active' : 'nav-menu'}>
               <li className='nav-item'>
@@ -73,14 +73,9 @@ function Navbar() {
                   Join Lobby
                 </Link>
               </li>              
-              <li className='nav-item'>
-                <Link to='/Sign-up' className='nav-links-mobile' onClick={closeMobileMenu}>
-                  Sign Up
-                </Link>
-              </li>
               <div className='nav-item'>
-            { isLoggedIn };
-            </div>
+                { isLoggedIn };
+              </div>
             </ul>
             
           </div>  
