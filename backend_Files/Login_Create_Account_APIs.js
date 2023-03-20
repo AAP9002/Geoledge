@@ -176,7 +176,7 @@ module.exports = function (app, connection) {
     
     
     // LOGIN API HANDLER
-    // test http://localhost:5000/api/login?username=kev123&password=pass
+    // test http://localhost:5000/api/login?username=admin123&password=admin123
     app.get('/api/login', (req, res) => {
         console.log("Client logging in");
         // Getting login credentials
