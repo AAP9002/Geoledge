@@ -27,14 +27,23 @@ function LeaderBoard() {
     
    <>
     <h1 className='leaderboardH1'>Leaderboard</h1>
+    <label className='modes'></label>
+      <div className='box'>
+        <select name="modes" id="modes">
+        <option className='option' value="wins">Wins</option>
+        <option className='option' value="gameplayed">Game played</option>
+        <option className='option' value="winratess">Winrate</option>        
+        </select>
+        </div>
+        
 
-    <div className='wrapper w-100'>
+    <div className='wrapper'>
       
-      <table className='board w-100'>
+      <table className='board'>
         <thead>
         <tr>
           <th className='columns'>Player(Username)</th>
-          <th className='columns'>Number of Wins</th>
+          <th className='columns'>Score</th>
         </tr>
         </thead>
         
@@ -44,6 +53,8 @@ function LeaderBoard() {
         {Leaderboard.map((row)=> <tr><td className='data' align='center'>{row.username}</td><td className='data' align='center'>{row.wins}</td></tr>)}
         </tbody>
         </table>
+
+        
         
         
         

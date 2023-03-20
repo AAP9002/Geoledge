@@ -164,6 +164,7 @@ const SignUpPage = () => {
         .then(status => {
           console.log(status);
           window.location.href = "/#/Home";
+          window.location.reload();
         });
     }
   };
