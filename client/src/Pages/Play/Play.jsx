@@ -33,12 +33,18 @@ function Play() {
             }
         })
 
+        let timer;
+
         setTimeout(() => {
-            fetch('/api/getLobbyPlayers?sessionID='+sessionID, { method: "GET" }).then(res => res.json()).then(stateJson => {
-                setPlayers(stateJson.players);
-                console.log("Players will be blank, but not when you use players.map in return", Players)
-            })
-        }, 1000);
+            timer = setInterval(() => {
+                fetch('/api/getLobbyPlayers?sessionID='+sessionID, { method: "GET" }).then(res => res.json()).then(stateJson => {
+                    setPlayers(stateJson.players);
+                    console.log("Players will be blank, but not when you use players.map in return", Players)
+                })
+            }, 1000);
+        }, 3000);
+        return () => clearInterval(timer);
+        
     }, []);
     
     const [NumberOfRounds, setNOR] = useState(5)
