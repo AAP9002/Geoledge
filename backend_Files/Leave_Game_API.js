@@ -51,9 +51,24 @@ module.exports = function (app, connection) {
 
         return promise;
     }
+        
+    function sessionNewHost(sessionID) {
+        let myPromise = new Promise(function(resolve, reject) {
+            let query = "call new_host(?)"
 
+            connection.query(query, [sessionID], (err, result) => {
+                if (err) {
+                    console.log("Error when checking if client is a participent of a session: " + sessionID);
+                    reject(null);
+                } else {
+                    resolve(null);
+                }
+            })
+        });
 
-
+        return myPromise;
+    }
+    
     app.get('/api/leaveSession', function (req, res) {
         if (req.loggedIn == "false") {
             // Client not logged in. This API shall not work :)
@@ -77,6 +92,8 @@ module.exports = function (app, connection) {
 
                             promise3.then(function(result) {
                                 // SUCCESSFULLY REMOVED PARTICIPENT FROM DATABASE
+                                // Assign new host/drop empty session
+                                let myPromise = sessionNewHost(sessionID)
                                 res.status(200).send({ "status": "successfully left the game" });
                             }, 
                             function(reject) {
