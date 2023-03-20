@@ -30,13 +30,18 @@ function Navbar() {
       console.log(res);
       if (res.status == "User is logged in.") {
         // Displaying the username and logout button
-        setIsLoggedIn(button && <Button buttonStyle='btn--outline'>LOG OUT</Button>);
+        setIsLoggedIn(button && <Button buttonStyle='btn--outline' onClick={logout_of_account}>LOG OUT</Button>);
       } else {
         // Displaying sign up/log in button
         setIsLoggedIn(button && <Button buttonStyle='btn--outline'>SIGN UP / LOG IN</Button>);
       }
     });
   }, []);
+
+  function logout_of_account() {
+    document.cookie = "JWT"+'=; Max-Age=-99999999;'; 
+    window.location.reload();
+  }
 
 
   window.addEventListener('resize', showButton);
