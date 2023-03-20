@@ -1,3 +1,5 @@
+const { urlencoded } = require("express");
+
 module.exports = function (app, DBconnection) {
     // === Need to check that game state in "dispaying question" before accepting answer === - Alex
 
@@ -153,4 +155,25 @@ module.exports = function (app, DBconnection) {
             }
         )
     });
+
+    app.get('/api/isHost', (req, res) => {
+        let sessionID = req.query.sessionID;
+        let userID = req.userID;
+        if (userID == null) {
+            res.status(401).send({ status: "User is not logged in"})
+        }
+        else {
+            let query = `call is_host(?,?)`
+            DBconnection.query(query, [sessionID, userID], (err, result) => {
+                if (err) {
+                    console.log("sql broken" + err)
+                    res.status(500).send()
+                } 
+                else {
+                    res.status(200).send({ is_host: result[0][0].value})
+                }
+            });
+        }
+    });
+    
 }

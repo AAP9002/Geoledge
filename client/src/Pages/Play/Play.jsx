@@ -113,10 +113,10 @@ function Play() {
                                             <div className="me-2" aria-label="Second group">
 
 
-                                                <button className="styledbutton2" id="60" onClick={changeTPR}>60s</button>
-                                                <button className="styledbutton2" id="90" onClick={changeTPR}>90s</button>
-                                                <button className="styledbutton2" id="120" onClick={changeTPR}>120s</button>
-                                                <button className="styledbutton2" id="150" onClick={changeTPR}>150s</button>
+                                                <button className="styledbutton3" id="60" onClick={changeTPR}>60s</button>
+                                                <button className="styledbutton3" id="90" onClick={changeTPR}>90s</button>
+                                                <button className="styledbutton3" id="120" onClick={changeTPR}>120s</button>
+                                                <button className="styledbutton3" id="150" onClick={changeTPR}>150s</button>
                                             </div>
 
                                         </div>
