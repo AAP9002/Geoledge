@@ -138,9 +138,9 @@ module.exports = function (app, DBconnection) {
 
         myPromise.then(
             function(result) {
-                let i = result[0][0].current_question-1
+                console.log(result)
                 let game_state = result[0][0].game_state
-                let answer = result[1][i].country_name
+                let answer = result[2][0].country_name
                 if (game_state == "revealing answer") {
                     res.status(200).send({ country_name: answer})
                 } else {
