@@ -88,7 +88,9 @@ h2{
 .Statistics{
     display: flex;
     justify-content: center;
-    margin-top: -49vh;
+    position: relative;
+    top: -350px;
+    
 }
 
 .b2{
@@ -116,7 +118,7 @@ h2{
 .wr{
     position: relative;
     right:-150px;
-    margin-top: -4vh;
+    top: -44px;
     font-size: 40px;
 }
 .Container2{
@@ -127,12 +129,15 @@ h2{
      height: 150px;
      position: relative;
      right: -40px;
-     margin-top: 2vh;
+     top: -27px;
+     border-radius:15px;
+     
 }
 .Gameplayed{
     display: flex;
     justify-content: center;
-    margin-top: 6vh;
+    position: relative;
+    top: 20px;
     font-size: 30px;
 }
 
@@ -144,13 +149,13 @@ h2{
      height: 150px;
      position: relative;
      right: -370px;
-     margin-top: -21vh;   
+     top: -175px; 
+     border-radius: 15px;  
 }
 
 
 .rate{
-    display: flex;
-    justify-content: center;
-    margin-top: 6vh;
+    position: relative;
+    top: 20px;
     font-size: 30px;
 }
