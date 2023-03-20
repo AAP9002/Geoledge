@@ -10,14 +10,18 @@ const Reveal_answer = (props) => {
     const [correctAnswer, setCorrectAnswer] = useState("HERE")
     const [loading, setloading] = useState(true)
     useEffect(() => {
-        //check if current user is host
-        //check correct answer
-        fetch('/api/').then(res => res.json()).then(stateJson => {
-            fetch('/api/').then(res => res.json()).then(stateJson => {
-                setloading(false)
-            })
+        // //check if current user is host (all users get the answer, not just the host)
+        // //check correct answer
+        // fetch('/api/').then(res => res.json()).then(stateJson => {
+        //     fetch('/api/').then(res => res.json()).then(stateJson => {
+        //         setloading(false)
+        //     })
+        // })
+        // setloading(false)
+        fetch('/api/revealAnswer?sessionID='+sessionID).then(res => res.json()).then(stateJson => {
+            setCorrectAnswer(stateJson.country_name)
+            setloading(false)
         })
-        setloading(false)
     }, []);
 
     function Change_State_Current_Score() {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from './signupButton';
 import './Navbar.css'
@@ -13,6 +13,8 @@ function Navbar() {
 
   const closeMobileMenu = () => setClick(false)
 
+  const [isLoggedIn, setIsLoggedIn] = useState(button && <Button buttonStyle='btn--outline'>SIGN UP / LOG IN</Button>);
+
   const showButton = () => {
     if(window.innerWidth <= 960){
       setButton(false);
@@ -21,6 +23,21 @@ function Navbar() {
       setButton(true);
     }
   };
+
+
+  useEffect(() => {
+    fetch('/api/checkLoggedIn').then(res => res.json()).then(res => {
+      console.log(res);
+      if (res.status == "User is logged in.") {
+        // Displaying the username and logout button
+        setIsLoggedIn(button && <Button buttonStyle='btn--outline'>LOG OUT</Button>);
+      } else {
+        // Displaying sign up/log in button
+        setIsLoggedIn(button && <Button buttonStyle='btn--outline'>SIGN UP / LOG IN</Button>);
+      }
+    });
+  }, []);
+
 
   window.addEventListener('resize', showButton);
   return (
@@ -57,7 +74,7 @@ function Navbar() {
                 </Link>
               </li>
               <div className='nav-item'>
-            {button && <Button buttonStyle='btn--outline'>SIGN UP / LOG IN</Button>}
+            { isLoggedIn };
             </div>
             </ul>
             

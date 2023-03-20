@@ -13,48 +13,48 @@ module.exports = function (app, DBconnection) {
                 auth_status: user_verified
             });
         }
-        else{
+        else {
             DBconnection.query("call check_country_guess_correct(?,?)",
-            [answer_submitted, user], function (error, results) {
-                console.log(results);
-                if (error) {
-                    console.log(error);
-                    res.status(500).status()
-                }
-                else {
-                    try {
-                        //console.log(results);
-
-                        guess = results[0][0]
-
-                        actual_docted = results[4][0];
-                        //console.log(actual_docted);
-                        status_of_correct = guess.country_id == actual_docted.country_id;
-
-                        res.status(200).send({
-                            auth_status: user_verified,
-                            correct_status: status_of_correct,
-                            guess_country: guess,
-                            actual_country: {
-                                independent: (actual_docted["independent"] == guess["independent"]),
-                                unMember: (actual_docted["unMember"] == guess["unMember"]),
-                                region: (actual_docted["region"] == guess["region"]),
-                                proximity: compare_and_give_direction(guess["latitude"], guess["longitude"], actual_docted["latitude"], actual_docted["longitude"]),
-                                surface_area: value_distance_score(guess["surface_area"], actual_docted["surface_area"]),
-                                population: value_distance_score(guess["population"], actual_docted["population"]),
-                                time_diff_hours_off: Number(guess["timezone"].substring(3, 6)) - Number(actual_docted["timezone"].substring(3, 6)),
-                                driving_side: (actual_docted["driving_side"] == guess["driving_side"]),
-                                capital: (actual_docted["capital"] == guess["capital"]),
-                                language: (actual_docted["language"] == guess["language"]),
-                                currency: (actual_docted["currency"] == guess["currency"]),
-                            }
-                        });
+                [answer_submitted, user], function (error, results) {
+                    console.log(results);
+                    if (error) {
+                        console.log(error);
+                        res.status(500).status({errorMessage:error});
                     }
-                    catch {
-                        res.status(500).send("Error when processing data, may be not in game or not in question state")
+                    else {
+                        try {
+                            //console.log(results);
+
+                            guess = results[0][0]
+
+                            actual_docted = results[4][0];
+                            //console.log(actual_docted);
+                            status_of_correct = guess.country_id == actual_docted.country_id;
+
+                            res.status(200).send({
+                                auth_status: user_verified,
+                                correct_status: status_of_correct,
+                                guess_country: guess,
+                                actual_country: {
+                                    independent: (actual_docted["independent"] == guess["independent"]),
+                                    unMember: (actual_docted["unMember"] == guess["unMember"]),
+                                    region: (actual_docted["region"] == guess["region"]),
+                                    proximity: compare_and_give_direction(guess["latitude"], guess["longitude"], actual_docted["latitude"], actual_docted["longitude"]),
+                                    surface_area: value_distance_score(guess["surface_area"], actual_docted["surface_area"]),
+                                    population: value_distance_score(guess["population"], actual_docted["population"]),
+                                    time_diff_hours_off: Number(guess["timezone"].substring(3, 6)) - Number(actual_docted["timezone"].substring(3, 6)),
+                                    driving_side: (actual_docted["driving_side"] == guess["driving_side"]),
+                                    capital: (actual_docted["capital"] == guess["capital"]),
+                                    language: (actual_docted["language"] == guess["language"]),
+                                    currency: (actual_docted["currency"] == guess["currency"]),
+                                }
+                            });
+                        }
+                        catch {
+                            res.status(500).send("Error when processing data, may be not in game or not in question state")
+                        }
                     }
-                }
-            })
+                })
         }
     });
 
@@ -117,25 +117,6 @@ module.exports = function (app, DBconnection) {
         })
     }
 
-    ///// /api/has_everyone_answered /////
-    // check if for that quiz, if there are any participants where answered = 0
-    // SELECT COUNT(answered) from participants where quiz_session_id={session_id} and answered = 0
-    // in JS if == 0, return TRUE else FALSE
-    app.get('/api/has_everyone_answered', (req, res) => {
-        let quiz_session_id = "19";
-        DBconnection.query("call check_if_all_participants_have_answered(?)", [quiz_session_id], function (error, results) {
-
-            if (error) {
-                res.status(500).send();
-            }
-            else {
-                res.status(200).send({
-                    all_answered_current_question: (results[0][0]['COUNT(*)'] == 0),
-                });
-            }
-        })
-    });
-
     app.get('/api/countryNames', (req, res) => {
         res.sendFile(`${__dirname}/static_files/country_name_list.json`);
     });
@@ -160,7 +141,7 @@ module.exports = function (app, DBconnection) {
                 let game_state = result[0][0].game_state
                 let answer = result[1][i].country_name
                 if (game_state == "revealing answer") {
-                    res.status(200).send(answer)
+                    res.status(200).send({ country_name: answer})
                 } else {
                     res.status(401).send("game state not in revealing answer yet")
                 }

@@ -89,3 +89,11 @@
 .return-home-button:hover {
   background-color: #b875f7;
 }
+
+
+.nonExistMessage{
+  color: red;
+  text-align: center;
+  font-weight: bold;
+  font-size: 2rem;
+}
