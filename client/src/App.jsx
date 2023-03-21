@@ -19,7 +19,7 @@ function App() {
   
   return (
     <>
-    <img className='w-100 h-100' id='app_background_image' src={background}></img>
+    <img className='' id='app_background_image' src={background}></img>
       <Router>
            <div className='App'>
            {window.location.href.split('#')[1] !=='/Game'?  <Navbar />:null }

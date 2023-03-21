@@ -64,9 +64,9 @@ const Question = (props) => {
             setSaUPDOWN(resp.actual_country.surface_area.directionupdown);
             setSaColour(resp.actual_country.surface_area.howClose);
             setTimeUPDOWN(resp.actual_country.time_diff_hours_off);
-            setlocationDirection("rotate("+Math.floor(resp.actual_country.proximity.direction* (180/Math.PI))+"deg)");
+            setlocationDirection("rotate("+resp.actual_country.proximity.direction* (180/Math.PI)+"deg)");
             console.log(resp.actual_country.proximity.direction* (180/Math.PI))
-            setlocationDistance(resp.actual_country.proximity.distanceKM);
+            setlocationDistance(resp.actual_country.proximity.distanceKM* (180/Math.PI));
 
             let others = resp.actual_country;
             delete others['population'];
@@ -123,9 +123,14 @@ const Question = (props) => {
                     <bubble style={{ backgroundColor: saColour }}>{saUPDOWN}</bubble>
                 </div>
                 <div className='d-flex flex-sm-column justify-content-center'>
-                    <b>Location</b>
+                    <b>Direction</b>
                     <bubble>
-                        <p style={{transform:locationDirection}}>⬆️</p><br/>
+                        <p style={{transform:locationDirection, fontSize:"40px"}}>⬆️</p>
+                    </bubble>
+                </div>
+                <div className='d-flex flex-sm-column justify-content-center'>
+                    <b>Distance</b>
+                    <bubble>
                         {Math.ceil(locationDistance)} Km
                     </bubble>
                 </div>
