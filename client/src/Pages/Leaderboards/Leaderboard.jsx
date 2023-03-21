@@ -42,15 +42,17 @@ function LeaderBoard() {
         <div className='box'>
         <label className='modes'></label>
       
-        <select name="modes" value = "modeValue" onChange={(e) => setModeValue(e.target.value)}>
+        <select name="modes" value = "modeValue" onChange={(e) => setModeValue(e.target.value)} >
           {options}
         </select>
         </div>
         {/* <option className='option' value="wins">Wins</option> */}
         <div className='opFunc'>
-        <button onClick={() => setModeValue("1")}>Wins</button>
-		      <button onClick={() => setModeValue("2")}>Gameplayed</button>
-		      <button onClick={() => setModeValue("3")}>Win rate</button>
+        <option onClick={() => {setModeValue("1");
+      console.log(modeValue)}}>Wins</option>
+		      <option onClick={() => {setModeValue("2");
+        console.log(modeValue)}}>Gameplayed</option>
+		      <option onClick={() => setModeValue("3")}>Win rate</option>
 		      
         </div>
     
