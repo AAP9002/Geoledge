@@ -15,7 +15,9 @@ function Navbar() {
 
   const closeMobileMenu = () => setClick(false)
 
-  const [isLoggedIn, setIsLoggedIn] = useState(button && <Button buttonStyle='btn--outline'>SIGN UP / LOG IN</Button>);
+  const [isLoggedInButton, setIsLoggedInButton] = useState(button && <Button buttonStyle='btn--outline'>SIGN UP / LOG IN</Button>);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
 
   const showButton = () => {
     if(window.innerWidth <= 960){
@@ -31,14 +33,28 @@ function Navbar() {
     fetch('/api/checkLoggedIn').then(res => res.json()).then(res => {
       console.log(res);
       if (res.status == "User is logged in.") {
+        setIsLoggedIn(true);
+        setUsername(res.username);
+
         // Displaying the username and logout button
-        setIsLoggedIn(<LogoutButton buttonStyle='btn--outline' onClick={logout_of_account}>LOG OUT</LogoutButton>);
+        setIsLoggedInButton(<LogoutButton buttonStyle='btn--outline' onClick={logout_of_account}>LOG OUT</LogoutButton>);
       } else {
+        setIsLoggedIn(false);
+        setUsername("");
+
         // Displaying sign up/log in button
-        setIsLoggedIn(<Button buttonStyle='btn--outline'>SIGN UP / LOG IN</Button>);
+        setIsLoggedInButton(<Button buttonStyle='btn--outline'>SIGN UP / LOG IN</Button>);
       }
     });
   }, []);
+
+  function getUsername() {
+    if (isLoggedIn) { 
+      return (<div className='nav-item'> <p><u>     Welcome back { username }!</u></p> </div>);
+    } else {
+      return (<></>)
+    }
+  }
 
   function logout_of_account() {
     document.cookie = "JWT"+'=; Max-Age=-99999999;';
@@ -66,18 +82,21 @@ function Navbar() {
                 </Link>
               </li> 
               <li className='nav-item'>
-                <Link to='/AccountPage' className='nav-links' onClick={closeMobileMenu}>
-                  Account
-                </Link>
-              </li>
-              <li className='nav-item'>
                 <Link to='/join-lobby' className='nav-links' onClick={closeMobileMenu}>
                   Join Lobby
                 </Link>
+              </li>
+              <li className='nav-item'>
+                <Link to='/AccountPage' className='nav-links' onClick={closeMobileMenu}>
+                  Account
+                </Link>
               </li>              
               <div className='nav-item'>
-                { isLoggedIn };
+                { isLoggedInButton }
               </div>
+
+              { getUsername() }
+              
             </ul>
             
           </div>  
