@@ -16,9 +16,9 @@ function LeaderBoard() {
                         {value: "1", text: "Game Played"}, 
                         {value: "2", text: "Winrate"}                      
                       ]
-                      const options = modes.map((option) => {
-                        return <option value={option.value}>{option.text}</option>
-                      })
+    const options = modes.map((option) => {
+    return <option value={option.value}>{option.text}</option>
+      })
   
 
   // API Fetch to get all
