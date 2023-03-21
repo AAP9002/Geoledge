@@ -11,9 +11,31 @@
     scrollbar-width: thin;
     height:500px;
     display:block;  
+    top: 130px;
     
     }
-    
+    .header1{
+        position: absolute;
+        right: -8em;
+        font-size: 70px
+       
+    }
+    .button{
+        
+        position: relative;
+        top: 80px;
+        right: 180px;
+    }
+    .fcolor{
+        position: relative;
+        top: -10px;
+    }
+    .rtn{
+        height: 50px;
+        background-color: #835ee8;
+   
+        border-radius: 30px;
+    }
     
     .RankingTable{ 
         font-family:  Comic Sans MS;
