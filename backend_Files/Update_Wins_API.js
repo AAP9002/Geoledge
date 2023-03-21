@@ -101,6 +101,8 @@ module.exports = function(app, connection) {
             connection.query(query, [sessionID, userID, msg], (err, result) => {
                 if (err) {
                     myReject(err);
+                } else if (result[0].length == 0) {
+                    myReject(result);
                 } else {
                     myResolve(result); // returns bool(host == id AND game_state == "revealing answer")
                 }

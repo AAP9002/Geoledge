@@ -1,5 +1,7 @@
 import React from 'react';
 import "./Home.css";
+import { useEffect, useRef, useState } from 'react';
+
 
 
 
@@ -43,7 +45,7 @@ const About = () => {
             } else {
                 fetch('/api/createLobby', { method: "POST" }).then(res => res.json()).then(stateJson => {
                     let sessionID = stateJson.id
-                    window.location.href =(`#/Play/${sessionID}`);
+                    window.location.href = (`#/Play/${sessionID}`);
                 })
             }
         })
@@ -54,31 +56,57 @@ const About = () => {
         window.location.href = "/#/JoinLobby"
     }
 
+    function FadeInSection(props) {
+        const [isVisible, setVisible] = useState(true);
+        const domRef = useRef();
+        useEffect(() => {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => setVisible(entry.isIntersecting));
+            });
+            observer.observe(domRef.current);
+            return () => observer.unobserve(domRef.current);
+        }, []);
+        return (
+            <div
+                className={`fade-in-section ${isVisible ? 'is-visible' : ''}`}
+                ref={domRef}
+            >
+                {props.children}
+            </div>
+        );
+    }
+
     return (
         <div>
-            <div>
-
-            </div>
-            <div className="column">
+            <div className="column2">
                 <div className="top">
                     <div className="row-md-8">
                         <div className='home-headers'>
                             <h1>GEOLEDGE</h1>
-                            <h2>Prepared to test your geographical knowledge?</h2>
+                            <h2>Prepared to test your<br></br> geographical knowledge?</h2>
                         </div>
                         <div className="btns">
-                        <button className="homestyledbutton" onClick={HostLobby}> Host Game</button>
-                            <button className="homestyledbutton" onClick={findOnlineGame}> Play Online</button>
+
+                            <button className="homestyledbutton2" onClick={findOnlineGame}> Play Online</button>
+
+                        </div>
+                        <div className='btns2'>
+                            <button className="homestyledbutton" onClick={HostLobby}> Host Game</button>
                             <button className="homestyledbutton" onClick={Joinlobby}> Join Game</button>
                         </div>
-                    </div>
-                </div>
-                <div className="bottom">
-                    <div className="row-md-12">
-                        <h1>What Is Geoledge?</h1>
-                        <p>Geoledge is an online quiz-type game.</p>
-                        <p>Each round you will be given a list of facts describing a mystery country.</p>
-                        <p>Will you be able to pinpoint the coutnry based on these facts?</p>
+                        <div className='earth'>
+                            <div id="box"></div>
+                            <FadeInSection>
+                                <div className="bottom">
+                                    <div className="row-md-12">
+                                        <h1>What Is Geoledge?</h1>
+                                        <p>Geoledge is an online quiz-type game.</p>
+                                        <p>Each round you will be given a list of facts describing a mystery country.</p>
+                                        <p>Will you be able to pinpoint the coutnry based on these facts?</p>
+                                    </div>
+                                </div>
+                            </FadeInSection>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,9 +1,3 @@
-body {
-  background-color: #F8F8FF;
-  font-family: 'Open Sans', sans-serif;
-  color: #333;
-}
-
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
@@ -33,10 +27,6 @@ body {
   background-color:  rgb(163, 10, 168);
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   height: 600px;
   width: 100%;
   max-width: 900px; 
@@ -78,34 +68,7 @@ body {
   font-weight: bold;
   position: relative;
   color:#ffffff;
-}
-
-.question-container #country_stats b:after {
-  content: '';
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  position: absolute;
-  bottom: -10px;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.question-container #country_stats b:nth-child(1):after {
-  background-color: var(--main-color);
-}
-
-.question-container #country_stats b:nth-child(2):after {
-  background-color: var(--secondary-color);
-}
-
-.question-container #country_stats b:nth-child(3):after {
-  background-color: var(--tertiary-color);
-}
-
-.question-container #country_stats b:nth-child(4):after {
-  background-color: #4caf50;
+  text-align: center;
 }
 
 /* Other country stats styles */
@@ -119,6 +82,17 @@ body {
   font-size: 16px;
   font-weight: bold;
   color: var(--main-color);
+}
+
+bubble{
+  background-color: black;
+  border-radius: 1000px;
+  width:100px;
+  aspect-ratio: 1/1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Search styles */

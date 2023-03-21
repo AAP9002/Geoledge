@@ -269,11 +269,13 @@ module.exports = function (app, connection) {
                         res.status(401).send(
                             { status: "The lobby you are trying to access has expired. Please check the session ID was entered correctly" }
                         );
-                    } else if (session[0].game_state != "waiting for players") {
-                        res.status(401).send(
-                            { status: "The lobby you are trying to access is in an invalid state. Please check the session ID was entered correctly" }
-                        );
-                    } else {
+                    } 
+                    // else if (session[0].game_state != "waiting for players") {
+                    //     res.status(401).send(
+                    //         { status: "The lobby you are trying to access is in an invalid state. Please check the session ID was entered correctly" }
+                    //     );
+                    // } 
+                    else {
                         res.status(200).send(
                             { status: "Lobby Verification Successful" }
                          );

@@ -13,7 +13,6 @@ const Waiting_for_players = (props) => {
 
     return(<>
             <p className="waiting">Waiting for players</p>
-            <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
         </>);}
 
 export default Waiting_for_players;
