@@ -1,5 +1,6 @@
 import React from 'react';
 import "./Question.css";
+import arrow from '../GameloopImages/arrow.png'
 
 import { useState, useEffect } from 'react';
 
@@ -29,6 +30,7 @@ const Question = (props) => {
     const [numberOfGuessesUsed, setNumberOfGuessesUsed] = useState(0);
     const [Score, setScore] = useState(10000);
 
+    const [display_searchbox_mobile, set_display_searchbox_mobile] = useState(false);
 
 
     useEffect(() => {
@@ -81,8 +83,12 @@ const Question = (props) => {
                 setNumberOfGuessesUsed(numberOfGuessesUsed+1)
                 setScore(Math.floor(10000-((5000*((MAX_TIME-timeNumber)/MAX_TIME))+(5000*(numberOfGuessesUsed/MAX_GUESS)))))
             }
-            
+            toggle_movile_search()
         });
+    }
+
+    function toggle_movile_search(){
+        set_display_searchbox_mobile(!display_searchbox_mobile)
     }
 
     if (numberOfGuessesUsed > MAX_GUESS) {
@@ -124,7 +130,7 @@ const Question = (props) => {
                 <div className='d-flex flex-sm-column justify-content-center'>
                     <b>Direction</b>
                     <bubble>
-                        <p style={{transform:locationDirection, fontSize:"40px"}}>⬆️</p>
+                        <img style={{transform:locationDirection}} className="w-75" src={arrow}></img>
                     </bubble>
                 </div>
                 <div className='d-flex flex-sm-column justify-content-center'>
@@ -138,8 +144,9 @@ const Question = (props) => {
                     <bubble>{timeUPDOWN} Hrs</bubble>
                 </div>
             </div>
-            <br />
-            <br />
+            <div id="country_other_stats">
+                {Object.keys(otherCountryData).map(key => (<div style={otherCountryData[key]==true?{backgroundColor:"green"}:{backgroundColor:"red"}} className='other_box'>{key}</div>))}
+            </div>
             <div className='search-container'>
                 <div className='search-inner'>
                     <input type='text' placeholder='Start Typing a Country' value={value} onChange={onChange} />
@@ -164,11 +171,34 @@ const Question = (props) => {
                         ))}
                 </div>
             </div>
-            <br />
-            <b>Other</b>
-            <div id="country_other_stats" style={{ display: 'flex', justifyContent: 'space-around' }}>
-                {Object.keys(otherCountryData).map(key => (<small>{key} : {String(otherCountryData[key])}</small>))}
+            <br/>
+            <btn className="mobile_guess_btn btn btn-secondary w-100" onClick={toggle_movile_search}>Make A Guess</btn>
+            <div className='mobile-search-container' style={display_searchbox_mobile==true?{display:"block"}:{display:"none"}}>
+                <a className='w-100' onClick={toggle_movile_search}>X CLOSE</a>
+                <div className='search-inner'>
+                    <input type='text' placeholder='Start Typing a Country' value={value} onChange={onChange} />
+                </div>
+                <div className='dropdown'>
+                    {countryNames.filter((item) => {
+                        const searchTerm = value.toLowerCase();
+                        const country = item.country_name.toLowerCase();
+                        return (searchTerm && country.startsWith(searchTerm));
+                    })
+                        .slice(0, 10)
+                        .map((item) => (
+                            <button
+                                onClick={() => check_guess(item.country_id,item.country_name)}
+                                value={item.country_id}
+                                className='btn btn-secondary btn-sm w-100'
+                                key={item.country_id}
+                                style={{ padding: "5px" }}
+                            >
+                                {item.country_name}
+                            </button>
+                        ))}
+                </div>
             </div>
+            <br />
         </div>
     );
 };

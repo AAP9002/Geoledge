@@ -27,7 +27,7 @@ body {
   background-color:  rgb(163, 10, 168);
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  height: 600px;
+  height: fit-content;
   width: 100%;
   max-width: 900px; 
   margin: 0 auto;
@@ -64,14 +64,17 @@ body {
 /* Other country stats styles */
 .question-container #country_other_stats {
   display: flex;
-  justify-content: space-around;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
   margin-top: 30px;
 }
 
-.question-container #country_other_stats small {
-  font-size: 16px;
-  font-weight: bold;
-  color: var(--main-color);
+.other_box{
+  padding: 10px;
+  margin-left: 20px;
+  border-radius: 20px;
 }
 
 bubble{
@@ -111,6 +114,35 @@ bubble{
   margin-top: 30px;
 }
 
+.mobile-search-container {
+  background-color: grey;
+  width: calc(100vw - 40px);
+  height: calc(100vh - 60px);
+  padding: 20px;
+  position: fixed;
+  top:0px;
+  left:0px;
+  margin: 20px;
+  border-radius: 20px;
+  display: none;
+}
+
+.mobile_guess_btn{
+  display: none;
+}
+
+
+@media screen and (max-width: 768px) {
+  .search-container{
+    display: none;
+  }
+  
+
+  .mobile_guess_btn{
+    display: block;
+  }
+}
+
 .question-container .search-inner {
   position: relative;
 }
@@ -129,8 +161,6 @@ bubble{
 }
 
 .question-container .dropdown {
-  position: absolute;
-  top: 60px;
   left: 0;
   width: 100%;
   background-color: #fff;
@@ -140,6 +170,7 @@ bubble{
   }
   
   .question-container .dropdown li {
+    
   list-style: none;
   padding: 10px;
   font-size: 18px;
@@ -210,7 +241,6 @@ bubble{
   .show-less-button {
   display: none;
   }
-
   
 
   
@@ -233,11 +263,6 @@ bubble{
   
   .question-container #country_stats b {
   margin-bottom: 10px;
-  }
-  
-  .question-container #country_other_stats {
-  flex-direction: column;
-  margin-top: 20px;
   }
   
   .question-container .search-container {
