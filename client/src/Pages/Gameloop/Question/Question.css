@@ -80,12 +80,29 @@ bubble{
   color: black;
   font-size: 100%;
   font-weight: bold;
-  width:10vw;
+  width:9vw;
   aspect-ratio: 1/1;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media screen and (max-width: 770px) {
+
+bubble{
+  background-color: rgb(255, 255, 255);
+  border-radius: 1000px;
+  color: black;
+  font-size: 100%;
+  font-weight: bold;
+  width:15vw;
+  aspect-ratio: 1/1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 }
 
 /* Search styles */

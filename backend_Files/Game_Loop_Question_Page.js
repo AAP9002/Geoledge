@@ -45,7 +45,7 @@ module.exports = function (app, DBconnection) {
                                     proximity: compare_and_give_direction(guess["latitude"], guess["longitude"], actual_docted["latitude"], actual_docted["longitude"]),
                                     surface_area: value_distance_score(guess["surface_area"], actual_docted["surface_area"]),
                                     population: value_distance_score(guess["population"], actual_docted["population"]),
-                                    time_diff_hours_off: (Number(guess["timezone"].substring(3, 6))+12) - (Number(actual_docted["timezone"].substring(3, 6))+12),
+                                    time_diff_hours_off: (Number(actual_docted["timezone"].substring(3, 6))+12)-(Number(guess["timezone"].substring(3, 6))+12) ,
                                     driving_side: (actual_docted["driving_side"] == guess["driving_side"]),
                                     capital: (actual_docted["capital"] == guess["capital"]),
                                     language: (actual_docted["language"] == guess["language"]),
@@ -75,10 +75,23 @@ module.exports = function (app, DBconnection) {
         const _distance = R * c; // kilo metres
 
 
+        const direction_calculated =  angleLngLat(guess_lat, guess_lng,target_lat, target_lng)
         return ({
-            direction: heading,
+            direction: direction_calculated,
             distanceKM: _distance
         })
+    }
+
+    function angleLngLat(lat1, lng1, lat2, lng2) {
+        y = Math.sin(lng2 - lng1) * Math.cos(lat2);
+        x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lng2 - lng1);
+
+        direction_calculated = Math.atan2(y, x);
+        direction_calculated = (direction_calculated*(180/Math.PI));
+        direction_calculated = (direction_calculated + 360) % 360;
+        direction_calculated = 360 - direction_calculated +90;
+
+        return direction_calculated;
     }
 
     function value_distance_score(guess, actual) {

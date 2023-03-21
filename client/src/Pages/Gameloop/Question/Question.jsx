@@ -64,8 +64,7 @@ const Question = (props) => {
             setSaUPDOWN(resp.actual_country.surface_area.directionupdown);
             setSaColour(resp.actual_country.surface_area.howClose);
             setTimeUPDOWN(resp.actual_country.time_diff_hours_off);
-            setlocationDirection("rotate("+resp.actual_country.proximity.direction* (180/Math.PI)+"deg)");
-            console.log(resp.actual_country.proximity.direction* (180/Math.PI))
+            setlocationDirection("rotate("+resp.actual_country.proximity.direction+"deg)");
             setlocationDistance(resp.actual_country.proximity.distanceKM* (180/Math.PI));
 
             let others = resp.actual_country;
@@ -86,7 +85,7 @@ const Question = (props) => {
         });
     }
 
-    if (numberOfGuessesUsed == MAX_GUESS) {
+    if (numberOfGuessesUsed > MAX_GUESS) {
         return (<> <div><p style={{color: 'black',position:"relative",top:"-22px"}}>Time Left: {timeNumber}s</p></div>
         <p className='waiting'>Out Of Guesses</p>
         </>);
