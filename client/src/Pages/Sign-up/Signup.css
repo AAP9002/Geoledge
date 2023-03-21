@@ -118,6 +118,11 @@ button[type="button"]:hover {
 }
 
 
+.empty {
+  height: 0px;
+}
+
+
 input[type="checkbox"]#termsAccepted {
   margin-right: 10px;
 }
