@@ -20,7 +20,6 @@
 
 .top{
     height: 100%;
-    position: relative;
 }
 
 .top h1{
@@ -58,10 +57,12 @@
     width: 100%;
     background-color: rgb(255, 255, 255);
     border: 7px solid #4E2461;
-    bottom: 0;
-    margin-bottom: -0.5%;
-    
-
+    position:relative; 
+    bottom: 300px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .column2{
@@ -139,9 +140,7 @@
 }
 
 .earth{
-    height: fit-content;
-    padding-bottom: 3%;
-    position: relative;
+    height:800px;
 }
 
 #box {
