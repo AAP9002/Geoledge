@@ -56,20 +56,24 @@ const About = () => {
 
     return (
         <div>
-            <div>
-
-            </div>
-            <div className="column">
+            <div className="column2">
                 <div className="top">
                     <div className="row-md-8">
                         <div className='home-headers'>
                             <h1>GEOLEDGE</h1>
-                            <h2>Prepared to test your geographical knowledge?</h2>
+                            <h2>Prepared to test your<br></br> geographical knowledge?</h2>
                         </div>
                         <div className="btns">
-                        <button className="homestyledbutton" onClick={HostLobby}> Host Game</button>
-                            <button className="homestyledbutton" onClick={findOnlineGame}> Play Online</button>
+                        
+                            <button className="homestyledbutton2" onClick={findOnlineGame}> Play Online</button>
+                           
+                        </div>
+                        <div className='btns2'>
+                            <button className="homestyledbutton" onClick={HostLobby}> Host Game</button>
                             <button className="homestyledbutton" onClick={Joinlobby}> Join Game</button>
+                        </div>
+                        <div className='earth'>
+                        <div id="box"></div>
                         </div>
                     </div>
                 </div>
