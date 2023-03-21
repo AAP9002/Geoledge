@@ -1,6 +1,5 @@
 .home {
     color: purple;
-    background-image: url(./starry2.png)
 }           
 
 
@@ -21,10 +20,7 @@
 
 .top{
     height: 100%;
-    background-color: aliceblue;
     position: relative;
-    background-image: url(./starry2.png);
-
 }
 
 .top h1{
@@ -49,7 +45,6 @@
     width: 100%;
     background-color: rgb(255, 255, 255);
     border: 7px solid #4E2461;
-    position:absolute;
     bottom: 0;
     margin-bottom: -0.5%;
     
