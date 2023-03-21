@@ -34,16 +34,6 @@ body {
   border: 5px solid#000000;
 }
 
-.question-container::before {
-  content: '';
-  position: absolute;
-  top: 20;
-  right: 0;
-  width:150px;
-  height: 60px;
-  background-color: #ffffff;
-  z-index: -1;
-}
 
 /* Header styles */
 .question-container h2 {
@@ -85,14 +75,34 @@ body {
 }
 
 bubble{
-  background-color: black;
+  background-color: white;
   border-radius: 1000px;
-  width:100px;
+  color: black;
+  font-size: 100%;
+  font-weight: bold;
+  width:9vw;
   aspect-ratio: 1/1;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media screen and (max-width: 770px) {
+
+bubble{
+  background-color: rgb(255, 255, 255);
+  border-radius: 1000px;
+  color: black;
+  font-size: 100%;
+  font-weight: bold;
+  width:15vw;
+  aspect-ratio: 1/1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 }
 
 /* Search styles */

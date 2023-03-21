@@ -9,12 +9,15 @@
 .App{
   height: fit-content;
   min-height: 100vh;
+  overflow-y: hidden;
 }
 
 #app_background_image {
   z-index: -100;
   position: fixed;
   object-fit:cover;
+  width: 100vw;
+  height: 100vh;
 }
 
 .waiting {
