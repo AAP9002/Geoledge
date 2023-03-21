@@ -50,6 +50,7 @@
     opacity: 1;
     transform: none;
     visibility: visible;
+    height: 1px;
   }
 
 .bottom{
@@ -140,7 +141,7 @@
 }
 
 .earth{
-    height:800px;
+    height: 495px;
 }
 
 #box {
