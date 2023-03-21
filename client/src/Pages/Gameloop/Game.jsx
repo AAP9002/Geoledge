@@ -57,6 +57,12 @@ const Game = () => {
         return () => clearInterval(timer);
     }, []);
 
+    function leaveGame() {
+        fetch(`/api/leaveSession?sessionID=${ sessionID }`).then(res => res.json()).then(res => {
+            console.log(res.status);
+            window.location = "/#/Home";
+        })
+    }
     /* ==============  INFORMATION ON GAME_STATE  ==============
        Game states held by game_state:
             1. "waiting for players"
@@ -72,31 +78,52 @@ const Game = () => {
 
     switch (status) {
         case "waiting for players":
-            return (
+            return (<>
+                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
                 <WaitingForPlayers sessionID={ sessionID }/>
+                </>
             );
         case "starting game":
             return (
+                <>
+                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
                 <StartingGame />
+                </>
             );
         case "displaying question":
             return (
+                <>
+                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
                 <Question timeLeft={gameTimeLimit} maxGuesses={maxGuesses}/>
+                </>
             );
         case "starting next question":
-            return(<StartingQuestion/>);
+            return(<>
+                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
+                <StartingQuestion/>
+                </>
+                );
         case "revealing answer":
             return (
+                <>
+                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
                 <RevealAnswer sessionID={sessionID} />
+                </>
             );
 
         case "showing current scores":
             return (
+                <>
+                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
                 <CurrentScores sessionID={sessionID} />
+                </>
             );
         case "showing final scores":
             return (
+                <>
+                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
                 <EndGame sessionID={sessionID} />
+                </>
             );
         case "Loading":
             return (
