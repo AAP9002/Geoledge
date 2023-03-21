@@ -11,6 +11,12 @@
 .btns{
     text-align: center;
     padding-top: 10px;
+    height: fit-content;
+}
+
+.btns2{
+    text-align: center;
+    height: fit-content;
 }
 
 .top{
@@ -25,8 +31,8 @@
     text-align: center;
     color: rgb(122, 228, 122);
     text-shadow: -3px -3px 0 skyblue, 3px -3px 0 skyblue, -3px 3px 0 skyblue, 3px 3px 0 skyblue;
-    font-size: 10vw;
-    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 7vw;
+    font-family: "Comic Sans MS";
 
 }
 
@@ -44,8 +50,13 @@
     border: 7px solid #4E2461;
     position:absolute;
     bottom: 0;
+    margin-bottom: -0.5%;
     
 
+}
+
+.column2{
+    height: fit-content;
 }
 
 .home-headers{
@@ -79,8 +90,29 @@
 .homestyledbutton{
     background-color: #ae00ff;
   color: white;
-  padding: 5px 15px;
-  border-radius: 5px;
+  padding: 15px 30px;
+  border-radius: 15px;
+  margin: 10px 5px 10px 20px;
+  cursor: pointer;
+  text-align: left;
+  transition: ease background-color 250ms;
+  height: fit-content;
+  width: fit-content;
+  opacity: 100%;
+  text-decoration: none;
+  
+}
+
+.homestyledbutton:hover{
+    text-decoration: none;
+    color: #4E2461;
+}
+
+.homestyledbutton2{
+    background-color: #ae00ff;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 15px;
   margin: 10px 5px 10px 20px;
   cursor: pointer;
   text-align: left;
@@ -92,7 +124,34 @@
   text-decoration: none;
 }
 
-.homestyledbutton:hover{
+.homestyledbutton2:hover{
     text-decoration: none;
     color: #4E2461;
 }
+
+.earth{
+    height: fit-content;
+    padding-bottom: 3%;
+    position: relative;
+}
+
+.earth:hover{
+    
+}
+
+#box {
+    background-image: url(./earth.png);
+    background-size:cover;
+    border:7px solid #000;
+    border-radius:50%;
+    width:200px;
+    height:200px;
+    margin:auto;
+
+
+  }
+
+  
+
+
+  
