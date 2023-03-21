@@ -127,7 +127,7 @@ const Question = (props) => {
                     {countryNames.filter((item) => {
                         const searchTerm = value.toLowerCase();
                         const country = item.country_name.toLowerCase();
-                        return (searchTerm && country.startsWith(searchTerm) && country);
+                        return (searchTerm && country.startsWith(searchTerm));
                     })
                         .slice(0, 10)
                         .map((item) => (
