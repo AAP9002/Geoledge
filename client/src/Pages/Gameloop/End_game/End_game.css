@@ -56,8 +56,12 @@
     .data{
         width: 700px;
     }
-    tr:nth-child(odd){
-        background:#782ad1;}
+    
+   
+    .RankingTable:nth-child(1){
+        background: #fafa03;
+    }
+        
     
     
     .columns:nth-child(odd){
@@ -65,6 +69,12 @@
     
     .columns:nth-child(even){
         background:#7d29dd;}
+    
+
+
+
+
+
     .wrapper h1{
         font-family:  Comic Sans MS;
         text-decoration-line: underline;

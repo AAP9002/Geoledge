@@ -9,8 +9,7 @@ function FinishBoard(props) {
 
     const sessionID = props.sessionID;
     const [loading, setloading] = useState(true)
-    const [Finishboard, setFinishboard] = useState([{ no: "1", username: "fdfdf", scores: "200" }, { no: "1", username: "fdfdf", scores: "200" }, { no: "2", username: "asass", scores: "100" }
-        , { no: "3", username: "jkjkj", scores: "50" }]);
+    const [Finishboard, setFinishboard] = useState([]);
 
     useEffect(() => {
         fetch('/api/getScores?sessionID='+sessionID).then(res => res.json()).then(stateJson => {
@@ -46,7 +45,7 @@ function FinishBoard(props) {
 
 
                 <tbody className='RankingTable'>
-                    {Finishboard.map((row) => <tr><td className='data'>{row.no}</td><td className='data'>{row.username}</td><td className='data'>{row.scores}</td></tr>)}
+                    {Finishboard.map((row, index) => <tr><td className='data'>{index + 1}</td><td className='data'>{row.username}</td><td className='data'>{row.player_score}</td></tr>)}
                 </tbody>
             </table>
             </div>

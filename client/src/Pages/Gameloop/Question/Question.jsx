@@ -64,7 +64,8 @@ const Question = (props) => {
             setSaUPDOWN(resp.actual_country.surface_area.directionupdown);
             setSaColour(resp.actual_country.surface_area.howClose);
             setTimeUPDOWN(resp.actual_country.time_diff_hours_off);
-            setlocationDirection(resp.actual_country.proximity.direction);
+            setlocationDirection("rotate("+Math.floor(resp.actual_country.proximity.direction* (180/Math.PI))+"deg)");
+            console.log(resp.actual_country.proximity.direction* (180/Math.PI))
             setlocationDistance(resp.actual_country.proximity.distanceKM);
 
             let others = resp.actual_country;
@@ -101,6 +102,7 @@ const Question = (props) => {
         </>);
     }
 
+
     return (
         <div className="question-container" style={{ padding: '30px', color: "white" }}>
             <div>
@@ -112,10 +114,25 @@ const Question = (props) => {
             </div>
             <h2 style={{textAlign:'center'}}>{lastGuess}</h2>
             <div id="country_stats" style={{ display: 'flex', justifyContent: 'space-around' }}>
-                <b style={{ color: populationColour }}>Population: {populationUPDOWN}</b>
-                <b style={{ color: saColour }}>Surface Area: {saUPDOWN}</b>
-                <b>Location: [{locationDirection},{locationDistance}]</b>
-                <b>Time Difference {timeUPDOWN}</b>
+                <div className='d-flex flex-sm-column justify-content-center'>
+                    <b>Population</b>
+                    <bubble style={{ backgroundColor: populationColour }}>{populationUPDOWN}</bubble>
+                </div>
+                <div className='d-flex flex-sm-column justify-content-center'>
+                    <b>SA</b>
+                    <bubble style={{ backgroundColor: saColour }}>{saUPDOWN}</bubble>
+                </div>
+                <div className='d-flex flex-sm-column justify-content-center'>
+                    <b>Location</b>
+                    <bubble>
+                        <p style={{transform:locationDirection}}>⬆️</p><br/>
+                        {Math.ceil(locationDistance)} Km
+                    </bubble>
+                </div>
+                <div className='d-flex flex-sm-column justify-content-center'>
+                    <b>Time</b>
+                    <bubble>{timeUPDOWN} Hrs</bubble>
+                </div>
             </div>
             <br />
             <br />
