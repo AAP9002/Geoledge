@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 
 
 
-function FinishBoard(props) {
+function PlayerBoard(props) {
 
     const sessionID = props.sessionID;
     const [loading, setloading] = useState(true)
@@ -66,7 +66,7 @@ const EndGame = (props) => {
         <div>
             <div>
 
-                <FinishBoard sessionID={props.sessionID} />
+                <PlayerBoard sessionID={props.sessionID} />
 
             </div>
         </div>
