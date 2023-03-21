@@ -1,6 +1,5 @@
 .home {
     color: purple;
-    background-image: url(./starry2.png)
 }           
 
 
@@ -21,10 +20,7 @@
 
 .top{
     height: 100%;
-    background-color: aliceblue;
     position: relative;
-    background-image: url(./starry2.png);
-
 }
 
 .top h1{
@@ -32,7 +28,8 @@
     color: rgb(122, 228, 122);
     text-shadow: -3px -3px 0 skyblue, 3px -3px 0 skyblue, -3px 3px 0 skyblue, 3px 3px 0 skyblue;
     font-size: 7vw;
-    font-family: "Comic Sans MS";
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    letter-spacing: 2%;
 
 }
 
@@ -48,7 +45,6 @@
     width: 100%;
     background-color: rgb(255, 255, 255);
     border: 7px solid #4E2461;
-    position:absolute;
     bottom: 0;
     margin-bottom: -0.5%;
     
@@ -135,19 +131,19 @@
     position: relative;
 }
 
-/*#box {
-    background-image: url(./earth.png);
+#box {
+    background-image: url(./earth2.png);
     background-size:cover;
     border:2px solid #000;
     border-radius:50%;
-    width:200px;
-    height:200px;
-    animation: movimiento 5s linear 0s infinite;
-    box-shadow:0 0 25px RGBA(255,255,255, 0.10),
-               -8px -8px 15px #000 inset,
-               2px 2px 25px #000 inset,
-               -45px -45px 25px RGBA(0,0,0, 0.5) inset, 
-               25px 25px 45px RGBA(0,0,0, 0.45) inset;
+    width:300px;
+    height:300px;
+    animation: movimiento 10s linear 0s infinite;
+    box-shadow:0 0 10px RGBA(255,255,255, 0.10),
+               -4px -4px 15px #000 inset,
+               2px 2px 15px #000 inset,
+               -45px -20px 25px RGBA(0,0,0, 0.5) inset, 
+               25px 25px 25px RGBA(0,0,0, 0.45) inset;
     margin:6em auto;
     transform:rotateX(6deg) rotateY(6deg) rotateZ(6deg);
   }
@@ -160,10 +156,10 @@
   @keyframes stars {
     0% { background-position:0 0 }
     100% { background-position:0 100% }
-  }*/
+  }
   
 
-#box {
+/*#box {
     background-image: url(./earth.png);
     background-size:cover;
     border:7px solid #000;
@@ -173,7 +169,7 @@
     margin:auto;
 
 
-  }
+  }*/
 
   
 

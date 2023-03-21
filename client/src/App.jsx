@@ -12,15 +12,18 @@ import Home from './Pages/Home/Home'
 import JoinLobby from './Pages/JoinLobby/JoinLobby';
 import LoginPage from './Pages/Sign-up/LoginPage.jsx'
 import Game from './Pages/Gameloop/Game';
+import background from './Pages/Home/starry2.png'
 
 
 function App() {
-  return (  
+  
+  return (
     <>
+    <img id='app_background_image' src={background}></img>
       <Router>
-       
-      {window.location.href.split('#')[1] !=='/Game'?  <Navbar />:null }
            <div className='App'>
+           {window.location.href.split('#')[1] !=='/Game'?  <Navbar />:null }
+
             <Routes>
             <Route exact path='/' element={<Home/>} />
             <Route path='/Home' element={<Home/>} />
@@ -36,9 +39,8 @@ function App() {
             <Route path='/Game' element={<Game/>}/>
           </Routes>
         </div>
-      
         {window.location.href.split('#')[1] !=='/Game'?  <Footer />:null }      
-        
+
       </Router>
     </>
   );
