@@ -50,7 +50,7 @@ function Navbar() {
 
   function getUsername() {
     if (isLoggedIn) { 
-      return (<div className='nav-item'> <p><u>     Welcome back { username }!</u></p> </div>);
+      return (<div className='nav-item'> <p> Welcome back { username }!</p> </div>);
     } else {
       return (<></>)
     }
@@ -88,14 +88,14 @@ function Navbar() {
               </li>
               <li className='nav-item'>
                 <Link to='/AccountPage' className='nav-links' onClick={closeMobileMenu}>
-                  Account
+                  Account & Stats
                 </Link>
               </li>              
               <div className='nav-item'>
                 { isLoggedInButton }
               </div>
 
-              { getUsername() }
+              {/* <p> { getUsername() } </p> */}
               
             </ul>
             
