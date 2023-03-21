@@ -86,7 +86,6 @@ const Game = () => {
         case "starting game":
             return (
                 <>
-                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
                 <StartingGame />
                 </>
             );
@@ -121,7 +120,6 @@ const Game = () => {
         case "showing final scores":
             return (
                 <>
-                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
                 <EndGame sessionID={sessionID} />
                 </>
             );

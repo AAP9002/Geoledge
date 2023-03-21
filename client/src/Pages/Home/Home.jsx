@@ -46,6 +46,7 @@ const About = () => {
                 fetch('/api/createLobby', { method: "POST" }).then(res => res.json()).then(stateJson => {
                     let sessionID = stateJson.id
                     window.location.href = (`#/Play/${sessionID}`);
+                    window.location.reload();
                 })
             }
         })
