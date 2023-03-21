@@ -73,16 +73,16 @@ const About = () => {
                             <button className="homestyledbutton" onClick={Joinlobby}> Join Game</button>
                         </div>
                         <div className='earth'>
-                        <div id="box"></div>
+                            <div id="box"></div>
+                            <div className="bottom">
+                                <div className="row-md-12">
+                                    <h1>What Is Geoledge?</h1>
+                                    <p>Geoledge is an online quiz-type game.</p>
+                                    <p>Each round you will be given a list of facts describing a mystery country.</p>
+                                    <p>Will you be able to pinpoint the coutnry based on these facts?</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div className="bottom">
-                    <div className="row-md-12">
-                        <h1>What Is Geoledge?</h1>
-                        <p>Geoledge is an online quiz-type game.</p>
-                        <p>Each round you will be given a list of facts describing a mystery country.</p>
-                        <p>Will you be able to pinpoint the coutnry based on these facts?</p>
                     </div>
                 </div>
             </div>

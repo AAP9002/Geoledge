@@ -20,7 +20,6 @@
 
 .top{
     height: 100%;
-    position: relative;
 }
 
 .top h1{
@@ -45,10 +44,12 @@
     width: 100%;
     background-color: rgb(255, 255, 255);
     border: 7px solid #4E2461;
-    bottom: 0;
-    margin-bottom: -0.5%;
-    
-
+    position:relative; 
+    bottom: 300px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .column2{
@@ -126,9 +127,7 @@
 }
 
 .earth{
-    height: fit-content;
-    padding-bottom: 3%;
-    position: relative;
+    height:800px;
 }
 
 #box {
@@ -136,8 +135,8 @@
     background-size:cover;
     border:2px solid #000;
     border-radius:50%;
-    width:300px;
-    height:300px;
+    width:500px;
+    height:500px;
     animation: movimiento 10s linear 0s infinite;
     box-shadow:0 0 10px RGBA(255,255,255, 0.10),
                -4px -4px 15px #000 inset,

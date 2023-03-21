@@ -13,9 +13,7 @@
 
 #app_background_image {
   z-index: -100;
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
+  position: fixed;
   object-fit:cover;
 }
 
