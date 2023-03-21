@@ -1,5 +1,5 @@
 import React from 'react';
-import "./End_game.css";
+import "./Gamelobby.css";
 
 import { useState, useEffect } from 'react';
 
