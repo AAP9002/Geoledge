@@ -10,18 +10,21 @@ const Reveal_answer = (props) => {
     const [correctAnswer, setCorrectAnswer] = useState("HERE")
     const [loading, setloading] = useState(true)
     useEffect(() => {
-        // //check if current user is host (all users get the answer, not just the host)
-        // //check correct answer
-        // fetch('/api/').then(res => res.json()).then(stateJson => {
-        //     fetch('/api/').then(res => res.json()).then(stateJson => {
-        //         setloading(false)
-        //     })
-        // })
-        // setloading(false)
+        //check if current user is host
+        //check correct answer
+        fetch('/api/isHost?sessionID='+sessionID).then(res => res.json()).then(stateJson => {
+            setUserIsHost(stateJson.is_host)
+            fetch('/api/revealAnswer?sessionID='+sessionID).then(res => res.json()).then(stateJson => {
+                setCorrectAnswer(stateJson.country_name)
+                setloading(false)
+            })
+        })
+
         fetch('/api/revealAnswer?sessionID='+sessionID).then(res => res.json()).then(stateJson => {
             setCorrectAnswer(stateJson.country_name)
             setloading(false)
         })
+        setloading(false)
     }, []);
 
     function Change_State_Current_Score() {
@@ -34,7 +37,8 @@ const Reveal_answer = (props) => {
 
 
     if (!loading) {
-        if (userIsHost)
+        console.log("host?", userIsHost)
+        if (userIsHost == 1)
             return (<div className='reveal_answer_container'>
                 <h1>Answer: {correctAnswer}</h1>
                 <btn className='btn btn-success' onClick={Change_State_Current_Score}>Next</btn>

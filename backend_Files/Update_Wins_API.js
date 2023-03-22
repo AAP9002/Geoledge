@@ -32,14 +32,14 @@ module.exports = function(app, connection) {
                     });
 
                     if (i == 0) { // first index has the highest score
-                        let query = `UPDATE users SET wins = (wins + 1), win_rate = wins/losses WHERE user_id = ${user_id};`
+                        let query = `UPDATE users SET wins = (wins + 1), win_rate = round(wins/games_played, 3)*100 WHERE user_id = ${user_id};`
                         connection.query(query, (err, result) => {
                             if (err) {
                                 res.status(500).send("server error");
                             }
                         })
                     } else {
-                        let query = `UPDATE users SET losses = (losses + 1), win_rate = wins/losses WHERE user_id = ${user_id};`
+                        let query = `UPDATE users SET losses = (losses + 1), win_rate = round(wins/games_played, 3)*100 WHERE user_id = ${user_id};`
                         connection.query(query, (err, result) => {
                             if (err) {
                                 res.status(500).send("server error");
@@ -95,7 +95,7 @@ module.exports = function(app, connection) {
         let sessionID = req.query.sessionID;
         let userID = req.userID;
         let msg = "revealing answer"
-        // check if we score state change is valid for current game state
+        // check if the score state change is valid for current game state
         let myPromise = new Promise(function(myResolve, myReject) {
             let query = `call host_check_game_state(?,?,?)`;
             connection.query(query, [sessionID, userID, msg], (err, result) => {
@@ -127,13 +127,17 @@ module.exports = function(app, connection) {
 
     app.get('/api/getScores', (req, res) => {
         let sessionID = req.query.sessionID;
-        let query = "call get_scores(?)"
-        connection.query(query, [sessionID], (err, result) => {
+        let userID = req.userID
+        let query = "call get_scores(?,?)"
+        connection.query(query, [sessionID, userID], (err, result) => {
             if (err) {
                 console.log("sql broken: " + err)
                 res.status(500).send("Server couldn't get scores");
             } else {
-                res.status(200).send({ scores: result[0]});
+                res.status(200).send({
+                    "scores": result[0],
+                    "myScore": result[1][0].my_score
+                });
             }
         })
     }); 

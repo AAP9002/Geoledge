@@ -69,11 +69,20 @@
   }
 
   .styledbutton2:hover {
-    background-color: #975CAB;
+    background-color: #b875f7;
+    color: #4E2461;
   }
 
   .styledbutton3:hover {
-    background-color: #975CAB;
+    background-color: #b875f7;
+    color: #4E2461;
+
+  }
+
+  .styledbutton4:hover {
+    background-color: #b875f7;
+ 
+
   }
 
   .styledbutton:focus{

@@ -52,21 +52,51 @@ module.exports = function (app, connection) {
         return promise;
     }
         
-    function sessionNewHost(sessionID) {
-        let myPromise = new Promise(function(resolve, reject) {
-            let query = "call new_host(?)"
-
+    function NewHost(sessionID, res) {
+        let promise = new Promise(function(resolve, reject) {
+            let query = "call select_parts(?)";
             connection.query(query, [sessionID], (err, result) => {
                 if (err) {
-                    console.log("Error when checking if client is a participent of a session: " + sessionID);
+                    console.log("ERROR WHEN SELECTING PARTS: " + err);
                     reject(null);
                 } else {
-                    resolve(null);
+                    resolve(result);
                 }
-            })
+            });
         });
 
-        return myPromise;
+        promise.then(
+            function(result) {
+                if (result[0].length == 0) {
+                    console.log("no participents in session")
+                    let query = "call expire_session(?)";
+                    connection.query(query, [sessionID], (err, result) => {
+                        if (err) {
+                            console.log("ERROR WHEN ASSIGNING NEW HOST: " + err);
+                            res.status(500).send({ status: "Server side error" });
+                        } else {
+                           console.log(`Session ${sessionID} was expired since it had no more players`);
+                        }
+                    });
+                } else {
+                    console.log("participents in session")
+                    console.log(result)
+                    let newHostID = result[0][0].user_id
+                    let query = "call new_host(?,?)";
+                    connection.query(query, [newHostID, sessionID], (err, result) => {
+                        if (err) {
+                            console.log("ERROR WHEN ASSIGNING NEW HOST: " + err);
+                            res.status(500).send({ status: "Server side error" });
+                        } else {
+                            console.log(`New host was assigning to previous game: ${sessionID}`);
+                        }
+                    });
+                }
+            }
+            , function(reject) {
+                console.log("sql error")
+            }
+        )
     }
     
     app.get('/api/leaveSession', function (req, res) {
@@ -93,7 +123,7 @@ module.exports = function (app, connection) {
                             promise3.then(function(result) {
                                 // SUCCESSFULLY REMOVED PARTICIPENT FROM DATABASE
                                 // Assign new host/drop empty session
-                                let myPromise = sessionNewHost(sessionID)
+                                NewHost(sessionID, res)
                                 res.status(200).send({ "status": "successfully left the game" });
                             }, 
                             function(reject) {
