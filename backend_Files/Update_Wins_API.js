@@ -127,13 +127,17 @@ module.exports = function(app, connection) {
 
     app.get('/api/getScores', (req, res) => {
         let sessionID = req.query.sessionID;
-        let query = "call get_scores(?)"
-        connection.query(query, [sessionID], (err, result) => {
+        let userID = req.userID
+        let query = "call get_scores(?,?)"
+        connection.query(query, [sessionID, userID], (err, result) => {
             if (err) {
                 console.log("sql broken: " + err)
                 res.status(500).send("Server couldn't get scores");
             } else {
-                res.status(200).send({ scores: result[0]});
+                res.status(200).send({
+                    "scores": result[0],
+                    "myScore": result[1][0].my_score
+                });
             }
         })
     }); 

@@ -34,7 +34,7 @@ const Question = (props) => {
     const [display_searchbox_mobile, set_display_searchbox_mobile] = useState(false);
     const [display_mapbox, set_display_mapbox] = useState(false);
 
-    
+    const [myScore, setMyScore] = useState(0);
 
 
 
@@ -51,6 +51,10 @@ const Question = (props) => {
     useEffect(() => {
         fetch('/api/countryNames').then(res => res.json()).then(names => {
             setCountryNames(names);
+
+            fetch('/api/getScores?sessionID='+props.sessionID).then(res => res.json()).then(stateJson => {
+                setMyScore(stateJson.myScore);
+            });
         });
         setloading(false);
     }, []);
@@ -123,7 +127,8 @@ const Question = (props) => {
                 <p style={{ textAlign: 'right' , color: 'black'}}>
                 Time Left: {timeNumber}s<br/>
                 Guesses Left: {MAX_GUESS-numberOfGuessesUsed}<br/>
-                Score: {Score}
+                Round Score: {Score}
+                Total Score: {myScore}
                 </p>
             </div>
             <div style={(lastGuess!==undefined)?null:{visibility:"hidden",maxHeight:"0px"}}>
