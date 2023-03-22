@@ -7,24 +7,13 @@ import { useState, useEffect } from 'react';
 function LeaderBoard() {
 
   const [Leaderboard, setLeaderboard] = useState([]);
-  const [modeValue, setModeValue] = useState("")
-  
-
-  
-    const modes = [
-                        {value: "0", text: "Wins"}, 
-                        {value: "1", text: "Game Played"}, 
-                        {value: "2", text: "Winrate"}                      
-                      ]
-                      const options = modes.map((option) => {
-                        return <option value={option.value}>{option.text}</option>
-                      })
+  const [SortName, SetSort] = useState("Wins")
   
 
   // API Fetch to get all
    
   useEffect(() => {
-    fetch('/api/leaderboards?sort=wins').then(res => res.json()).then(fetchedData =>{
+    fetch(`/api/leaderboards?sort=wins`).then(res => res.json()).then(fetchedData =>{
 
       setLeaderboard(fetchedData.leaderboards);
       console.log(Leaderboard);
@@ -32,6 +21,23 @@ function LeaderBoard() {
     }, []);
   
 
+  function getSort(sort) {
+
+      if (sort == "wins") {
+        SetSort("Wins");
+      } else if (sort == "gamesPlayed") {
+        SetSort("Games Played");
+      } else if (sort == "winRate") {
+        SetSort("Win Rate");
+      }
+
+      fetch(`/api/leaderboards?sort=${ sort }`).then(res => res.json()).then(fetchedData =>{
+        setLeaderboard(fetchedData.leaderboards);
+        console.log(Leaderboard);
+      });
+
+  }
+  
   return (
     
     
@@ -40,26 +46,14 @@ function LeaderBoard() {
     
        <div className='all'>
         <div className='box'>
-        <label className='modes'></label>
-      
-        <select name="modes" value = "modeValue" onChange={(e) => setModeValue(e.target.value)}>
-          {options}
+        <select name="modes" onChange={(e) => getSort(e.target.value)} >
+          <option value="wins">Wins</option>
+		      <option value="gamesPlayed">Games Played</option>
+		      <option value="winRate">Win Rate</option>
         </select>
         </div>
-        {/* <option className='option' value="wins">Wins</option> */}
-        <div className='opFunc'>
-        <button onClick={() => setModeValue("1")}>Wins</button>
-		      <button onClick={() => setModeValue("2")}>Gameplayed</button>
-		      <button onClick={() => setModeValue("3")}>Win rate</button>
-		      
-        </div>
-    
-
       </div>
-            
-        
-        
-        
+      
 
      <div className='wrapper'>
       
@@ -67,14 +61,14 @@ function LeaderBoard() {
          <thead>
          <tr>
            <th className='columns'>Player(Username)</th>
-           <th className='columns'>Score</th>
+           <th className='columns'>{ SortName }</th>
          </tr>
          </thead>
         
 
 
          <tbody className='myTable'>
-         {Leaderboard.map((row)=> <tr><td className='data' align='center'>{row.username}</td><td className='data' align='center'>{row.wins}</td></tr>)}
+         {Leaderboard.map((row)=> <tr><td className='data' align='center'>{row.username}</td><td className='data' align='center'>{row.value}</td></tr>)}
          </tbody>
          </table>
       

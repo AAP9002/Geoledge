@@ -10,15 +10,23 @@ const SignUpPage = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   
   const [isInvalidUsername, setIsInvalidUsername] = useState(false);
+  const [isUsernameTaken, setIsUsernameTaken] = useState(false);
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isInvalidPassword, setIsInvalidPassword] = useState(false);
 
   const [isInvalidTerms, setIsInvalidTerms] = useState(false);
 
+  const [isErrorOnServer, setIsErrorOnServer] = useState(false);
+  
+
 
   const checkIsValidUsername = () => {
-    if (isInvalidUsername) {
+    if (isUsernameTaken) {
+      return(<div style={{color: "#f85956" }}>USERNAME <i id={"invalidMessage"}>- Username is taken</i></div>);
+
+    } else if (isInvalidUsername) {
       return(<div style={{color: "#f85956" }}>USERNAME <i id={"invalidMessage"}>- Username must be at least 5 characters long</i></div>);
+    
     } else {
       return(<div>USERNAME</div>);
     }
@@ -42,9 +50,17 @@ const SignUpPage = () => {
 
   const checkTermsAccepted = () => {
     if (isInvalidTerms) {
-      return(<div style={{color: "#f85956"}}> - <i id={"invalidMessage"}> Please accept terms and conditions and privacy policy</i></div>);
+      return(<div style={{color: "#f85956"}}> - <i id={"invalidMessage"}> Please accept the terms and conditions and privacy policy</i></div>);
     } else {
-      return(<></>);
+      return(<div className="empty"></div>);
+    }
+  }
+
+  const checkIsErrorOnServer = () => {
+    if (isErrorOnServer) {
+      return(<div style={{color: "#f85956"}}> - <i id={"invalidMessage"}> - Error occured on the server. Please try again.</i></div>);
+    } else {
+      return(<div className="empty"></div>);
     }
   }
 
@@ -121,6 +137,8 @@ const SignUpPage = () => {
 
     console.log('Name:', name, 'Email:', email, 'Password:', password, 'Terms Accepted:', termsAccepted);
     let valid = true;
+    setIsUsernameTaken(false);
+    setIsErrorOnServer(false);
 
     if (!validateUsername()) {
       // username not valid
@@ -163,8 +181,23 @@ const SignUpPage = () => {
         .then(res => res.json())
         .then(status => {
           console.log(status);
-          window.location.href = "/#/Home";
-          window.location.reload();
+
+          if (status.status == "Account successfully created") {
+            window.location.href = "/#/Home";
+            window.location.reload();
+          } else if (status.status == "Username is taken") {
+            // Username taken. Displaying this to the user
+            setIsUsernameTaken(true);
+          } else if (status.status == "Credentials were invalid") {
+            // Client sent credentials that did not pass the validation checks
+            setIsInvalidUsername(true);
+            setIsInvalidPassword(true);
+            setIsInvalidEmail(true);
+          } else {
+            // Error occrurred on the server when creating the account
+            setIsErrorOnServer(true);
+          }
+      
         });
     }
   };
@@ -183,6 +216,7 @@ const SignUpPage = () => {
       <div className="container">
         <form onSubmit={handleSubmit} className="forme" id="signup-form">
           <h1>SIGN UP</h1>
+          { checkIsErrorOnServer() }
           <div className="input-group">
             <label htmlFor="name">{ checkIsValidUsername() }</label>
             <input  

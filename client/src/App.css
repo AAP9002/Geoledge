@@ -6,10 +6,18 @@
     -webkit-font-smoothing: antialiased;
   }
 
-.App {
-  background-image: url(./Pages/Home/starry2.png);
+.App{
+  height: fit-content;
   min-height: 100vh;
-  position: relative;
+  overflow-y: hidden;
+}
+
+#app_background_image {
+  z-index: -100;
+  position: fixed;
+  object-fit:cover;
+  width: 100vw;
+  height: 100vh;
 }
 
 .waiting {

@@ -1,11 +1,11 @@
 import React from 'react';
-import "./End_game.css";
+import "./Gamelobby.css";
 
 import { useState, useEffect } from 'react';
 
 
 
-function FinishBoard(props) {
+function PlayerBoard(props) {
 
     const sessionID = props.sessionID;
     const [loading, setloading] = useState(true)
@@ -37,7 +37,7 @@ function FinishBoard(props) {
                     <tr>
                         <th className='columns'>No</th>
                         <th className='columns'>Player(Username)</th>
-                        <th className='columns'>Points</th>
+                        
                     </tr>
                 </thead>
          
@@ -45,7 +45,7 @@ function FinishBoard(props) {
 
 
                 <tbody className='RankingTable'>
-                    {Finishboard.map((row, index) => <tr><td className='data'>{index + 1}</td><td className='data'>{row.username}</td><td className='data'>{row.player_score}</td></tr>)}
+                    {Finishboard.map((row, index) => <tr><td className='data'>{index + 1}</td><td className='data'>{row.username}</td></tr>)}
                 </tbody>
             </table>
             </div>
@@ -66,7 +66,7 @@ const EndGame = (props) => {
         <div>
             <div>
 
-                <FinishBoard sessionID={props.sessionID} />
+                <PlayerBoard sessionID={props.sessionID} />
 
             </div>
         </div>

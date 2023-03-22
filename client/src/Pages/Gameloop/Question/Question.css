@@ -27,23 +27,13 @@ body {
   background-color:  rgb(163, 10, 168);
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  height: 600px;
+  height: fit-content;
   width: 100%;
   max-width: 900px; 
   margin: 0 auto;
   border: 5px solid#000000;
 }
 
-.question-container::before {
-  content: '';
-  position: absolute;
-  top: 20;
-  right: 0;
-  width:150px;
-  height: 60px;
-  background-color: #ffffff;
-  z-index: -1;
-}
 
 /* Header styles */
 .question-container h2 {
@@ -68,53 +58,90 @@ body {
   font-weight: bold;
   position: relative;
   color:#ffffff;
-}
-
-.question-container #country_stats b:after {
-  content: '';
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  position: absolute;
-  bottom: -10px;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.question-container #country_stats b:nth-child(1):after {
-  background-color: var(--main-color);
-}
-
-.question-container #country_stats b:nth-child(2):after {
-  background-color: var(--secondary-color);
-}
-
-.question-container #country_stats b:nth-child(3):after {
-  background-color: var(--tertiary-color);
-}
-
-.question-container #country_stats b:nth-child(4):after {
-  background-color: #4caf50;
+  text-align: center;
 }
 
 /* Other country stats styles */
 .question-container #country_other_stats {
   display: flex;
-  justify-content: space-around;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
   margin-top: 30px;
 }
 
-.question-container #country_other_stats small {
-  font-size: 16px;
+.other_box{
+  padding: 10px;
+  margin-left: 20px;
+  border-radius: 20px;
+}
+
+bubble{
+  background-color: white;
+  border-radius: 1000px;
+  color: black;
+  font-size: 100%;
   font-weight: bold;
-  color: var(--main-color);
+  width:8vw;
+  aspect-ratio: 1/1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 770px) {
+
+bubble{
+  background-color: rgb(255, 255, 255);
+  border-radius: 1000px;
+  color: black;
+  font-size: 100%;
+  font-weight: bold;
+  width:15vw;
+  aspect-ratio: 1/1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 }
 
 /* Search styles */
 .question-container .search-container {
   position: relative;
   margin-top: 30px;
+}
+
+.mobile-search-container, .map_box {
+  background-color: grey;
+  width: calc(100vw - 40px);
+  height: calc(100vh - 60px);
+  padding: 10px;
+  padding-bottom: 40px;
+  position: fixed;
+  top:0px;
+  left:0px;
+  margin: 20px;
+  border-radius: 20px;
+  display: none;
+}
+
+.mobile_guess_btn{
+  display: none;
+}
+
+
+@media screen and (max-width: 768px) {
+  .search-container{
+    display: none;
+  }
+  
+
+  .mobile_guess_btn{
+    display: block;
+  }
 }
 
 .question-container .search-inner {
@@ -135,8 +162,6 @@ body {
 }
 
 .question-container .dropdown {
-  position: absolute;
-  top: 60px;
   left: 0;
   width: 100%;
   background-color: #fff;
@@ -146,6 +171,7 @@ body {
   }
   
   .question-container .dropdown li {
+    
   list-style: none;
   padding: 10px;
   font-size: 18px;
@@ -216,7 +242,6 @@ body {
   .show-less-button {
   display: none;
   }
-
   
 
   
@@ -239,11 +264,6 @@ body {
   
   .question-container #country_stats b {
   margin-bottom: 10px;
-  }
-  
-  .question-container #country_other_stats {
-  flex-direction: column;
-  margin-top: 20px;
   }
   
   .question-container .search-container {

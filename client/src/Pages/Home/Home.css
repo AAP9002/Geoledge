@@ -1,6 +1,5 @@
 .home {
     color: purple;
-    background-image: url(./starry2.png)
 }           
 
 
@@ -21,10 +20,6 @@
 
 .top{
     height: 100%;
-    background-color: aliceblue;
-    position: relative;
-    background-image: url(./starry2.png);
-
 }
 
 .top h1{
@@ -32,7 +27,8 @@
     color: rgb(122, 228, 122);
     text-shadow: -3px -3px 0 skyblue, 3px -3px 0 skyblue, -3px 3px 0 skyblue, 3px 3px 0 skyblue;
     font-size: 7vw;
-    font-family: "Comic Sans MS";
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    letter-spacing: 2%;
 
 }
 
@@ -43,16 +39,33 @@
     text-align: center;
 }
 
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20vh);
+    visibility: hidden;
+    transition: opacity 0.6s ease-out, transform 1.2s ease-out;
+    will-change: opacity, visibility;
+  }
+  .fade-in-section.is-visible {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    height: 10px;
+
+
+  }
+
 .bottom{
     height: fit-content;
     width: 100%;
     background-color: rgb(255, 255, 255);
     border: 7px solid #4E2461;
-    position:absolute;
-    bottom: 0;
-    margin-bottom: -0.5%;
-    
-
+    position:relative; 
+    bottom: 270px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .column2{
@@ -130,14 +143,34 @@
 }
 
 .earth{
-    height: fit-content;
-    padding-bottom: 3%;
-    position: relative;
+    height: 495px;
 }
 
-
-
 #box {
+    background-image: url(./earth2.png);
+    background-size:cover;
+    border:2px solid #000;
+    border-radius:50%;
+    width:300px;
+    height:300px;
+    animation: moveearth 10s linear 0s infinite;
+    box-shadow:0 0 10px RGBA(255,255,255, 0.10),
+               -4px -4px 15px #000 inset,
+               2px 2px 15px #000 inset,
+               -45px -20px 25px RGBA(0,0,0, 0.5) inset, 
+               25px 25px 25px RGBA(0,0,0, 0.45) inset;
+    margin:6em auto;
+    transform:rotateX(6deg) rotateY(6deg) rotateZ(6deg);
+  }
+  
+  @keyframes moveearth {
+    0% { background-position:0 0 }
+    100% { background-position:355px 0 }
+  }
+  
+  
+
+/*#box {
     background-image: url(./earth.png);
     background-size:cover;
     border:7px solid #000;
@@ -147,7 +180,7 @@
     margin:auto;
 
 
-  }
+  }*/
 
   
 

@@ -19,12 +19,13 @@ const Game = () => {
     const [previousState, setPreviousState] = useState();
     const [maxGuesses, setMaxGuesses] = useState();
 
-
+    const [Players, setPlayers] = useState([]);
 
 
 
 
     useEffect(() => {
+
         setloading(true);
 
         let timer;
@@ -43,10 +44,16 @@ const Game = () => {
 
                         if (stateJson.game_state === "showing final scores") {
                             clearInterval(timer);
+                        } else if (stateJson.game_state === "waiting for players") {
+                            fetch(`/api/getLobbyPlayers?sessionID=${ sessionID }`, { method: "GET" }).then(res => res.json()).then(stateJson => {
+                                setPlayers(stateJson.players);
+                                console.log("Players will be blank, but not when you use players.map in return", Players)
+                            })
                         }
 
 
-                        if(!window.location.endsWith("/#/Game")){
+
+                        if(!window.location.href.split('#')[1] == "/Game"){
                             clearInterval(timer);
                         }
 
@@ -79,14 +86,13 @@ const Game = () => {
     switch (status) {
         case "waiting for players":
             return (<>
-                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
-                <WaitingForPlayers sessionID={ sessionID }/>
+                {/* <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button> */}
+                <WaitingForPlayers sessionID={ sessionID } Players={ Players }/>
                 </>
             );
         case "starting game":
             return (
                 <>
-                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
                 <StartingGame />
                 </>
             );
@@ -121,7 +127,6 @@ const Game = () => {
         case "showing final scores":
             return (
                 <>
-                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
                 <EndGame sessionID={sessionID} />
                 </>
             );

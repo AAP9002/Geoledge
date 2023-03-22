@@ -16,7 +16,7 @@
     scrollbar-width: auto;
     height:400px;
     display:block; 
-    
+    top: 8px;
     }
     
     
@@ -44,10 +44,10 @@
      background:#782ad1;}
     
     
-    .columns:nth-child(odd){
+    .tr:nth-child(odd){
      background:#5b0ca5;}
     
-    .columns:nth-child(even){
+    .tr:nth-child(even){
      background:#7d29dd;}
    
     .wrapper td {

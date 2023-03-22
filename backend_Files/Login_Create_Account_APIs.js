@@ -5,7 +5,7 @@ module.exports = function (app, connection) {
     // JWT Functions
     function generateAccessToken(username, userID) {
         let clientHash =  crypto.randomBytes(64).toString('hex');   // creating random 64 byte-long hash
-        return jwt.sign({username, userID, clientHash}, process.env.TOKEN_SECRET);
+        return jwt.sign({username, userID, clientHash}, process.env.TOKEN_SECRET, { expiresIn: '30m' });
     }
 
     ////////////// LOGIN/SIGNUP API Start //////////////
