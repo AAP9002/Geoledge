@@ -83,7 +83,8 @@ const Question = (props) => {
                 setNumberOfGuessesUsed(numberOfGuessesUsed+1)
                 setScore(Math.floor(10000-((5000*((MAX_TIME-timeNumber)/MAX_TIME))+(5000*(numberOfGuessesUsed/MAX_GUESS)))))
             }
-            toggle_movile_search()
+            set_display_searchbox_mobile(false)
+
         });
     }
 
