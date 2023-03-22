@@ -23,6 +23,78 @@ module.exports = function (app, connection) {
                 - writes game configs to dbo 
     */
 
+    //==================   FUNCTIONS   ====================
+    function RemoveFromParts(userID, sessionID, res) {
+        let query = "call remove_a_participent(?,?)";
+        connection.query(query, [userID, sessionID], (err, result) => {
+            if (err) {
+                console.log("ERROR WHEN REMOVING PARTS: " + err);
+                res.status(500).send({ status: "Server side error" });
+            }
+        });
+    }
+
+    function RemoveFromPartsPromise(userID, sessionID) {
+        let promise = new Promise(function(resolve, reject) {
+            let query = "call remove_a_participent(?,?)";
+            connection.query(query, [userID, sessionID], (err, result) => {
+                if (err) {
+                    console.log("ERROR WHEN REMOVING PARTS: " + err);
+                    reject(null);
+                } else {
+                    resolve();
+                }
+            });
+        });
+        return promise;
+    }
+
+    function NewHost(sessionID, res) {
+        let promise = new Promise(function(resolve, reject) {
+            let query = "call select_parts(?)";
+            connection.query(query, [sessionID], (err, result) => {
+                if (err) {
+                    console.log("ERROR WHEN SELECTING PARTS: " + err);
+                    reject(null);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+
+        promise.then(
+            function(result) {
+                if (result[0].length == 0) {
+                    console.log("no participents in session")
+                    let query = "call expire_session(?)";
+                    connection.query(query, [sessionID], (err, result) => {
+                        if (err) {
+                            console.log("ERROR WHEN ASSIGNING NEW HOST: " + err);
+                            res.status(500).send({ status: "Server side error" });
+                        } else {
+                           console.log(`Session ${sessionID} was expired since it had no more players`);
+                        }
+                    });
+                } else {
+                    console.log("participents in session")
+                    console.log(result)
+                    let newHostID = result[0][0].user_id
+                    let query = "call new_host(?,?)";
+                    connection.query(query, [newHostID, sessionID], (err, result) => {
+                        if (err) {
+                            console.log("ERROR WHEN ASSIGNING NEW HOST: " + err);
+                            res.status(500).send({ status: "Server side error" });
+                        } else {
+                            console.log(`New host was assigning to previous game: ${sessionID}`);
+                        }
+                    });
+                }
+            }
+            , function(reject) {
+                console.log("sql error")
+            }
+        )
+    }
     // ====================   API   =======================
     app.get('/api/checkLoggedIn', (req, res) => {
         if (req.loggedIn == "true") {
@@ -33,47 +105,89 @@ module.exports = function (app, connection) {
     });
 
     app.post('/api/createLobby', (req, res) => {
-        let host_id = req.userID;
-        let myPromise = new Promise(function(myResolve, myReject) {
-            // try find game where user is already a host (resuming)
-            let query = "call host_game_exists(?)"
-            connection.query(query, [host_id], (err, result) => {
+        let userID = req.userID
+        let promise = new Promise(function(resolve, reject) {
+            // Gets sessionID the user was in, if he was in one
+            let query = "call select_curr_session(?)";
+            connection.query(query, [userID], (err, result) => {
                 if (err) {
-                    console.log("sql broken: " + err);
-                    myReject(null);
+                    console.log("Couldn't get the previous session ID: " + err);
+                    reject(null);
                 } else {
-                    myResolve(result);
+                    resolve(result);
                 }
-            })            
+            });
         });
 
-        myPromise.then(
+        promise.then(
             function(result) {
-                // user has no exist, make new game, OR
-                // user has exist but expired
-                if (result[0].length==0 || (result[0].length!=0 && result[0][0].expired == 1)) {
-                    let query = "call create_lobby(?)"
-                    connection.query(query, [host_id], (err, result) => {
+                if (result[0].length == 0) {
+                    console.log("user was not in a previous session")
+                    let query = "call create_lobby(?)";
+                    connection.query(query, [userID], (err, result) => {
                         if (err) {
-                            console.log("sql broken: " + err)
-                            res.status(500).send(err);
+                            console.log("sql broken: " + err);
+                            res.status(500).json({ "status": "Server side error" })
                         } else {
-                            console.log(((Object.entries(result[2][0])[0])[1]))
-                            res.status(200).send({ 
-                                id: ((Object.entries(result[2][0])[0])[1])
+                            let sessionID = result[1][0].id
+                            res.status(200).json(
+                                {
+                                    "status": "Lobby Created Successfully?",
+                                    "id": sessionID
+                                })
+                        }
+                    });
+                } else {   
+                    console.log("user was in a previous session")
+                    let prevSessionID = result[0][0].session_id
+                    let host_user = result[0][0].host_user
+                    
+                    let myPromise = new Promise(function(myResolve, myReject) {
+                        // assign new host if you were prev sessn's host
+                        if (host_user == userID) {
+                            let promise1 = RemoveFromPartsPromise(userID, prevSessionID)
+                            promise1.then(
+                                function() {
+                                    NewHost(prevSessionID, res)
+                                    myResolve()
+                                }
+                                , function() {
+                                    myReject()
+                                }
+                            )
+                        } else {
+                            RemoveFromParts(userID, prevSessionID, res)
+                            myResolve()
+                        }
+                    });
+
+                    myPromise.then(
+                        function() {
+                            let query = "call create_lobby(?)"
+                            connection.query(query, [userID], (err, result) => {
+                                if (err) {
+                                    console.log("sql broken: " + err);
+                                    res.status(500).json({ "status": "Server side error" })
+                                } else {
+                                    let sessionID = result[1][0].id
+                                    res.status(200).json(
+                                        {
+                                            "status": "Lobby Created Successfully?",
+                                            "id": sessionID
+                                        })
+                                }
                             });
                         }
-                    })
-                } else {
-                    res.status(200).send({ 
-                        id: ((Object.entries(result[0][0])[0])[1])
-                    });
+                        , function(error) {
+                            res.status(500).json({ "status": "Server side error" })
+                        }
+                    )
                 }
             }
             , function(error) {
-                res.status(500).send(err);
+
             }
-        );
+        )
     });
 
     app.get('/api/joinLobby', (req, res) => {
@@ -87,7 +201,6 @@ module.exports = function (app, connection) {
             // Checking to see if session is full
             let promise = new Promise(function(resolve, reject) {
                 let query = "call check_if_session_is_full(?)"
-
                 connection.query(query, [sessionID], (err, result) => {
                     if (err) {
                         console.log("ERROR WHEN CHECKING IF SESSION IS FULL: " + err);
@@ -270,11 +383,11 @@ module.exports = function (app, connection) {
                             { status: "The lobby you are trying to access has expired. Please check the session ID was entered correctly" }
                         );
                     } 
-                    // else if (session[0].game_state != "waiting for players") {
-                    //     res.status(401).send(
-                    //         { status: "The lobby you are trying to access is in an invalid state. Please check the session ID was entered correctly" }
-                    //     );
-                    // } 
+                    else if (session[0].game_state != "waiting for players") {
+                        res.status(401).send(
+                            { status: "The lobby you are trying to access is in an invalid state. Please check the session ID was entered correctly" }
+                        );
+                    } 
                     else {
                         res.status(200).send(
                             { status: "Lobby Verification Successful" }

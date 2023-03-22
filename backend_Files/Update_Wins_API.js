@@ -95,7 +95,7 @@ module.exports = function(app, connection) {
         let sessionID = req.query.sessionID;
         let userID = req.userID;
         let msg = "revealing answer"
-        // check if we score state change is valid for current game state
+        // check if the score state change is valid for current game state
         let myPromise = new Promise(function(myResolve, myReject) {
             let query = `call host_check_game_state(?,?,?)`;
             connection.query(query, [sessionID, userID, msg], (err, result) => {
