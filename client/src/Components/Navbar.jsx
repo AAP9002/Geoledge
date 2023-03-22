@@ -50,7 +50,7 @@ function Navbar() {
 
   function getUsername() {
     if (isLoggedIn) { 
-      return (<div className='nav-item'> <p> Welcome back { username }!</p> </div>);
+      return (<div className='nav-itemm'> <p> Welcome back { username }!</p> </div>);
     } else {
       return (<></>)
     }
@@ -100,7 +100,7 @@ function Navbar() {
                 { isLoggedInButton }
               </div>
 
-              {/* <p> { getUsername() } </p> */}
+              <p> { getUsername() } </p>
               
             </ul>
             

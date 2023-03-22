@@ -85,12 +85,27 @@ function Play() {
                         </div>
                     </Row>
                     <Col>
-                        <table className="table">
+                        {/* <table className="table">
                             <thead> <tc> <th>no:</th><th>Player</th></tc></thead>
                             <tbody>
                                 <tr><td>{No}</td></tr>
                             </tbody>
+                        </table> */}
+                        <div className='table'>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th className='columnss'>No</th>
+                                    <th className='columnss'>Player(Username)</th>
+                                    
+                                </tr>
+                            </thead>
+                    
+                            <tbody className='RankingTable'>
+                                {Players.map((row, index) => <tr><td className='data'>{index + 1}</td><td className='data'>{row.username}</td></tr>)}
+                            </tbody>
                         </table>
+                      </div>
                     </Col>
                     <div className='col'>
                         <div className="settingscontainer">
@@ -129,13 +144,15 @@ function Play() {
                     </div>
                 </Row>
                 <div>
-                    <div>
-                        <p>Number of rounds: {NumberOfRounds}</p>
-                        <p>Time Limit: {TimePerRound}</p>
+                    <div className='formf'>
+                        <h2>Number of rounds</h2>
+                        <h1>{NumberOfRounds}</h1>
+                        <h2>Time Limit</h2>
+                        <h1> {TimePerRound}</h1>
 
                         <form onSubmit={handleSubmit}>
 
-                            <button className='styledbutton3'>Play</button>
+                            <button className='styledbutton4'>Play</button>
 
                         </form>
                     </div>

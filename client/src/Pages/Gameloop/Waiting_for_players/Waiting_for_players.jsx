@@ -13,29 +13,27 @@ const Waiting_for_players = (props) => {
             window.location = "/#/Home";
         })
     }
-    console.log("players" + props.Players)
+    console.log("players" + props.Players);
+
     function returnToHome() {
 
 
     }
-
-    return(<>
-            <p className="waiting">Waiting for players</p>
-            <div className='wrapper'>
-            <h1> <p className='header1'> Lobby</p></h1>
-            <div className='alltable'>
-            <table className='Ranking'>
-                <thead>
-                    <tr>
-                        <th className='columns'>No</th>
-                        <th className='columns'>Player(Username)</th>
-                        
-                    </tr>
-                </thead>
-         
-
-
-
+    if (props.sessionID != undefined) {
+        return(<>
+                <p className="waiting">Waiting for players</p>
+                <div className='wrapper'>
+                <h1> <p className='header1'> Lobby</p></h1>
+                <div className='alltable'>
+                <table className='Ranking'>
+                    <thead>
+                        <tr>
+                            <th className='columns'>No</th>
+                            <th className='columns'>Player(Username)</th>
+                            
+                        </tr>
+                    </thead>
+            
                 <tbody className='RankingTable'>
                     {props.Players.map((row, index) => <tr><td className='data'>{index + 1}</td><td className='data'>{row.username}</td></tr>)}
                 </tbody>
@@ -48,6 +46,10 @@ const Waiting_for_players = (props) => {
 
         </div>
 
-        </>);}
+        </>);
+    } else {
+        return(<p className="waiting">Waiting for players</p>);
+    }
+}
 
 export default Waiting_for_players;
