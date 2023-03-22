@@ -120,7 +120,7 @@ const Game = () => {
             return (
                 <>
                 <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
-                <Question timeLeft={gameTimeLimit} maxGuesses={maxGuesses}/>
+                <Question timeLeft={gameTimeLimit} maxGuesses={maxGuesses} sessionID={sessionID}/>
                 </>
             );
         case "starting next question":
