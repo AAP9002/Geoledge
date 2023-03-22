@@ -72,7 +72,7 @@ const Question = (props) => {
             setSaColour(resp.actual_country.surface_area.howClose);
             setTimeUPDOWN(resp.actual_country.time_diff_hours_off);
             setlocationDirection("rotate("+resp.actual_country.proximity.direction+"deg)");
-            setlocationDistance(resp.actual_country.proximity.distanceKM* (180/Math.PI));
+            setlocationDistance(resp.actual_country.proximity.distanceKM);
             let others = resp.actual_country;
             delete others['population'];
             delete others['surface_area'];
@@ -128,7 +128,7 @@ const Question = (props) => {
             </div>
             <div style={(lastGuess!==undefined)?null:{visibility:"hidden",maxHeight:"0px"}}>
             <h2 style={{textAlign:'center'}}>{lastGuess}</h2>
-            <a className='w-100' onClick={toggle_mapbox}>Show Map</a>
+            <a className='w-100' onClick={toggle_mapbox}>🗺️Show Map</a>
             <div id="country_stats" style={{ display: 'flex', justifyContent: 'space-around' }}>
                 <div className='d-flex flex-sm-column justify-content-center'>
                     <b>Population</b>
