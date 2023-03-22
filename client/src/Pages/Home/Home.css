@@ -50,7 +50,9 @@
     opacity: 1;
     transform: none;
     visibility: visible;
-    height: 1px;
+    height: 10px;
+
+
   }
 
 .bottom{

@@ -37,18 +37,15 @@
 
 }
 .styledbutton4{
-  background-color: #ab50d4;
-color: white;
-padding: 5px 15px;
-border-radius: 5px;
-margin: 10px 5px 0px 0px;
-cursor: pointer;
-text-align: left;
-box-shadow: 0px 2px 2px lightgray;
-transition: ease background-color 250ms;
-height: auto;
-width: auto;
-opacity: 70%;
+  background-color: #8A2BE2;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 5px #ffffff;
 
 }
 
@@ -124,6 +121,7 @@ opacity: 70%;
     color: aliceblue;
     font-size: larger;
     padding:30px;
+    border-bottom: none;
 
 
 }
@@ -131,17 +129,20 @@ opacity: 70%;
 .table td{
     color: aliceblue;
     padding:30px;
+    background-color: #1F2329;
+    border-radius: 10px;
+    border-bottom: none;
+
 
 
   }
 
 .table{
-    background-color: #4E2461;
+    background-color: #1F2329;
     height: 100%;
     text-decoration-color: white;
-
-    border-color: aliceblue;
-    border-style: solid;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px #8A2BE2;
     width: 100%;
 
 
@@ -164,11 +165,11 @@ opacity: 70%;
 
 
 .settings{
-    background-color: #4E2461;
+    background-color: #1F2329;
     height: 100%;
     width: 100%;
-    border-color: aliceblue;
-    border-style: solid;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px #8A2BE2;
 
 }
 
@@ -189,6 +190,8 @@ opacity: 70%;
 
 .lob h1{
     color: white;
+    font-size: 4vw;
+    text-decoration: none;
 }
 
 
@@ -198,7 +201,28 @@ opacity: 70%;
   height: 50%;
   width: 20%;
   align-self: center;
-  border-color: aliceblue;
-  border-style: solid;  
 
+  justify-content: center;
+}
+
+.formf{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  background-color: #1F2329;
+  height: 100%;
+  width: 100%;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px #8A2BE2;
+}
+.formf h1{
+  text-decoration: none;
+}
+
+.formf h2{
+  text-decoration: none;
 }
