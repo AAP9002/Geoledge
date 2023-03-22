@@ -183,8 +183,18 @@ const SignUpPage = () => {
           console.log(status);
 
           if (status.status == "Account successfully created") {
-            window.location.href = "/#/Home";
-            window.location.reload();
+            // Logging the client into their newly created account
+            fetch(`/api/login?username=${ name }&password=${ password }`)
+              .then(res => res.json())
+              .then(res => {
+                if (res.status == "Successfully logged in") {
+                  window.location.href = "/#/Home";
+                  window.location.reload();
+                } else {
+                  // server error :(. could not login
+                  setIsErrorOnServer(true);
+                }
+            });
           } else if (status.status == "Username is taken") {
             // Username taken. Displaying this to the user
             setIsUsernameTaken(true);
