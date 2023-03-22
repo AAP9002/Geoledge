@@ -32,14 +32,14 @@ module.exports = function(app, connection) {
                     });
 
                     if (i == 0) { // first index has the highest score
-                        let query = `UPDATE users SET wins = (wins + 1), win_rate = wins/losses WHERE user_id = ${user_id};`
+                        let query = `UPDATE users SET wins = (wins + 1), win_rate = round(wins/games_played, 3)*100 WHERE user_id = ${user_id};`
                         connection.query(query, (err, result) => {
                             if (err) {
                                 res.status(500).send("server error");
                             }
                         })
                     } else {
-                        let query = `UPDATE users SET losses = (losses + 1), win_rate = wins/losses WHERE user_id = ${user_id};`
+                        let query = `UPDATE users SET losses = (losses + 1), win_rate = round(wins/games_played, 3)*100 WHERE user_id = ${user_id};`
                         connection.query(query, (err, result) => {
                             if (err) {
                                 res.status(500).send("server error");
