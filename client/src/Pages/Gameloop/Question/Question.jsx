@@ -67,32 +67,35 @@ const Question = (props) => {
     const check_guess = (country_code,countryName) => {
         setloading(true);
         setLastGuess(countryName+"❌")
-        fetch('/api/make_a_guess?answer_submitted=' + country_code).then(res => res.json()).then(resp => {
-            setcorrectStatus(resp.correct_status);
-            setPopulationUPDOWN(resp.actual_country.population.directionupdown);
-            setPopulationColour(resp.actual_country.population.howClose);
-            setSaUPDOWN(resp.actual_country.surface_area.directionupdown);
-            setSaColour(resp.actual_country.surface_area.howClose);
-            setTimeUPDOWN(resp.actual_country.time_diff_hours_off);
-            setlocationDirection("rotate("+resp.actual_country.proximity.direction+"deg)");
-            setlocationDistance(resp.actual_country.proximity.distanceKM* (180/Math.PI));
-            let others = resp.actual_country;
-            delete others['population'];
-            delete others['surface_area'];
-            delete others['time_diff_hours_off'];
-            delete others['proximity'];
-            setOtherCountryData(others);
-            setValue("");
-            setloading(false);
 
-            if(!correctStatus)
-            {
-                setNumberOfGuessesUsed(numberOfGuessesUsed+1)
-                setScore(Math.floor(10000-((5000*((MAX_TIME-timeNumber)/MAX_TIME))+(5000*(numberOfGuessesUsed/MAX_GUESS)))))
-            }
-            set_display_searchbox_mobile(false)
+        if (props.sessionID != -1) {
+            fetch(`/api/make_a_guess?answer_submitted=${ country_code }&sessionID=${ props.sessionID }`).then(res => res.json()).then(resp => {
+                setcorrectStatus(resp.correct_status);
+                setPopulationUPDOWN(resp.actual_country.population.directionupdown);
+                setPopulationColour(resp.actual_country.population.howClose);
+                setSaUPDOWN(resp.actual_country.surface_area.directionupdown);
+                setSaColour(resp.actual_country.surface_area.howClose);
+                setTimeUPDOWN(resp.actual_country.time_diff_hours_off);
+                setlocationDirection("rotate("+resp.actual_country.proximity.direction+"deg)");
+                setlocationDistance(resp.actual_country.proximity.distanceKM* (180/Math.PI));
+                let others = resp.actual_country;
+                delete others['population'];
+                delete others['surface_area'];
+                delete others['time_diff_hours_off'];
+                delete others['proximity'];
+                setOtherCountryData(others);
+                setValue("");
+                setloading(false);
 
-        });
+                if(!correctStatus)
+                {
+                    setNumberOfGuessesUsed(numberOfGuessesUsed+1)
+                    setScore(Math.floor(10000-((5000*((MAX_TIME-timeNumber)/MAX_TIME))+(5000*(numberOfGuessesUsed/MAX_GUESS)))))
+                }
+                set_display_searchbox_mobile(false)
+
+            });
+        }
     }
 
     function toggle_mobile_search(){

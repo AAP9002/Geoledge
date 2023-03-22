@@ -8,57 +8,80 @@ module.exports = function (app, DBconnection) {
         let user = req.userID;
         let user_verified = user != undefined;
         let answer_submitted = req.query.answer_submitted;
+        let session_id = req.query.sessionID;
 
-        if (!user_verified) {
-            //console.log(user);
-            res.status(401).send({
-                auth_status: user_verified
-            });
-        }
-        else {
-            DBconnection.query("call check_country_guess_correct(?,?)",
-                [answer_submitted, user], function (error, results) {
-                    console.log(results);
-                    if (error) {
-                        console.log(error);
-                        res.status(500).status({errorMessage:error});
-                    }
-                    else {
-                        try {
-                            //console.log(results);
+        // Checking if sessionID is valid
+        let promise = new Promise(function(resolve) {
+            let query = `SELECT game_state FROM sessions WHERE session_id=${ session_id }`
 
-                            guess = results[0][0]
+            DBconnection.query(query, (err, result) => {
+                if (err) {
+                    resolve(null);
+                } else {
+                    resolve(result);
+                }
+            })
+        })
 
-                            actual_docted = results[4][0];
-                            //console.log(actual_docted);
-                            status_of_correct = guess.country_id == actual_docted.country_id;
-                            console.log(Number(guess["timezone"].substring(3, 6)));
-                            console.log(Number(actual_docted["timezone"].substring(3, 6)));
-                            res.status(200).send({
-                                auth_status: user_verified,
-                                correct_status: status_of_correct,
-                                guess_country: guess,
-                                actual_country: {
-                                    independent: (actual_docted["independent"] == guess["independent"]),
-                                    unMember: (actual_docted["unMember"] == guess["unMember"]),
-                                    region: (actual_docted["region"] == guess["region"]),
-                                    proximity: compare_and_give_direction(guess["latitude"], guess["longitude"], actual_docted["latitude"], actual_docted["longitude"]),
-                                    surface_area: value_distance_score(guess["surface_area"], actual_docted["surface_area"]),
-                                    population: value_distance_score(guess["population"], actual_docted["population"]),
-                                    time_diff_hours_off: (Number(actual_docted["timezone"].substring(3, 6))+12)-(Number(guess["timezone"].substring(3, 6))+12) ,
-                                    driving_side: (actual_docted["driving_side"] == guess["driving_side"]),
-                                    capital: (actual_docted["capital"] == guess["capital"]),
-                                    language: (actual_docted["language"] == guess["language"]),
-                                    currency: (actual_docted["currency"] == guess["currency"]),
+        promise.then(function(result) {
+            if (result == null) {
+                res.status(200).send("Not in valid game state or session id doesn't exist")
+            } else {
+                if (!user_verified) {
+                    //console.log(user);
+                    res.status(401).send({
+                        auth_status: user_verified
+                    });
+                }
+                else {
+                    DBconnection.query("call check_country_guess_correct(?,?)",
+                        [answer_submitted, user], function (error, results) {
+                            console.log(results);
+                            if (error) {
+                                console.log(error);
+                                res.status(500).status({errorMessage:error});
+                            }
+                            else {
+                                try {
+                                    //console.log(results);
+        
+                                    guess = results[0][0]
+        
+                                    actual_docted = results[4][0];
+                                    //console.log(actual_docted);
+                                    status_of_correct = guess.country_id == actual_docted.country_id;
+                                    console.log(Number(guess["timezone"].substring(3, 6)));
+                                    console.log(Number(actual_docted["timezone"].substring(3, 6)));
+                                    res.status(200).send({
+                                        auth_status: user_verified,
+                                        correct_status: status_of_correct,
+                                        guess_country: guess,
+                                        actual_country: {
+                                            independent: (actual_docted["independent"] == guess["independent"]),
+                                            unMember: (actual_docted["unMember"] == guess["unMember"]),
+                                            region: (actual_docted["region"] == guess["region"]),
+                                            proximity: compare_and_give_direction(guess["latitude"], guess["longitude"], actual_docted["latitude"], actual_docted["longitude"]),
+                                            surface_area: value_distance_score(guess["surface_area"], actual_docted["surface_area"]),
+                                            population: value_distance_score(guess["population"], actual_docted["population"]),
+                                            time_diff_hours_off: (Number(actual_docted["timezone"].substring(3, 6))+12)-(Number(guess["timezone"].substring(3, 6))+12) ,
+                                            driving_side: (actual_docted["driving_side"] == guess["driving_side"]),
+                                            capital: (actual_docted["capital"] == guess["capital"]),
+                                            language: (actual_docted["language"] == guess["language"]),
+                                            currency: (actual_docted["currency"] == guess["currency"]),
+                                        }
+                                    });
                                 }
-                            });
-                        }
-                        catch {
-                            res.status(500).send("Error when processing data, may be not in game or not in question state")
-                        }
-                    }
-                })
-        }
+                                catch {
+                                    res.status(500).send("Error when processing data, may be not in game or not in question state")
+                                }
+                            }
+                        })
+                }
+            }
+        })
+
+
+        
     });
 
     function compare_and_give_direction(guess_lat, guess_lng, target_lat, target_lng) {
