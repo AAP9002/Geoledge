@@ -50,8 +50,8 @@ function ScoreBoard() {
     <div className='Statistics'>
     <div className='b2'>
       <h1 className='title2'>Statistics</h1> 
-      <h2 className='gpd'>Gameplayed</h2>
-      <h2 className='wr'>Winrate</h2>
+      <h2 className='gpd'>Games Played</h2>
+      <h2 className='wr'>Win Rate(%)</h2>
     
       <div className='Container2'><p className='Gameplayed'>{GamePlayed}</p></div> 
       

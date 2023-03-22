@@ -183,7 +183,11 @@ module.exports = function (app, DBconnection) {
                     res.status(500).send()
                 } 
                 else {
-                    res.status(200).send({ is_host: result[0][0].value})
+                    if (result[0].length == 0) {
+                        res.status(500).send({ status: "Invalid session id, or doesn't exist"})
+                    } else {
+                        res.status(200).send({ is_host: result[0][0].value})
+                    }
                 }
             });
         }

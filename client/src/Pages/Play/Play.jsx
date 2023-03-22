@@ -85,12 +85,27 @@ function Play() {
                         </div>
                     </Row>
                     <Col>
-                        <table className="table">
+                        {/* <table className="table">
                             <thead> <tc> <th>no:</th><th>Player</th></tc></thead>
                             <tbody>
                                 <tr><td>{No}</td></tr>
                             </tbody>
+                        </table> */}
+                        <div className='table'>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th className='columns'>No</th>
+                                    <th className='columns'>Player(Username)</th>
+                                    
+                                </tr>
+                            </thead>
+                    
+                            <tbody className='RankingTable'>
+                                {Players.map((row, index) => <tr><td className='data'>{index + 1}</td><td className='data'>{row.username}</td></tr>)}
+                            </tbody>
                         </table>
+                      </div>
                     </Col>
                     <div className='col'>
                         <div className="settingscontainer">
