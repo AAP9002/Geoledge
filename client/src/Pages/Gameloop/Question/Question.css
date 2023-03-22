@@ -114,11 +114,12 @@ bubble{
   margin-top: 30px;
 }
 
-.mobile-search-container {
+.mobile-search-container, .map_box {
   background-color: grey;
   width: calc(100vw - 40px);
   height: calc(100vh - 60px);
-  padding: 20px;
+  padding: 10px;
+  padding-bottom: 40px;
   position: fixed;
   top:0px;
   left:0px;
