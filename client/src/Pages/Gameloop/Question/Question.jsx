@@ -51,7 +51,6 @@ const Question = (props) => {
     useEffect(() => {
         fetch('/api/countryNames').then(res => res.json()).then(names => {
             setCountryNames(names);
-
             fetch('/api/getScores?sessionID='+props.sessionID).then(res => res.json()).then(stateJson => {
                 setMyScore(stateJson.myScore);
             });
@@ -127,7 +126,7 @@ const Question = (props) => {
                 <p style={{ textAlign: 'right' , color: 'black'}}>
                 Time Left: {timeNumber}s<br/>
                 Guesses Left: {MAX_GUESS-numberOfGuessesUsed}<br/>
-                Round Score: {Score}
+                Round Score: {Score}<br/>
                 Total Score: {myScore}
                 </p>
             </div>

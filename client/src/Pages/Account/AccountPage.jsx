@@ -29,7 +29,7 @@ function ScoreBoard() {
         SetWinrate(0)
       }
       else {
-        SetWinrate((Account.wins / Account.games_played) * 100)
+        SetWinrate(Math.round((Account.wins / Account.games_played)*1000) / 10)
       }
     });
   }, []);
