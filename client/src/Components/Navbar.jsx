@@ -77,6 +77,11 @@ function Navbar() {
                 </Link>
               </li>
               <li className='nav-item'>
+                <Link to='/HowToPlay' className='nav-links' onClick={closeMobileMenu}>
+                  How To Play
+                </Link>
+              </li>  
+              <li className='nav-item'>
                 <Link to='/Leaderboard' className='nav-links' onClick={closeMobileMenu}>
                   Leaderboards
                 </Link>
