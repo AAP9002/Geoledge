@@ -8,6 +8,7 @@ import RevealAnswer from './Reveal_answer/Reveal_answer';
 import CurrentScores from './Current_scores/Current_scores';
 import EndGame from './End_game/End_game'
 import StartingQuestion from './Starting_Question/Starting_Question';
+import ExpiredSession from './Expired_Session/Expired_Session';
 
 const Game = () => {
 
@@ -86,7 +87,7 @@ const Game = () => {
     function leaveGame() {
         fetch(`/api/leaveSession?sessionID=${ sessionID }`).then(res => res.json()).then(res => {
             console.log(res.status);
-            window.location = "/#/Home";
+            window.location.href = "/#/Home";
         })
     }
     /* ==============  INFORMATION ON GAME_STATE  ==============
@@ -147,6 +148,12 @@ const Game = () => {
             return (
                 <>
                 <EndGame sessionID={sessionID} />
+                </>
+            );
+        case "expired session":
+            return (
+                <>
+                <ExpiredSession />
                 </>
             );
         case "Loading":
