@@ -95,7 +95,7 @@ function Navbar() {
                 { isLoggedInButton }
               </div>
 
-              {/* <p> { getUsername() } </p> */}
+              <p> { getUsername() } </p>
               
             </ul>
             
