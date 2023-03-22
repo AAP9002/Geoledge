@@ -22,7 +22,10 @@ function ScoreBoard() {
       SetUsername(Account.username)
       setWins(Account.wins)
       setGamePlayed(Account.games_played)
-      if (Number(Account.games_played) === 0) {
+
+      console.log(Account.wins);
+      console.log(Account.games_played)
+      if (Account.games_played == 0) {
         SetWinrate(0)
       }
       else {

@@ -14,7 +14,7 @@ const Game = () => {
 
     const [status, setStatus] = useState("Loading")
     const [loading, setloading] = useState(true);
-    const [sessionID, setSessionID] = useState();
+    const [sessionID, setSessionID] = useState(-1);
     const [gameTimeLimit, setGameTimeLimit] = useState();
 
     const [previousState, setPreviousState] = useState();
@@ -35,35 +35,54 @@ const Game = () => {
             timer = setInterval(() => {
                 fetch('/api/getSessionID').then(res => res.json()).then(stateJson => {
                     if (previousState !== stateJson.game_state) {
+                        console.log(stateJson);
                         setPreviousState(stateJson.game_state)
                         setStatus(stateJson.game_state);
                         setSessionID(stateJson.session_id);
                         setGameTimeLimit(stateJson.time_limit);
                         setMaxGuesses(stateJson.max_guesses);
                         setloading(false);
+                        console.log("sessionID: " + sessionID);
 
 
                         if (stateJson.game_state === "showing final scores") {
                             clearInterval(timer);
-                        } else if (stateJson.game_state === "waiting for players") {
-                            fetch(`/api/getLobbyPlayers?sessionID=${ sessionID }`, { method: "GET" }).then(res => res.json()).then(stateJson => {
-                                setPlayers(stateJson.players);
-                                console.log("Players will be blank, but not when you use players.map in return", Players)
-                            })
                         }
 
 
 
-                        if(!window.location.href.split('#')[1] == "/Game"){
+                        if(!window.location.endsWith("/#/Game")){
                             clearInterval(timer);
                         }
 
+                        console.log(Players);
+                        console.log(sessionID);
+
                     }
+                
+                if (sessionID !== -1) {
+                    fetch(`/api/getLobbyPlayers?sessionID=${ sessionID }`, { method: "GET" }).then(res => res.json()).then(stateJson => {
+                        setPlayers(stateJson.players);
+                        console.log("Players will be blank, but not when you use players.map in return", Players)
+                    })
+                }
                 })
             }, 1000);
         }, 3000);
+
+
+
         return () => clearInterval(timer);
     }, []);
+
+    if (sessionID !== -1) {
+        fetch(`/api/getLobbyPlayers?sessionID=${ sessionID }`, { method: "GET" }).then(res => res.json()).then(stateJson => {
+            setPlayers(stateJson.players);
+            console.log("Players will be blank, but not when you use players.map in return", Players)
+
+            console.log(sessionID);
+        })
+    }
 
     function leaveGame() {
         fetch(`/api/leaveSession?sessionID=${ sessionID }`).then(res => res.json()).then(res => {
