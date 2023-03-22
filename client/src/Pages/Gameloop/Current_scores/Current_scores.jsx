@@ -40,13 +40,13 @@ const Current_scores = (props) => {
             return (
                 <div className='reveal_answer_container'>
                     <h1> Scores</h1>
-                    <div className='alltable'>
-                        <table className='Ranking'>
+                    <div className='alltable2'>
+                        <table className='Rankings'>
                             <thead>
                                 <tr>
-                                    <th className='columns'>No</th>
-                                    <th className='columns'>Player(Username)</th>
-                                    <th className='columns'>Points</th>
+                                    <th className='columns2'>No</th>
+                                    <th className='columns2'>Player(Username)</th>
+                                    <th className='columns2'>Points</th>
                                 </tr>
                             </thead>
                     

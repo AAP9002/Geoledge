@@ -95,8 +95,8 @@ function Play() {
                         <table>
                             <thead>
                                 <tr>
-                                    <th className='columns'>No</th>
-                                    <th className='columns'>Player(Username)</th>
+                                    <th className='columnss'>No</th>
+                                    <th className='columnss'>Player(Username)</th>
                                     
                                 </tr>
                             </thead>
