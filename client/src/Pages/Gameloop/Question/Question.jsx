@@ -21,6 +21,7 @@ const Question = (props) => {
     const [locationDirection, setlocationDirection] = useState();
     const [locationDistance, setlocationDistance] = useState();
 
+
     const [countryNames, setCountryNames] = useState([]);
     const [timeNumber, setTimeNumber] = useState(props.timeLeft);
     
@@ -31,6 +32,10 @@ const Question = (props) => {
     const [Score, setScore] = useState(10000);
 
     const [display_searchbox_mobile, set_display_searchbox_mobile] = useState(false);
+    const [display_mapbox, set_display_mapbox] = useState(false);
+
+    
+
 
 
     useEffect(() => {
@@ -68,7 +73,6 @@ const Question = (props) => {
             setTimeUPDOWN(resp.actual_country.time_diff_hours_off);
             setlocationDirection("rotate("+resp.actual_country.proximity.direction+"deg)");
             setlocationDistance(resp.actual_country.proximity.distanceKM* (180/Math.PI));
-
             let others = resp.actual_country;
             delete others['population'];
             delete others['surface_area'];
@@ -83,12 +87,17 @@ const Question = (props) => {
                 setNumberOfGuessesUsed(numberOfGuessesUsed+1)
                 setScore(Math.floor(10000-((5000*((MAX_TIME-timeNumber)/MAX_TIME))+(5000*(numberOfGuessesUsed/MAX_GUESS)))))
             }
-            toggle_movile_search()
+            set_display_searchbox_mobile(false)
+
         });
     }
 
-    function toggle_movile_search(){
+    function toggle_mobile_search(){
         set_display_searchbox_mobile(!display_searchbox_mobile)
+    }
+
+    function toggle_mapbox(){
+        set_display_mapbox(!display_mapbox)
     }
 
     if (numberOfGuessesUsed > MAX_GUESS) {
@@ -117,7 +126,9 @@ const Question = (props) => {
                 Score: {Score}
                 </p>
             </div>
+            <div style={(lastGuess!==undefined)?null:{visibility:"hidden",maxHeight:"0px"}}>
             <h2 style={{textAlign:'center'}}>{lastGuess}</h2>
+            <a className='w-100' onClick={toggle_mapbox}>Show Map</a>
             <div id="country_stats" style={{ display: 'flex', justifyContent: 'space-around' }}>
                 <div className='d-flex flex-sm-column justify-content-center'>
                     <b>Population</b>
@@ -147,6 +158,7 @@ const Question = (props) => {
             <div id="country_other_stats">
                 {Object.keys(otherCountryData).map(key => (<div style={otherCountryData[key]==true?{backgroundColor:"green"}:{backgroundColor:"red"}} className='other_box'>{key}</div>))}
             </div>
+            </div>
             <div className='search-container'>
                 <div className='search-inner'>
                     <input type='text' placeholder='Start Typing a Country' value={value} onChange={onChange} />
@@ -172,9 +184,9 @@ const Question = (props) => {
                 </div>
             </div>
             <br/>
-            <btn className="mobile_guess_btn btn btn-secondary w-100" onClick={toggle_movile_search}>Make A Guess</btn>
+            <btn className="mobile_guess_btn btn btn-secondary w-100" onClick={toggle_mobile_search}>Make A Guess</btn>
             <div className='mobile-search-container' style={display_searchbox_mobile==true?{display:"block"}:{display:"none"}}>
-                <a className='w-100' onClick={toggle_movile_search}>X CLOSE</a>
+                <a className='w-100' onClick={toggle_mobile_search}>X CLOSE</a>
                 <div className='search-inner'>
                     <input type='text' placeholder='Start Typing a Country' value={value} onChange={onChange} />
                 </div>
@@ -199,6 +211,10 @@ const Question = (props) => {
                 </div>
             </div>
             <br />
+            <div className='map_box' style={display_mapbox==true?{display:"block"}:{display:"none"}}>
+                <a className='w-100' onClick={toggle_mapbox}>X CLOSE</a>
+                <iframe className='w-100 h-100' title="map" id="googlemap" src={"https://maps.google.com/maps?q="+lastGuess+"country&t=&z=5&ie=UTF8&iwloc=&output=embed"} frameborder="0" marginheight="0" marginwidth="0"></iframe>
+            </div>
         </div>
     );
 };

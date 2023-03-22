@@ -53,7 +53,7 @@ const Game = () => {
 
 
 
-                        if(!window.location.endsWith("/#/Game")){
+                        if(!window.location.href.split('#')[1] == "/Game"){
                             clearInterval(timer);
                         }
 
