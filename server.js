@@ -78,6 +78,7 @@ const authenticateToken = function(req, res, next) {
                 // Checking if JWT needs to be renewed (renewed 2 mins after JWT issue)
                 if (Math.floor(Date.now() / 1000) > (userData.iat + 120)) {
                   // renewing JWT
+                  console.log(Date.now() / 1000, userData.iat + 120)
                   console.log("JWT renewed")
                   let token = generateAccessToken(userData.username, userData.userID);
                   res.cookie("JWT", token);

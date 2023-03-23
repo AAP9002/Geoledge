@@ -12,7 +12,7 @@ module.exports = function (app, DBconnection) {
 
         // Checking if sessionID is valid
         let promise = new Promise(function(resolve) {
-            let query = `SELECT game_state FROM sessions WHERE session_id=${ session_id }`
+            let query = `SELECT game_state FROM session WHERE session_id=${ session_id }`
 
             DBconnection.query(query, (err, result) => {
                 if (err) {

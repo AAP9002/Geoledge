@@ -68,7 +68,6 @@ const Question = (props) => {
         setloading(true);
         setLastGuess(countryName+"❌")
 
-        if (props.sessionID != -1) {
             fetch(`/api/make_a_guess?answer_submitted=${ country_code }&sessionID=${ props.sessionID }`).then(res => res.json()).then(resp => {
                 setcorrectStatus(resp.correct_status);
                 setPopulationUPDOWN(resp.actual_country.population.directionupdown);
@@ -95,7 +94,7 @@ const Question = (props) => {
                 set_display_searchbox_mobile(false)
 
             });
-        }
+        
     }
 
     function toggle_mobile_search(){

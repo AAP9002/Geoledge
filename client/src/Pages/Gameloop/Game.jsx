@@ -42,7 +42,7 @@ const Game = () => {
                         setGameTimeLimit(stateJson.time_limit);
                         setMaxGuesses(stateJson.max_guesses);
                         setloading(false);
-                        console.log("sessionID: " + sessionID);
+                        // console.log("sessionID: " + sessionID);
 
 
                         if (stateJson.game_state === "showing final scores") {
@@ -55,15 +55,12 @@ const Game = () => {
                             clearInterval(timer);
                         }
 
-                        console.log(Players);
-                        console.log(sessionID);
-
                     }
                 
                 if (sessionID !== -1) {
                     fetch(`/api/getLobbyPlayers?sessionID=${ sessionID }`, { method: "GET" }).then(res => res.json()).then(stateJson => {
                         setPlayers(stateJson.players);
-                        console.log("Players will be blank, but not when you use players.map in return", Players)
+                        // console.log("Players will be blank, but not when you use players.map in return", Players)
                     })
                 }
                 })
@@ -75,12 +72,12 @@ const Game = () => {
         return () => clearInterval(timer);
     }, []);
 
-    if (sessionID !== -1) {
+    if (sessionID !== -1 && status=="waiting for players") {
         fetch(`/api/getLobbyPlayers?sessionID=${ sessionID }`, { method: "GET" }).then(res => res.json()).then(stateJson => {
             setPlayers(stateJson.players);
-            console.log("Players will be blank, but not when you use players.map in return", Players)
+            // console.log("Players will be blank, but not when you use players.map in return", Players)
 
-            console.log(sessionID);
+            // console.log(sessionID);
         })
     }
 
