@@ -127,6 +127,10 @@
       font-size: 1rem;
       color: #876ce8;
     }
+    bubble{
+      font-size: 1.1rem;
+      max-width: 600px
+    }
   }
   
  
