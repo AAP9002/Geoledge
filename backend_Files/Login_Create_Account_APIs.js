@@ -5,7 +5,7 @@ module.exports = function (app, connection) {
     // JWT Functions
     function generateAccessToken(username, userID) {
         let clientHash =  crypto.randomBytes(64).toString('hex');   // creating random 64 byte-long hash
-        return jwt.sign({username, userID, clientHash}, process.env.TOKEN_SECRET);
+        return jwt.sign({username, userID, clientHash}, process.env.TOKEN_SECRET, { expiresIn: '30m' });
     }
 
     ////////////// LOGIN/SIGNUP API Start //////////////
@@ -103,7 +103,7 @@ module.exports = function (app, connection) {
         let email = req.query.email;
         let privacy_policy = req.query.privacy_policy;
         let terms_conditions = req.query.terms_conditions;
-        
+    
         // Validating username
         if(!validateUsername(username)) {
             // Credentials did not pass validation checks
@@ -176,7 +176,7 @@ module.exports = function (app, connection) {
     
     
     // LOGIN API HANDLER
-    // test http://localhost:5000/api/login?username=kev123&password=pass
+    // test http://localhost:5000/api/login?username=admin123&password=admin123
     app.get('/api/login', (req, res) => {
         console.log("Client logging in");
         // Getting login credentials

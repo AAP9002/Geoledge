@@ -1,38 +1,153 @@
 
 
-
-.board{
-background-color: rgb(108, 25, 104);
-align-items: center;
-position: relative;
-padding: 40px;
-border-radius: 20px;
-position:relative;
-left: -50px;  
-overflow-y:scroll;
-height:500px;
-display:block;  
+.wrapper{
+    display: flex;
+    justify-content: center;
 }
-
-
-.myTable{ 
-    color: antiquewhite;
-    font-size:170%;   
-    
-       
      
-}
-.columns{
-    color: antiquewhite;
-    font-size:170%;
-   
-    padding: 100px;
-    width: 300px;
+    
+    .board{
+        margin: 0 auto;
+    position: relative;
+    background-color: #5b0ca5;
+    border-radius: 10px;
+    max-width: 800px;     
+    overflow-y:scroll;
+    scrollbar-width: auto;
+    height:400px;
+    display:block; 
+    top: 8px;
+    }
+    
+    
+    .wrapper myTable{ 
+     font-family: Comic Sans MS;
+    font-size:200%;  
+    
+     width: 70px; 
+    }
+    .wrapper columns{
+        margin-left: 30px;
+     font-family: Comic Sans MS;
+    font-size:200%;
     align-items: center;
     
+     width: 80px;
+     
+ 
+     
+    }
+    .wrapper data{
+    width: 700px;
+    }
+    tr:nth-child(odd){
+     background:#782ad1;}
     
-}
-
-
-
-
+    
+    .tr:nth-child(odd){
+     background:#5b0ca5;}
+    
+    .tr:nth-child(even){
+     background:#7d29dd;}
+   
+    .wrapper td {
+     color: aliceblue;
+     font-size: 30px;
+    }
+    .wrapper th {
+     color: aliceblue;
+     font-size: 30px;
+    }
+    .leaderboardH1{
+     font-family: Comic Sans MS;
+     text-decoration-line: underline;
+     color: aliceblue;
+     font-size: 80px;
+     text-align: center;
+     padding-bottom: 20px;
+    }
+    
+    .box{
+        display: flex;
+        justify-content: center;
+        position: relative;
+        right: -275px;
+    }
+       
+    
+    .box select {
+        background-color: #8148d0;
+        color: white;
+        padding: 12px;
+        width: 250px;
+        border: none;
+        font-size: 20px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        -webkit-appearance: button;
+        appearance: button;
+        outline: none;
+        ;
+      }
+      
+      .box::before {
+       
+        font-family: FontAwesome;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 20%;
+        height: 100%;
+        text-align: center;
+        font-size: 28px;
+        line-height: 45px;
+        color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 255, 255, 0.1);
+        pointer-events: none;
+      }
+      
+      
+      .box:hover::before {
+        color: rgba(255, 255, 255, 0.6);
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+      
+      .box select option {
+        padding: 30px;
+      }
+    body::-webkit-scrollbar {
+     width: 12px; /* width of the entire scrollbar */
+     }
+     
+    body::-webkit-scrollbar-track {
+    background: rgb(120, 28, 206); /* color of the tracking area */
+    }
+    
+     body::-webkit-scrollbar-thumb {
+    background-color: rgb(230, 215, 228); /* color of the scroll thumb */
+     border-radius: 20px;  /* roundness of the scroll thumb */
+     border: 3px solid rgb(194, 182, 159); /* creates padding around scroll thumb */
+    
+    }
+    ::-webkit-scrollbar {
+        width: 10px;
+      }
+      
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: #9d59e1; 
+      }
+       
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: #f2efef; 
+      }
+      
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #f8f2f2; 
+      }
+     
+    
+    
+    
+   

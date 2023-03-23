@@ -1,12 +1,104 @@
-.end {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: rgb(122, 228, 122);
-    text-shadow: -3px -3px 0 skyblue, 3px -3px 0 skyblue, -3px 3px 0 skyblue, 3px 3px 0 skyblue;
-    font-size: 120px;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-  }
-  
+.Ranking{
+    background-color: #5b0ca5;
+    border-radius: 10px;
+    align-items: center;
+    position: relative;
+    width: 800px;
+    
+    position:relative;
+    left: -50px;  
+    overflow-y:scroll;
+    scrollbar-width: thin;
+    height:500px;
+    display:block;  
+    top: 130px;
+    
+    }
+    .header1{
+        position: absolute;
+        right: -8em;
+        font-size: 70px
+       
+    }
+    .button{
+        
+        position: relative;
+        top: 80px;
+        right: 180px;
+    }
+    .fcolor{
+        position: relative;
+        top: -10px;
+    }
+    .rtn{
+        height: 50px;
+        background-color: #835ee8;
+   
+        border-radius: 30px;
+    }
+    
+    .RankingTable{ 
+        font-family:  Comic Sans MS;
+        font-size:200%;   
+        
+        width: 700px; 
+    }
+    .columns{
+        font-family:  Comic Sans MS;
+        font-size:10%;
+       align-items: center;
+        
+        width: 800px;
+        
+        
+        
+    }
+    .data{
+        width: 700px;
+    }
+    
+   
+    .RankingTable:nth-child(1){
+        background: #fafa03;
+    }
+        
+    
+    
+    .columns:nth-child(odd){
+        background:#5b0ca5;}
+    
+    .columns:nth-child(even){
+        background:#7d29dd;}
+    
+
+
+
+
+
+    .wrapper h1{
+        font-family:  Comic Sans MS;
+        text-decoration-line: underline;
+        position: relative;
+        left: -50px;
+    
+    }
+    .wrapper td {
+        color: aliceblue;
+    }
+    
+    body::-webkit-scrollbar {
+        width: 12px;               
+      }
+      
+      body::-webkit-scrollbar-track {
+        background: rgb(120, 28, 206);       
+      }
+    
+      body::-webkit-scrollbar-thumb {
+        background-color: rgb(230, 215, 228);    
+        border-radius: 20px;       
+        border: 3px solid rgb(194, 182, 159); 
+    
+      }
+    
+    

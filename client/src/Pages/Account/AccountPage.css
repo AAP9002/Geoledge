@@ -1,56 +1,164 @@
+ .Credentials{
+   display: flex;
+   justify-content: center;
+   
+ }
 
-.wrapper h1{
-  color: rgb(39, 223, 174);
-  font-size: 70px;
-  text-align: center;
+
+ .b1{   
+    background-color: #7145C9;
   
+    border: 7px solid #472B7E;
+    width: 300px;
+    height: 350px;
+    position: relative;
+    left: -400px;
+    margin-top: 100px;
+    border-radius: 30px;
+
 }
-.wrapper th{
-    color: rgb(39, 223, 174);
-    font-size: 30px;
-    padding:30px;
-  }
-  
-  .wrapper td{
-    color: rgb(39, 223, 174);
-    padding:10px;
-    font-size: 30px;
-  }
-  
-  .Wins{
-    background-color: rgb(122, 39, 206);
-    padding: 60px;
-    border-radius: 20px;
-  }
+.Container{
+    display: flex;
+   justify-content: center;
+    background-color: #472B7E;
+    width: 200px;
+    height: 70px;
+    position: relative;
+    right: -40px;
+    
+    border-radius: 15px;
+    margin-top: 10px;
+    
 
-  .wrapper{
-    height: 100vh;
+}
+
+
+
+
+ .username{
     display: flex;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-image: url(../Account/Images/uni1.jpg);
-  }
+    font-size: 150%;
+    color: white;
+    
+   
+
+    
+ }
 
 
-  .Credentials {
-    background-color: rgb(122, 39, 206);
-    padding: 20px;
-    border-radius: 20px;
-  }
 
-  .credentials-Wrapper{
-    min-height: 200px;
-    align-items: center;
+h1{
     display: flex;
-  }
-  .Username{
-    color: aqua;
-    align-items: center;
-  }
-  .wrapper credentialsAccount{
-    align-items: center;
-  }
-  .Winsbody{
-    height: 300px
-  }
+   justify-content: center;
+   font-family: Comic Sans MS;
+     text-decoration-line: underline;
+     color: aliceblue;
+}
+
+
+h2{
+    display: flex;
+   justify-content: center;
+   font-family: Comic Sans MS;
+     
+     color: aliceblue;
+     font-size: 200%;
+     margin-top: 15px;
+}
+
+.cpw{
+    
+    color: aliceblue;
+    font-size: 15px;
+}
+.button1{
+   margin-left: 80px;
+   margin-top: 20px;
+   background-color: #af2ecc;
+   
+   border-radius: 30px;
+
+}
+
+
+
+
+
+.Statistics{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: -350px;
+    
+}
+
+.b2{
+    background-color: #7145C9;
+
+  
+    border: 7px solid #472B7E;
+    width: 700px;
+    height: 350px;
+    position: relative;
+    right: -200px;
+    
+    border-radius: 30px;
+}
+
+.title2{
+    font-size: 400%;
+
+}
+.gpd{
+    position: relative;
+    left: -170px;
+    font-size: 40px;
+    top: 30px;
+}
+.wr{
+    position: relative;
+    right:-150px;
+    top: -40px;
+    font-size: 40px;
+}
+.Container2{
+    display: flex;
+    justify-content: center;
+     background-color: #472B7E;
+     width: 250px;
+     height: 150px;
+     position: relative;
+     right: -40px;
+     top: -35px;
+     border-radius:15px;
+     
+}
+.Gameplayed{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: 20px;
+    font-size: 30px;
+    color: white;
+}
+
+.Container3{
+    display: flex;
+    justify-content: center;
+     background-color: #472B7E;
+     width: 250px;
+     height: 150px;
+     position: relative;
+     right: -370px;
+     top: -185px; 
+     border-radius: 15px;  
+}
+
+
+.rate{
+    position: relative;
+    top: 20px;
+    font-size: 30px;
+    color: white;
+}

@@ -10,6 +10,7 @@
     top: 0;
     z-index: 999;
     text-align: center;
+    width: 100%;
   }
   
   .navbar-container {
@@ -49,6 +50,16 @@
   
   .nav-item {
     height: 100%;
+  }
+
+  .nav-itemm {
+    height: 100%;
+    padding-left: 5px;
+  }
+
+  .nav-itemm p{
+    padding-left: 5px;
+    color: white;
   }
   
   .nav-links {

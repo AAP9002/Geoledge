@@ -10,3 +10,17 @@
     font-family: "Comic Sans MS", cursive, sans-serif;
   }
   
+  .rankings {
+    padding-left: 300px;
+  }
+
+  .alltable2 {
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+  }
+
+  .columns2 {
+    height: fit-content;
+  }

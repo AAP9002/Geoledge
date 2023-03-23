@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import "./AccountPage.css";
+import './AccountPage.css'
 import { useState } from 'react';
 
 
@@ -10,6 +10,7 @@ function ScoreBoard() {
   const [Username, SetUsername] = useState("Username")
 
 
+
   useEffect(() => {
     fetch('/api/viewAccount').then(res => res.json()).then(Account => {
       if (Account.status === "client not logged") {
@@ -17,52 +18,67 @@ function ScoreBoard() {
         console.log("reached");
         window.location = "/#/Log-in";
       }
-
+      
       SetUsername(Account.username)
       setWins(Account.wins)
       setGamePlayed(Account.games_played)
-      if (Number(Account.games_played) === 0) {
-        SetWinrate(1)
+
+      console.log(Account.wins);
+      console.log(Account.games_played)
+      if (Account.games_played == 0) {
+        SetWinrate(0)
       }
       else {
-        SetWinrate(Number(Account.wins) / Number(Account.games_played))
+        SetWinrate(Math.round((Account.wins / Account.games_played)*1000) / 10)
       }
     });
   }, []);
 
-  return (<div className='wrapper'>
-    <h1 className='w-100'>My Account</h1>
-    <div className='row p-2'>
-    <div className='col-md-4 justify-content-center credentials-Wrapper'>
-        {/* table for userinfo basics */}
-        <table className='Credentials'>
-          <thead className='CredentialsHead'>
-            <tr>
-              <th className='Username'>{Username}</th>
-            </tr>
-          </thead>
-          <tbody className='CredentialsBody'>
-            <tr></tr>
-          </tbody>
-        </table>
-        <br/>
+  return (
+    <div className='all'>
+    <div className='Credentials'>
+      <div className='b1'>
+      <h1>Credentials</h1> 
+    
+      <h2>Username</h2> 
+      <div className='Container'><p className='username'>{Username}</p></div> 
+      <h2>Password</h2> 
+      <button className='button1'> <p className='cpw'>Change Password</p></button>
       </div>
+    </div>
 
-      <div className='col-md-8 d-flex justify-content-center'>
-        <table className='Wins'>
-          <thead className='WinsHead'>
-            <tr>
-              <th>Wins</th>
-              <th>Game Played</th>
-              <th>Win rate</th>
-            </tr>
-          </thead>
-          <tbody className='WinsBody'><tr><td align="center">{wins}</td><td align="center">{GamePlayed}</td><td align="center">{WinRate}</td></tr></tbody>
-        </table>
+    <div className='Statistics'>
+    <div className='b2'>
+      <h1 className='title2'>Statistics</h1> 
+      <h2 className='gpd'>Games Played</h2>
+      <h2 className='wr'>Win Rate(%)</h2>
+    
+      <div className='Container2'><p className='Gameplayed'>{GamePlayed}</p></div> 
+
+      <div className='Container3'><p className='rate'>{WinRate}</p></div> 
+      
+      
+      
+      
       </div>
+    </div>
+
+
+
       
     </div>
-  </div>)
+
+   
+
+    
+
+
+
+
+
+
+
+  )
 }
 
 const About = () => {

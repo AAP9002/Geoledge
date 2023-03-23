@@ -4,32 +4,52 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import "./Play.css";
-
+import { Routes, Route, useParams } from 'react-router-dom';
 
 
 function Play() {
-    // on load create new game session
+    let { sessionID } = useParams();
     const [creating_game_Session, setSessionCreationState] = useState(true);
     const [game_Session_ID, setGame_Session_ID] = useState(true);
-
+    const [Players, setPlayers] = useState([]);
+    
     useEffect(() => {
         fetch('/api/checkLoggedIn', { method: "GET" }).then((res) => {
+            console.log(res.status, "1")
             if (res.status === 401) {
                 window.location.href = "/#/Log-in";
             } else {
-                fetch('/api/createLobby', { method: "POST" }).then(res => res.json()).then(stateJson => {
-                    setGame_Session_ID(stateJson.id);
-                    setSessionCreationState(false);
+                fetch('/api/LobbyValidation?sessionID='+sessionID, { method: "GET" }).then((res) => res.json()).then(stateJson => {
+                    console.log(stateJson.status, "2")
+                    if (stateJson.status != "Lobby Verification Successful") {
+                        console.log(stateJson.status)
+                        window.location.href = "/#/Home";
+                    } else {
+                        console.log("$%^&*")
+                        setGame_Session_ID(sessionID)
+                        setSessionCreationState(false)
+                    }
                 })
             }
         })
 
-    }, []);
-    //
+        let timer;
 
+        setTimeout(() => {
+            timer = setInterval(() => {
+                fetch('/api/getLobbyPlayers?sessionID='+sessionID, { method: "GET" }).then(res => res.json()).then(stateJson => {
+                    setPlayers(stateJson.players);
+                    console.log("Players will be blank, but not when you use players.map in return", Players)
+                })
+            }, 1000);
+        }, 3000);
+        return () => clearInterval(timer);
+        
+    }, []);
+    
     const [NumberOfRounds, setNOR] = useState(5)
-    const [TimePerRound, setTPR] = useState(30)
-    const [Players, setPlayers] = useState([]);
+    const [TimePerRound, setTPR] = useState(60)
+
     const [No, setNo] = useState(0)
 
     const changeNOR = (event) => {
@@ -43,7 +63,7 @@ function Play() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log('Number of Rounds:', NumberOfRounds, 'Time per Round', TimePerRound);
-        fetch(`/api/SubmitGameSettings?session_id=${game_Session_ID}&num_of_questions=${NumberOfRounds}&max_guesses=${10}&time_limit=${TimePerRound}`, { method: "POST" }).then(res => {
+        fetch(`/api/SubmitGameSettings?sessionID=${game_Session_ID}&num_of_questions=${NumberOfRounds}&max_guesses=${10}&time_limit=${TimePerRound}`, { method: "POST" }).then(res => {
         });
 
         fetch(`/api/startGame?sessionID=${game_Session_ID}`, { method: "GET" });
@@ -52,12 +72,11 @@ function Play() {
 
 
     if(creating_game_Session){
-        return(<p className='waiting'>Creating New Game Session...</p>)
+        return(<p className='waiting'>Loading... (Hosting Game)</p>)
     }
 
     return (
         <div >
-
             <Container className='back'>
                 <Row>
                     <Row>
@@ -66,13 +85,27 @@ function Play() {
                         </div>
                     </Row>
                     <Col>
-
-                        <table className="table">
+                        {/* <table className="table">
                             <thead> <tc> <th>no:</th><th>Player</th></tc></thead>
                             <tbody>
                                 <tr><td>{No}</td></tr>
                             </tbody>
+                        </table> */}
+                        <div className='table'>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th className='columnss'>No</th>
+                                    <th className='columnss'>Player(Username)</th>
+                                    
+                                </tr>
+                            </thead>
+                    
+                            <tbody className='RankingTable'>
+                                {Players.map((row, index) => <tr><td className='data'>{index + 1}</td><td className='data'>{row.username}</td></tr>)}
+                            </tbody>
                         </table>
+                      </div>
                     </Col>
                     <div className='col'>
                         <div className="settingscontainer">
@@ -82,7 +115,7 @@ function Play() {
                                     <div className="settings">
                                         <h2 className="h2"> Settings </h2>
                                         <div>
-
+                                            
                                             <h3>Number Of Rounds</h3>
                                             <div>
                                                 <button className="styledbutton2" id="1" onClick={changeNOR}>1</button><button className="styledbutton2" id="2" onClick={changeNOR}>2</button><button className="styledbutton2" id="3" onClick={changeNOR}>3</button>
@@ -95,8 +128,10 @@ function Play() {
                                             <div className="me-2" aria-label="Second group">
 
 
-                                                <button className="styledbutton2" id="15" onClick={changeTPR}>15s</button><button className="styledbutton2" id="30" onClick={changeTPR}>30s</button><button className="styledbutton2" id="45" onClick={changeTPR}>45s</button>
-                                                <button className="styledbutton2" id="60" onClick={changeTPR}>60s</button>
+                                                <button className="styledbutton3" id="60" onClick={changeTPR}>60s</button>
+                                                <button className="styledbutton3" id="90" onClick={changeTPR}>90s</button>
+                                                <button className="styledbutton3" id="120" onClick={changeTPR}>120s</button>
+                                                <button className="styledbutton3" id="150" onClick={changeTPR}>150s</button>
                                             </div>
 
                                         </div>
@@ -109,13 +144,15 @@ function Play() {
                     </div>
                 </Row>
                 <div>
-                    <div>
-                        <p>Number of rounds: {NumberOfRounds}</p>
-                        <p>Time Limit: {TimePerRound}</p>
+                    <div className='formf'>
+                        <h2>Number of rounds</h2>
+                        <h1>{NumberOfRounds}</h1>
+                        <h2>Time Limit</h2>
+                        <h1> {TimePerRound}</h1>
 
                         <form onSubmit={handleSubmit}>
 
-                            <button className='styledbutton3'>Play</button>
+                            <button className='styledbutton4'>Play</button>
 
                         </form>
                     </div>

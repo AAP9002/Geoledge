@@ -12,18 +12,23 @@ import Home from './Pages/Home/Home'
 import JoinLobby from './Pages/JoinLobby/JoinLobby';
 import LoginPage from './Pages/Sign-up/LoginPage.jsx'
 import Game from './Pages/Gameloop/Game';
+import background from './Pages/Home/starry2.png'
+import HowToPlay from './Pages/HowToPlay/HowToPlay.jsx'
+
 
 function App() {
+  
   return (
     <>
+    <img className='' id='app_background_image' src={background}></img>
       <Router>
-       
-        <Navbar />
            <div className='App'>
+           {window.location.href.split('#')[1] !=='/Game'?  <Navbar />:null }
+
             <Routes>
             <Route exact path='/' element={<Home/>} />
             <Route path='/Home' element={<Home/>} />
-            <Route path='/Play' element={<Play/>} />
+            <Route path='/Play/:sessionID' element={<Play/>} />
             <Route path='/Leaderboard' element={<Leaderboard/>} />
             <Route path='/PrivacyPolicy' element={<PrivacyPolicy/>} />
             <Route path='/Sign-up' element={<Signup/>} />
@@ -32,14 +37,12 @@ function App() {
             <Route path='/TermsandConditions' element={<TermsandConditions/>} />
             <Route path='/AccountPage' element={<Account/>} />
             <Route path='/JoinLobby' element={<JoinLobby/>}/>
+            <Route path='/HowToPlay' element={<HowToPlay/>}/>
             <Route path='/Game' element={<Game/>}/>
-            
-
           </Routes>
         </div>
-        <Footer />
-      
-        
+        {window.location.href.split('#')[1] !=='/Game'?  <Footer />:null }      
+
       </Router>
     </>
   );
