@@ -60,8 +60,29 @@ const Question = (props) => {
 
     const [value, setValue] = useState('');
 
+
+
+
     const onChange = (event) => {
-        setValue(event.target.value);
+        let inputValue = event.target.value;
+        setValue(inputValue);
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        
+        let matchingCountries = countryNames.filter((item) => {
+            const searchTerm = value.toLowerCase();
+            const country = item.country_name.toLowerCase();
+            return (searchTerm && country.startsWith(searchTerm));
+        })
+
+        if (matchingCountries.length === 1) {
+            console.log("Guessing " + matchingCountries[0].country_name);
+            return(check_guess(matchingCountries[0].country_id, matchingCountries[0].country_name));
+        } else {
+            return;
+        }
     }
 
     const check_guess = (country_code,countryName) => {
@@ -183,10 +204,12 @@ const Question = (props) => {
             </div>
             <div className='search-container'>
                 <div className='search-inner'>
-                    <input type='text' placeholder='Start Typing a Country' value={value} onChange={onChange} />
+                    <form onSubmit={handleSubmit}>
+                        <input type='text' placeholder='Start Typing a Country' value={value} onChange={onChange} />
+                    </form>
                 </div>
                 <div className='dropdown'>
-                    {countryNames.filter((item) => {
+                    {countryNames.filter((item) => {    
                         const searchTerm = value.toLowerCase();
                         const country = item.country_name.toLowerCase();
                         return (searchTerm && country.startsWith(searchTerm));

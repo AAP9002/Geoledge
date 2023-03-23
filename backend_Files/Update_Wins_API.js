@@ -134,10 +134,14 @@ module.exports = function(app, connection) {
                 console.log("sql broken: " + err)
                 res.status(500).send("Server couldn't get scores");
             } else {
-                res.status(200).send({
-                    "scores": result[0],
-                    "myScore": result[1][0].my_score
-                });
+                if (result[0].length == 0) {
+                    res.status(500).send({ "status": `Server error: Player score not found in session ${sessionID}. User may no longer be in this session.`})      
+                } else {
+                    res.status(200).send({
+                        "scores": result[0],
+                        "myScore": result[1][0].my_score
+                    });
+                }
             }
         })
     }); 
