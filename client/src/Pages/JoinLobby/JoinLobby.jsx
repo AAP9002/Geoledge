@@ -11,8 +11,10 @@ function JoinLobby() {
     const [lobby_code, setLobbyCode] = useState("");
     const [gameNotExistMessage, setGameNotExistMessage] = useState();
 
-    function submitJoinCode() {
+    function submitJoinCode(event) {
                 // -------- what if joining fails  ---------
+                event.preventDefault();
+
                 fetch(`/api/joinLobby?sessionID=${lobby_code}`, { method: "GET" }).then(res => res.json()).then(joinres => {
                     if (joinres.status === 401) {
                         window.location.href = "/#/Log-in";
