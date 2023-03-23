@@ -7,7 +7,6 @@
     color: rgb(122, 228, 122);
     text-shadow: -3px -3px 0 skyblue, 3px -3px 0 skyblue, -3px 3px 0 skyblue, 3px 3px 0 skyblue;
     font-size: 120px;
-    font-family: "Comic Sans MS", cursive, sans-serif;
   }
   .reveal_answer_container{
     color: white;
