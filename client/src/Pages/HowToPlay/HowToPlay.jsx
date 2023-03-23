@@ -38,7 +38,7 @@ function HowToPlay() {
           <span className="circle">Surface Area</span>
         </h3>
         
-        <p style={{color: "black"}}>
+        <p style={{color: "red"}}>
           The surface area hint will tell you if the country's surface area is higher or lower than the guessed country. The hint will appear as the text "up" or "down", and the color of the circle indicates how close you are to the correct answer.
         </p>
       </div>
@@ -46,7 +46,7 @@ function HowToPlay() {
         <h3>
           <span className="circle">Time Difference</span>
         </h3>
-        <p style={{color: "black"}}>
+        <p style={{color: "red"}}>
           The time difference hint will tell you how many hours ahead or behind the country is compared to the guessed country. The hint will be displayed as a number, with a negative number indicating that the country is behind in hours and positive number indicating that the country is ahead in hours.
         </p>
       </div>
@@ -54,7 +54,7 @@ function HowToPlay() {
         <h3>
           <span className="circle1">Direction</span>
         </h3>
-        <p style={{color: "black"}}>
+        <p style={{color: "red"}}>
           The direction hint will tell you which direction the country is in relation to the guessed country . The hint will be displayed as an arrow pointing in the correct direction.
         </p>
       </div>
@@ -62,7 +62,7 @@ function HowToPlay() {
         <h3>
           <span className="circle1">Distance</span>
         </h3>
-        <p style={{color: "black"}}>
+        <p style={{color: "red"}}>
           The distance hint will tell you how far away the mystery country is in kilometers to the guessed country. The hint will be displayed as a number.
         </p>
       </div>
