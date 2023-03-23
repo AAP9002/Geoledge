@@ -101,6 +101,22 @@ const Question = (props) => {
         set_display_searchbox_mobile(!display_searchbox_mobile)
     }
 
+    function Positive_time(){
+        return <bubble>+{timeUPDOWN}  Hrs</bubble>
+
+    }
+
+    function Negative_time(){
+        return <bubble>{timeUPDOWN}  Hrs</bubble>
+    }
+
+    function Time(){
+        if (timeUPDOWN > 0){
+            return <Positive_time/>
+        }
+        return <Negative_time/>
+    }
+
     function toggle_mapbox(){
         set_display_mapbox(!display_mapbox)
     }
@@ -158,7 +174,7 @@ const Question = (props) => {
                 </div>
                 <div className='d-flex flex-sm-column justify-content-center'>
                     <b>Time</b>
-                    <bubble>{timeUPDOWN} Hrs</bubble>
+                    <Time/>
                 </div>
             </div>
             <div id="country_other_stats">
