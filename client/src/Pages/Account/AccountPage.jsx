@@ -51,9 +51,10 @@ function ScoreBoard() {
       <h2 className='wr'>Winrate</h2>
     
       <div className='Container2'><p className='Gameplayed'>{GamePlayed}</p></div> 
-      
-      <div className='Container3'><p className='rate'>{WinRate}</p></div> 
 
+      <div className='Container3'><p className='rate'>{WinRate}</p></div> 
+      
+      
       
       
       </div>
