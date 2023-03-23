@@ -319,7 +319,7 @@ module.exports = function (app, connection) {
             function (result) {
                 quiz_id = result[0].quiz_id
                 let myPromise = new Promise(function (myResolve, myReject) {
-                    let query = `SELECT country_id FROM country ORDER BY RAND();`
+                    let query = `SELECT country_id FROM geo2002.country where population >= 36910558 order by rand();`
                     connection.query(query, (err, result) => {
                         if (err) {
                             res.status(500).send("Failed to select all country ids");
