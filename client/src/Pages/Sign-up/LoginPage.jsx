@@ -95,7 +95,9 @@ const LoginPage = () => {
             />
           </div>
           <button type="submit">Login</button>
+          <div className='pe'>
           <p>Don't have an account? <a href="/#/Sign-up"><button type="button" onClick={handleSignUpClick}>Sign up</button></a></p>
+          </div>
         </form>
       </div>
     </div>

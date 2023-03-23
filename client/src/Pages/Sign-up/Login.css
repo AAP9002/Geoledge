@@ -72,12 +72,16 @@
     background-color: #b875f7;
   }
   
-  p {
+  .pe {
     color: #ffffff;
     font-size: 14px;
     margin-top: 20px;
     text-align: center;
     padding-left: 5px;
+  }
+
+  .pe p{
+    color: #ffffff;
   }
   
   a {
