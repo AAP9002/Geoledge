@@ -114,11 +114,12 @@ h2{
     position: relative;
     left: -170px;
     font-size: 40px;
+    top: 30px;
 }
 .wr{
     position: relative;
     right:-150px;
-    top: -44px;
+    top: -40px;
     font-size: 40px;
 }
 .Container2{
@@ -129,7 +130,7 @@ h2{
      height: 150px;
      position: relative;
      right: -40px;
-     top: -27px;
+     top: -35px;
      border-radius:15px;
      
 }
@@ -150,7 +151,7 @@ h2{
      height: 150px;
      position: relative;
      right: -370px;
-     top: -175px; 
+     top: -185px; 
      border-radius: 15px;  
 }
 

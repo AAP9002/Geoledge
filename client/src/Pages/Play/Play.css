@@ -18,7 +18,7 @@
   transition: ease background-color 250ms;
   height: 100%;
   width: 0%;
-  opacity: 70%;
+  opacity: 100%;
 }
 
 .styledbutton2{
@@ -33,11 +33,11 @@
   transition: ease background-color 250ms;
   height: auto;
   width: auto;
-  opacity: 70%;
+  opacity: 100%;
 
 }
 .styledbutton4{
-  background-color: #8A2BE2;
+  background-color: #ab50d4;
   border: none;
   border-radius: 5px;
   color: #fff;
@@ -61,7 +61,7 @@
   transition: ease background-color 250ms;
   height: auto;
   width: auto;
-  opacity: 70%;
+  opacity: 100%;
 }
 
 .styledbutton:hover {
@@ -85,7 +85,12 @@
 
   }
 
-  .styledbutton:focus{
+  .styledbutton3:focus{
+    opacity: 100%;
+    border: 2px white;
+  }
+
+  .styledbutton2:focus{
     opacity: 100%;
     border: 2px white;
   }
@@ -242,7 +247,7 @@
  align-items: center;
   
   width: 800px;
-  background-color:#4E2461;
+  background-color:#ab50d4;
   
   
   
