@@ -95,17 +95,8 @@ module.exports = function (app, connection) {
             }
         )
     }
-    // ====================   API   =======================
-    app.get('/api/checkLoggedIn', (req, res) => {
-        if (req.loggedIn == "true") {
-            res.status(200).send({ status:"User is logged in.", username: req.username });
-        } else {
-            res.status(401).send({ status: "Error: User is unauthorised/not logged in. Try logging in." });
-        }
-    });
 
-    app.post('/api/createLobby', (req, res) => {
-        let userID = req.userID
+    function getPrevSessionIDPromise(userID) {
         let promise = new Promise(function(resolve, reject) {
             // Gets sessionID the user was in, if he was in one
             let query = "call select_curr_session(?)";
@@ -118,7 +109,33 @@ module.exports = function (app, connection) {
                 }
             });
         });
+        return promise;
+    }
 
+    function join(userID, sessionID, res) {
+        let query = "call join_lobby(?,?)"
+        connection.query(query, [userID, sessionID], (err, result) => {
+            if (err) {
+                console.log("sql broken: " + err)
+                res.status(500).json({ "status": "error occurred on the server" });
+            } else {
+                res.status(200).json({ "status": 'participent added' });
+            }
+        })
+    }
+    // ====================   API   =======================
+    app.get('/api/checkLoggedIn', (req, res) => {
+        if (req.loggedIn == "true") {
+            res.status(200).send({ status:"User is logged in.", username: req.username });
+        } else {
+            res.status(401).send({ status: "Error: User is unauthorised/not logged in. Try logging in." });
+        }
+    });
+
+    app.post('/api/createLobby', (req, res) => {
+        let userID = req.userID
+
+        let promise = getPrevSessionIDPromise(userID);
         promise.then(
             function(result) {
                 if (result[0].length == 0) {
@@ -163,7 +180,7 @@ module.exports = function (app, connection) {
 
                     myPromise.then(
                         function() {
-                            let query = "call create_lobby(?)"
+                            let query = "call create_lobby(?)";
                             connection.query(query, [userID], (err, result) => {
                                 if (err) {
                                     console.log("sql broken: " + err);
@@ -185,68 +202,104 @@ module.exports = function (app, connection) {
                 }
             }
             , function(error) {
-
+                res(500).send({ "status": "Server side error."})
             }
         )
     });
 
-    app.get('/api/joinLobby', (req, res) => {
-        if (req.userID == null) {
-            res.status(401).json({ "status": "Not logged in mate." })
-        }
-        else {
-            let userID = req.userID;
-            let sessionID = req.query.sessionID ;
-
-            // Checking to see if session is full
-            let promise = new Promise(function(resolve, reject) {
-                let query = "call check_if_session_is_full(?)"
-                connection.query(query, [sessionID], (err, result) => {
-                    if (err) {
-                        console.log("ERROR WHEN CHECKING IF SESSION IS FULL: " + err);
-                        reject(null);
-                    } else {
-                        resolve(result);
-                    }
-                });
+    function joinAfterChecks(userID, sessionID, res) {
+        // Checking to see if session is full
+        let promise = new Promise(function(resolve, reject) {
+            let query = "call check_if_session_is_full(?)"
+            connection.query(query, [sessionID], (err, result) => {
+                if (err) {
+                    console.log("ERROR WHEN CHECKING IF SESSION IS FULL: " + err);
+                    reject(null);
+                } else {
+                    resolve(result);
+                }
             });
+        });
 
+        promise.then(
+            function(result) {
+                if (result[0].length == 0) {
+                    // no such sessionID exists
+                    res.status(200).json({ "status": "no such sessionID exists" });
+                } else {
+                    if (result[0][0].num_of_participents < result[0][0].max_participents) {
+                        // the session is not full. check if session expired
+                        if (result[0][0].expired == 1) {
+                            res.status(401).json({ "status": "session has expired" });
+                        } else {
+                            // adding client to session
+                            join(userID, sessionID, res);
+                        }
+                    } else {
+                        // the session is full
+                        res.status(200).json({ "status": "session is full" });
+                    }
+                }
+            },
+
+            function(reject) {
+                // SQL error when checking if session is full
+                console.log("sql broken: " + reject)
+                res.status(200).json({ "status": "error occurred on the server" });
+            }
+        );
+    }
+
+    app.get('/api/joinLobby', (req, res) => {
+        let userID = req.userID;
+        let sessionID = req.query.sessionID;
+        if (req.userID == null) {
+            res.status(401).json({ "status": "Unable to join game: User is not logged in." })
+        } else {
+            let promise = getPrevSessionIDPromise(userID);
             promise.then(
                 function(result) {
                     if (result[0].length == 0) {
-                        // no such sessionID exists
-                        res.status(200).json({ "status": "no such sessionID exists" });
-                    } else {
-                        if (result[0][0].num_of_participents < result[0][0].max_participents) {
-                            // the session is not full. check if session expired
-                            if (result[0][0].expired == 1) {
-                                res.status(401).json({ "status": "session has expired" });
-                            } else {
-                                // adding client to session
-                                let query = "call join_lobby(?,?)"
-    
-                                connection.query(query, [userID, sessionID], (err, result) => {
-                                    if (err) {
-                                        console.log("sql broken: " + err)
-                                        res.status(500).json({ "status": "error occurred on the server" });
-                                    } else {
-                                        res.status(200).json({ "status": 'participent added' });
+                        console.log("user was not in a previous session")
+                        joinAfterChecks(userID, sessionID, res);
+                    } else {   
+                        console.log("user was in a previous session")
+                        let prevSessionID = result[0][0].session_id
+                        let host_user = result[0][0].host_user
+                        
+                        let myPromise = new Promise(function(myResolve, myReject) {
+                            // assign new host if you were prev sessn's host
+                            if (host_user == userID) {
+                                let promise1 = RemoveFromPartsPromise(userID, prevSessionID)
+                                promise1.then(
+                                    function() {
+                                        NewHost(prevSessionID, res)
+                                        myResolve()
                                     }
-                                })
+                                    , function() {
+                                        myReject()
+                                    }
+                                )
+                            } else {
+                                RemoveFromParts(userID, prevSessionID, res)
+                                myResolve()
                             }
-                        } else {
-                            // the session is full
-                            res.status(200).json({ "status": "session is full" });
-                        }
+                        });
+    
+                        myPromise.then(
+                            function() {
+                                joinAfterChecks(userID, sessionID, res);
+                            }
+                            , function(error) {
+                                res.status(500).json({ "status": "Server side error" })
+                            }
+                        )
                     }
-                },
-
-                function(reject) {
-                    // SQL error when checking if session is full
-                    console.log("sql broken: " + reject)
-                    res.status(200).json({ "status": "error occurred on the server" });
                 }
-            );
+                , function(error) {
+                    res.status(500).send({ "status": "error occurred on the server" });
+                }
+            )
         }
     });
 

@@ -9,7 +9,7 @@ const About = () => {
     const [errorMsg, setMsg] = useState("");
     // Search for online game
     function findOnlineGame() {
-        fetch('/api/checkLoggedIn   ', { method: "GET" }).then((res) => res.json()).then((stateJson) => {
+        fetch('/api/checkLoggedIn', { method: "GET" }).then((res) => res.json()).then((stateJson) => {
             if (stateJson.status === 401 || stateJson.status === "Error: User is unauthorised/not logged in. Try logging in.") {
                 // redirecting client to login page
                 window.location.href = "/#/Log-in";
