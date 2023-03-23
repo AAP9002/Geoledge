@@ -38,7 +38,7 @@ function HowToPlay() {
           <span className="circle">Surface Area</span>
         </h3>
         
-        <p style={{color: "red"}}>
+        <p style={{color: "red"} }>
           The surface area hint will tell you if the country's surface area is higher or lower than the guessed country. The hint will appear as the text "up" or "down", and the color of the circle indicates how close you are to the correct answer.
         </p>
       </div>
