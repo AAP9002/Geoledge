@@ -68,7 +68,9 @@ const Question = (props) => {
         setValue(inputValue);
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        
         let matchingCountries = countryNames.filter((item) => {
             const searchTerm = value.toLowerCase();
             const country = item.country_name.toLowerCase();
@@ -77,7 +79,9 @@ const Question = (props) => {
 
         if (matchingCountries.length === 1) {
             console.log("Guessing " + matchingCountries[0].country_name);
-            check_guess(matchingCountries[0].country_id, matchingCountries[0].country_name);
+            return(check_guess(matchingCountries[0].country_id, matchingCountries[0].country_name));
+        } else {
+            return;
         }
     }
 
