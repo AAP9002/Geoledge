@@ -22,11 +22,14 @@ function ScoreBoard() {
       SetUsername(Account.username)
       setWins(Account.wins)
       setGamePlayed(Account.games_played)
-      if (Number(Account.games_played) === 0) {
+
+      console.log(Account.wins);
+      console.log(Account.games_played)
+      if (Account.games_played == 0) {
         SetWinrate(0)
       }
       else {
-        SetWinrate((Account.wins / Account.games_played) * 100)
+        SetWinrate(Math.round((Account.wins / Account.games_played)*1000) / 10)
       }
     });
   }, []);
@@ -47,8 +50,8 @@ function ScoreBoard() {
     <div className='Statistics'>
     <div className='b2'>
       <h1 className='title2'>Statistics</h1> 
-      <h2 className='gpd'>Gameplayed</h2>
-      <h2 className='wr'>Winrate</h2>
+      <h2 className='gpd'>Games Played</h2>
+      <h2 className='wr'>Win Rate(%)</h2>
     
       <div className='Container2'><p className='Gameplayed'>{GamePlayed}</p></div> 
 

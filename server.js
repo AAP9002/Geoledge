@@ -5,6 +5,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 const jwt = require('jsonwebtoken');
 var cookieParser = require('cookie-parser');
+const crypto = require('crypto');
+
 
 var connection = mysql.createPool({
   host: process.env.DB_SERVER,
@@ -31,6 +33,13 @@ app.use(express.static('backend_Files/static_files'))
 app.use(cookieParser());
 
 ///////////// PERMANENT MIDDLEWARE FUNCTIONS /////////////
+
+// JWT Functions
+function generateAccessToken(username, userID) {
+  let clientHash =  crypto.randomBytes(64).toString('hex');   // creating random 64 byte-long hash
+  return jwt.sign({username, userID, clientHash}, process.env.TOKEN_SECRET, { expiresIn: '30m' });
+}
+
 // MIDDLEWARE METHOD FOR TOKEN AUTHENTICATION
 const authenticateToken = function(req, res, next) {
   // Getting JWT token from cookies
@@ -62,6 +71,18 @@ const authenticateToken = function(req, res, next) {
                 req.userID = userData.userID;
                 req.clientHash = userData.clientHash;
                 //console.log("JWT verified");
+
+                // console.log(Math.floor(Date.now() / 1000));
+                // console.log(userData.iat);
+
+                // Checking if JWT needs to be renewed (renewed 2 mins after JWT issue)
+                if (Math.floor(Date.now() / 1000) > (userData.iat + 120)) {
+                  // renewing JWT
+                  console.log(Date.now() / 1000, userData.iat + 120)
+                  console.log("JWT renewed")
+                  let token = generateAccessToken(userData.username, userData.userID);
+                  res.cookie("JWT", token);
+                }
             }
         })
     }

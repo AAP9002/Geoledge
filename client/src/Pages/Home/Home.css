@@ -50,7 +50,9 @@
     opacity: 1;
     transform: none;
     visibility: visible;
-    height: 1px;
+    height: 10px;
+
+
   }
 
 .bottom{
@@ -59,7 +61,7 @@
     background-color: rgb(255, 255, 255);
     border: 7px solid #4E2461;
     position:relative; 
-    bottom: 300px;
+    bottom: 270px;
     min-height: 400px;
     display: flex;
     align-items: center;

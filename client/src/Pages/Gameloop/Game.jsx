@@ -8,12 +8,13 @@ import RevealAnswer from './Reveal_answer/Reveal_answer';
 import CurrentScores from './Current_scores/Current_scores';
 import EndGame from './End_game/End_game'
 import StartingQuestion from './Starting_Question/Starting_Question';
+import ExpiredSession from './Expired_Session/Expired_Session';
 
 const Game = () => {
 
     const [status, setStatus] = useState("Loading")
     const [loading, setloading] = useState(true);
-    const [sessionID, setSessionID] = useState();
+    const [sessionID, setSessionID] = useState(-1);
     const [gameTimeLimit, setGameTimeLimit] = useState();
 
     const [previousState, setPreviousState] = useState();
@@ -34,21 +35,18 @@ const Game = () => {
             timer = setInterval(() => {
                 fetch('/api/getSessionID').then(res => res.json()).then(stateJson => {
                     if (previousState !== stateJson.game_state) {
+                        console.log(stateJson);
                         setPreviousState(stateJson.game_state)
                         setStatus(stateJson.game_state);
                         setSessionID(stateJson.session_id);
                         setGameTimeLimit(stateJson.time_limit);
                         setMaxGuesses(stateJson.max_guesses);
                         setloading(false);
+                        // console.log("sessionID: " + sessionID);
 
 
                         if (stateJson.game_state === "showing final scores") {
                             clearInterval(timer);
-                        } else if (stateJson.game_state === "waiting for players") {
-                            fetch(`/api/getLobbyPlayers?sessionID=${ sessionID }`, { method: "GET" }).then(res => res.json()).then(stateJson => {
-                                setPlayers(stateJson.players);
-                                console.log("Players will be blank, but not when you use players.map in return", Players)
-                            })
                         }
 
 
@@ -58,16 +56,35 @@ const Game = () => {
                         }
 
                     }
+                
+                if (sessionID !== -1) {
+                    fetch(`/api/getLobbyPlayers?sessionID=${ sessionID }`, { method: "GET" }).then(res => res.json()).then(stateJson => {
+                        setPlayers(stateJson.players);
+                        // console.log("Players will be blank, but not when you use players.map in return", Players)
+                    })
+                }
                 })
             }, 1000);
         }, 3000);
+
+
+
         return () => clearInterval(timer);
     }, []);
+
+    if (sessionID !== -1 && status=="waiting for players") {
+        fetch(`/api/getLobbyPlayers?sessionID=${ sessionID }`, { method: "GET" }).then(res => res.json()).then(stateJson => {
+            setPlayers(stateJson.players);
+            // console.log("Players will be blank, but not when you use players.map in return", Players)
+
+            // console.log(sessionID);
+        })
+    }
 
     function leaveGame() {
         fetch(`/api/leaveSession?sessionID=${ sessionID }`).then(res => res.json()).then(res => {
             console.log(res.status);
-            window.location = "/#/Home";
+            window.location.href = "/#/Home";
         })
     }
     /* ==============  INFORMATION ON GAME_STATE  ==============
@@ -100,7 +117,7 @@ const Game = () => {
             return (
                 <>
                 <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
-                <Question timeLeft={gameTimeLimit} maxGuesses={maxGuesses}/>
+                <Question timeLeft={gameTimeLimit} maxGuesses={maxGuesses} sessionID={sessionID}/>
                 </>
             );
         case "starting next question":
@@ -128,6 +145,12 @@ const Game = () => {
             return (
                 <>
                 <EndGame sessionID={sessionID} />
+                </>
+            );
+        case "expired session":
+            return (
+                <>
+                <ExpiredSession />
                 </>
             );
         case "Loading":

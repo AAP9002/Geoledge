@@ -23,3 +23,31 @@
     text-decoration: none;
     color: #4E2461;
 }
+
+
+
+.wrapper h1{
+    font-family:  Comic Sans MS;
+    text-decoration-line: underline;
+    position: relative;
+    left: -50px;
+
+}
+.wrapper td {
+    color: aliceblue;
+}
+
+body::-webkit-scrollbar {
+    width: 12px;               
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: rgb(120, 28, 206);       
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background-color: rgb(230, 215, 228);    
+    border-radius: 20px;       
+    border: 3px solid rgb(194, 182, 159); 
+
+  }

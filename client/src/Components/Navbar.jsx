@@ -50,7 +50,7 @@ function Navbar() {
 
   function getUsername() {
     if (isLoggedIn) { 
-      return (<div className='nav-item'> <p> Welcome back { username }!</p> </div>);
+      return (<div className='nav-itemm'> <p> Welcome back { username }!</p> </div>);
     } else {
       return (<></>)
     }
@@ -77,6 +77,11 @@ function Navbar() {
                 </Link>
               </li>
               <li className='nav-item'>
+                <Link to='/HowToPlay' className='nav-links' onClick={closeMobileMenu}>
+                  How To Play
+                </Link>
+              </li>  
+              <li className='nav-item'>
                 <Link to='/Leaderboard' className='nav-links' onClick={closeMobileMenu}>
                   Leaderboards
                 </Link>
@@ -95,7 +100,7 @@ function Navbar() {
                 { isLoggedInButton }
               </div>
 
-              {/* <p> { getUsername() } </p> */}
+              <p> { getUsername() } </p>
               
             </ul>
             

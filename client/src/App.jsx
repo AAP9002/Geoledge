@@ -13,6 +13,7 @@ import JoinLobby from './Pages/JoinLobby/JoinLobby';
 import LoginPage from './Pages/Sign-up/LoginPage.jsx'
 import Game from './Pages/Gameloop/Game';
 import background from './Pages/Home/starry2.png'
+import HowToPlay from './Pages/HowToPlay/HowToPlay.jsx'
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
             <Route path='/TermsandConditions' element={<TermsandConditions/>} />
             <Route path='/AccountPage' element={<Account/>} />
             <Route path='/JoinLobby' element={<JoinLobby/>}/>
+            <Route path='/HowToPlay' element={<HowToPlay/>}/>
             <Route path='/Game' element={<Game/>}/>
           </Routes>
         </div>
