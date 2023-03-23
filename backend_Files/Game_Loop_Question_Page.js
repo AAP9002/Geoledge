@@ -63,7 +63,7 @@ module.exports = function (app, DBconnection) {
                                             proximity: compare_and_give_direction(guess["latitude"], guess["longitude"], actual_docted["latitude"], actual_docted["longitude"]),
                                             surface_area: value_distance_score(guess["surface_area"], actual_docted["surface_area"]),
                                             population: value_distance_score(guess["population"], actual_docted["population"]),
-                                            time_diff_hours_off: (Number(actual_docted["timezone"].substring(3, 6))+12)-(Number(guess["timezone"].substring(3, 6))+12) ,
+                                            time_diff_hours_off: (Number(actual_docted["timezone"])+24)-(Number(guess["timezone"])+24) ,
                                             driving_side: (actual_docted["driving_side"] == guess["driving_side"]),
                                             capital: (actual_docted["capital"] == guess["capital"]),
                                             language: (actual_docted["language"] == guess["language"]),
@@ -112,7 +112,7 @@ module.exports = function (app, DBconnection) {
         direction_calculated = Math.atan2(y, x);
         direction_calculated = (direction_calculated*(180/Math.PI));
         direction_calculated = (direction_calculated + 360) % 360;
-        direction_calculated = 360 - direction_calculated +90;
+        direction_calculated = direction_calculated-90;
 
         return direction_calculated;
     }
