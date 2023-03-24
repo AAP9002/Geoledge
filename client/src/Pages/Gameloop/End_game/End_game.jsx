@@ -31,7 +31,9 @@ function FinishBoard(props) {
 
 
         <div className='wrapper d-flex flex-column justify-content-center'>
-            <p className='header1 w-100'>Gameset!!</p>
+            <div className='header1-div'>
+            <p>Final Scores!</p>
+            </div>
             <div className='button d-flex justify-content-end' style={{ padding:"20px"}}>
             <button className='rtn' onClick={returnToHome}> <p style={{color:"White"}}>Back to Home</p></button>
             </div>
