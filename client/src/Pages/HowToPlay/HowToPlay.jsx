@@ -30,7 +30,11 @@ function HowToPlay() {
           <span className="circle1">Population</span>
         </h3>
         <p className='population'> 
-          The population hint will tell you if the country's population is higher or lower than the guessed country. The hint will appear as the text "up" or "down", and the color of the circle indicates how close you are to the correct answer.
+          <text style = {{maxwidth:1}}>
+            The population hint will tell you if the country's population is higher or lower than the 
+            guessed country.The hint will appear as the text "up" or "down", and the color of the circle
+            indicates how close you are to the correct answer.
+          </text>
         </p>
       </div>
       <div className="bubble2">
