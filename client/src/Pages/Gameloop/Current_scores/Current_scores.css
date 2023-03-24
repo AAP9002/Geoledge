@@ -1,4 +1,9 @@
+
+
+
 .score {
+  display: flex;
+  justify-content: center;
     position: absolute;
     top: 40%;
     left: 50%;
@@ -11,35 +16,43 @@
   }
   
   .rankings {
+    display: flex;
+    justify-content: center;
     padding-left: 300px;
   }
 
   .alltable2 {
+    display: flex;
     justify-content: center;
-    align-items: center;
     width: fit-content;
     height: fit-content;
   }
 
   .columns2 {
+     
+    justify-content: center;
     height: fit-content;
   }
   .button1{
+    display: flex;
+    justify-content: center;
+    position: relative;
     height:100px;
     width: 250px;
     border-radius: 80px;
     background-color: #8deccf;
-    display: flex;
-    justify-content: center;
-    position: relative;
     right: -550px;
+    margin-top:8vh;
   }
   .btn{
     display: flex;
     justify-content: center;
     
+    
   }
   .btntext{
+    display: flex;
+    justify-content: center;
     position: relative;
     top: -8px;
   }

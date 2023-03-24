@@ -8,8 +8,7 @@ const Current_scores = (props) => {
     const sessionID = props.sessionID;
     const [userIsHost, setUserIsHost] = useState(false)
     const [loading, setloading] = useState(true)
-    const [Scoreboard, setScoreboard] = useState([]);
-    
+    const [Scoreboard, setScoreboard] = useState([]);    
     useEffect(() => {
         fetch('/api/isHost?sessionID='+sessionID).then(res => res.json()).then(stateJson => {
             setUserIsHost(stateJson.is_host)
