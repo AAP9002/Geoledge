@@ -64,8 +64,8 @@
     display: flex;
     justify-content: center;
     position: relative;
-    top: 15px;
-    color: rgb(120, 85, 183);
+    margin-top: 12px;
+    color: rgb(255, 255, 255);
   }
   .buttonp1{
     margin-top: 10vh;
