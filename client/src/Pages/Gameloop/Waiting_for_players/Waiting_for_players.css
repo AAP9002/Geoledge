@@ -2,7 +2,10 @@
     width: fit-content;
     
 }
-
+.rtn{
+  position: relative;
+  right: -500px;
+}
 .wfpstyledbutton{
     background-color: #ae00ff;
     color: white;
