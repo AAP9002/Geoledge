@@ -50,3 +50,14 @@ body::-webkit-scrollbar {
     border: 3px solid rgb(194, 182, 159); 
 
   }
+
+  h1{
+    color: aliceblue;
+    position: relative
+    
+  }
+  .alltable{
+    position: relative;
+    right: -7em;
+  }
+  
