@@ -34,17 +34,13 @@ const Reveal_answer = (props) => {
     function Change_State_Current_Score() {
         setloading(true)
         fetch("/api/scoreState?sessionID="+sessionID,{method: "POST"}).then(res => res.json()).then(stateJson => {
-            setloading(false)
+           setloading(false)
         })
     }
-
-
-    console.log("FLAG here:", flag)
 
     if (!loading) {
         console.log("host?", userIsHost)
         if (userIsHost == 1) {
-            console.log("FLAG:", flag)
             return (
                 <div className='reveal_answer_container'>
                     <div>
