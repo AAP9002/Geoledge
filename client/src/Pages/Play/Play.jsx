@@ -101,7 +101,7 @@ function Play() {
                                 <tr><td>{No}</td></tr>
                             </tbody>
                         </table> */}
-                        <div className='table w-100'>
+                        <div className='table w-100 lobby_table'>
                         <table>
                             <thead>
                                 <tr>
