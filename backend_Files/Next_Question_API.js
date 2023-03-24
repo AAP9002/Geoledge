@@ -49,7 +49,7 @@ module.exports = function (app, connection) {
                         resolve(100);
                     }
                     else {
-                        resolve(result[0].time_limit);
+                        resolve(result);
                     }
                 })
             });
