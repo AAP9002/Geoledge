@@ -44,7 +44,7 @@ function LeaderBoard() {
    <>
     <h1 className='leaderboardH1'>Leaderboard</h1>
     
-       <div className='all'>
+       <div className='all w-100 d-flex justify-content-center'>
         <div className='box'>
         <select name="modes" onChange={(e) => getSort(e.target.value)} >
           <option value="wins">Wins</option>

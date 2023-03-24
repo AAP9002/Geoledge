@@ -23,7 +23,7 @@ function App() {
     <img className='' id='app_background_image' src={background}></img>
       <Router>
            <div className='App'>
-           {window.location.href.split('#')[1] !=='/Game'?  <Navbar />:null }
+           {(window.location.href.includes('/Game'))||(window.location.href.includes('Play'))? null: <Navbar /> }
 
             <Routes>
             <Route exact path='/' element={<Home/>} />
@@ -41,7 +41,7 @@ function App() {
             <Route path='/Game' element={<Game/>}/>
           </Routes>
         </div>
-        {window.location.href.split('#')[1] !=='/Game'?  <Footer />:null }      
+        {(window.location.href.includes('/Game'))||(window.location.href.includes('Play'))?  null:<Footer /> }      
 
       </Router>
     </>

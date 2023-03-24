@@ -1,4 +1,5 @@
 
+
 .bubble {
     background-color: white;
     text-decoration-color: #000000; 
@@ -113,6 +114,8 @@
   p {
     font-size: 1.2rem;
     line-height: 1.5;
+    word-wrap:break-word;
+    max-width: 90vw;
   }
 
 

@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 10;
-    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-family: 'Comic Neue', cursive;
+    /* font-family: "Comic Sans MS", cursive, sans-serif; */
     -webkit-font-smoothing: antialiased;
   }
 

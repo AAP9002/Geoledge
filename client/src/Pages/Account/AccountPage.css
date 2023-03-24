@@ -1,7 +1,6 @@
  .Credentials{
    display: flex;
    justify-content: center;
-   
  }
 
 
@@ -11,10 +10,8 @@
     border: 7px solid #472B7E;
     width: 300px;
     height: 350px;
-    position: relative;
-    left: -400px;
-    margin-top: 100px;
     border-radius: 30px;
+    margin-bottom: 20px;
 
 }
 .Container{
@@ -25,11 +22,8 @@
     height: 70px;
     position: relative;
     right: -40px;
-    
     border-radius: 15px;
     margin-top: 10px;
-    
-
 }
 
 
@@ -51,7 +45,6 @@
 h1{
     display: flex;
    justify-content: center;
-   font-family: Comic Sans MS;
      text-decoration-line: underline;
      color: aliceblue;
 }
@@ -60,7 +53,6 @@ h1{
 h2{
     display: flex;
    justify-content: center;
-   font-family: Comic Sans MS;
      
      color: aliceblue;
      font-size: 200%;
@@ -82,15 +74,15 @@ h2{
 }
 
 
-
+.full_width_limit{
+    max-width: 1000px;
+    margin-top: 30px;
+}
 
 
 .Statistics{
     display: flex;
     justify-content: center;
-    position: relative;
-    top: -350px;
-    
 }
 
 .b2{
@@ -99,11 +91,11 @@ h2{
   
     border: 7px solid #472B7E;
     width: 700px;
-    height: 350px;
-    position: relative;
-    right: -200px;
+    height: fit-content;
+    padding: 10px;
     
     border-radius: 30px;
+    margin-bottom: 20px;
 }
 
 .title2{
@@ -111,15 +103,9 @@ h2{
 
 }
 .gpd{
-    position: relative;
-    left: -170px;
     font-size: 40px;
-    top: 30px;
 }
 .wr{
-    position: relative;
-    right:-150px;
-    top: -40px;
     font-size: 40px;
 }
 .Container2{
@@ -128,17 +114,9 @@ h2{
      background-color: #472B7E;
      width: 250px;
      height: 150px;
-     position: relative;
-     right: -40px;
-     top: -35px;
      border-radius:15px;
-     
 }
 .Gameplayed{
-    display: flex;
-    justify-content: center;
-    position: relative;
-    top: 20px;
     font-size: 30px;
     color: white;
 }
@@ -149,16 +127,11 @@ h2{
      background-color: #472B7E;
      width: 250px;
      height: 150px;
-     position: relative;
-     right: -370px;
-     top: -185px; 
      border-radius: 15px;  
 }
 
 
 .rate{
-    position: relative;
-    top: 20px;
     font-size: 30px;
     color: white;
 }
