@@ -19,7 +19,10 @@ const Waiting_for_players = (props) => {
         return(<>
                 {/* <p className="waiting">Waiting for players</p> */}
 
-                <h1 className='w-100'>Waiting for players</h1>
+                <h1 className='w-100'>Waiting for players ({props.sessionID})</h1>
+                <div className='button'>
+            <button className='rtn' onClick={leaveGame}> <p className='' style={{color:"white"}}>Back to Home</p></button>
+            </div>
                 <div className='wrapper'>
                 <table className='Ranking w-100'>
                     <thead>
@@ -34,9 +37,6 @@ const Waiting_for_players = (props) => {
                     {props.Players.map((row, index) => <tr><td className='data'>{index + 1}</td><td className='data'>{row.username}</td></tr>)}
                 </tbody>
             </table>
-            </div>
-            <div className='button'>
-            <button className='rtn1' onClick={leaveGame}> <p className='fcolor'>Back to Home</p></button>
             </div>
 
 
