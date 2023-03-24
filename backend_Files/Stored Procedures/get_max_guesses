@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `get_max_guesses`(in session_idIn int)
+BEGIN
+    SELECT max_guesses FROM session WHERE session_id=session_idIn;
+END$$
+DELIMITER ;

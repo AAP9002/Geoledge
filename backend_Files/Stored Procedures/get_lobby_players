@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `get_lobby_players`(in session_id_in int)
+BEGIN
+select users.username from participents inner join users on users.user_id = participents.user_id where session_id = session_id_in;
+END$$
+DELIMITER ;

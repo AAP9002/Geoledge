@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `host_check_game_state`(in session_idIn int, in user_idIn int, in msgIn varchar(45))
+BEGIN
+select (IF(user_idIn = host_user, 1, 0) AND IF(game_state = msgIn, 1, 0)) as result from session where session_id = session_idIn;
+END$$
+DELIMITER ;

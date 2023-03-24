@@ -1,0 +1,7 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `update_stats`(in session_idIn int)
+BEGIN
+SELECT @UID := user_id FROM geo2002.participents WHERE session_id = session_idIn;
+
+END$$
+DELIMITER ;

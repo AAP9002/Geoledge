@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `select_curr_session`(in user_idIn int)
+BEGIN
+select session.session_id, session.host_user from session inner join participents on session.session_id = participents.session_id where participents.user_id = user_idIn;
+END$$
+DELIMITER ;

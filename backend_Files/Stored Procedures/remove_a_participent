@@ -1,0 +1,10 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `remove_a_participent`(in user_id_in int, in session_id_in int)
+BEGIN
+    DELETE from participents WHERE user_id = user_id_in AND session_id = session_id_in;
+
+    SELECT @player_count := count(*) FROM participents where session_id = session_id_in;
+    
+    UPDATE session SET num_of_participents = @player_count WHERE session_id = session_id_in;
+END$$
+DELIMITER ;

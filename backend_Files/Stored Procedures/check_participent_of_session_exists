@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `check_participent_of_session_exists`(in user_id_in int, in session_id_in int)
+BEGIN
+    SELECT EXISTS (SELECT 1 FROM participents WHERE user_id = user_id_in AND session_id = session_id_in) AS "result";
+END$$
+DELIMITER ;

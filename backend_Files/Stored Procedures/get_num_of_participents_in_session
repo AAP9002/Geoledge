@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `get_num_of_participents_in_session`(in sessionID int(11))
+BEGIN
+    SELECT COUNT(*) AS "count" FROM participents WHERE session_id = session_id;
+END$$
+DELIMITER ;

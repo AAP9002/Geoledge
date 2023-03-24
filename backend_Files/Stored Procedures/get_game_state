@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `get_game_state`(in session_idIn int)
+BEGIN
+    SELECT game_state FROM session WHERE session_id=session_idIn;
+END$$
+DELIMITER ;
