@@ -143,7 +143,7 @@ const Question = (props) => {
     }
 
     if (numberOfGuessesUsed >= MAX_GUESS) {
-        return (<> <div><p style={{color: 'black',position:"relative",top:"-22px"}}>Time Left: {timeNumber}s</p></div>
+        return (<> <div className="w-100"><div className="w-100" style={{color: 'white',textAlign:"center",top:"-22px"}}>Time Left: {timeNumber}s</div></div>
         <p className='waiting'>Out Of Guesses</p>
         </>);
     }
@@ -153,7 +153,7 @@ const Question = (props) => {
     }
 
     if (correctStatus) {
-        return (<> <div><p style={{color: 'black',position:"relative",top:"-22px"}}>Time Left: {timeNumber}s</p></div>
+        return (<> <div className="w-100"><div className="w-100" style={{color: 'white',textAlign:"center",top:"-22px"}}>Time Left: {timeNumber}s</div></div>
         <p className='waiting'>Correct!</p>
         </>);
     }
