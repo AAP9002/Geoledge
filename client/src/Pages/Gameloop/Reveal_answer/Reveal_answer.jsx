@@ -57,9 +57,10 @@ const Reveal_answer = (props) => {
                     </div>
                 </div>
             );
-        } else
-            return (<div className='reveal_answer_container'>
-                <div>
+        } else {
+            return (
+                <div className='reveal_answer_container'>
+                    <div>
                         <h1>Answer: {correctAnswer}</h1>
                     </div>
                     <div>
@@ -68,7 +69,9 @@ const Reveal_answer = (props) => {
                         <div class="col-md-6"> <iframe className='w-100 h-100' title="map" id="googlemap" src={"https://maps.google.com/maps?q="+correctAnswer+"country&t=&z=5&ie=UTF8&iwloc=&output=embed"} frameborder="0" marginheight="0" marginwidth="0"></iframe> </div>
                     </div>
                     </div>
-            </div>);
+                </div>
+            );
+        }
     }
     else{
         return (<div className='reveal_answer_container'>
