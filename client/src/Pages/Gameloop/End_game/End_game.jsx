@@ -30,9 +30,12 @@ function FinishBoard(props) {
 
 
 
-        <div className='wrapper'>
-            <h1> <p className='header1'> Gameset!!</p></h1>
-            <div className='alltable'>
+        <div className='wrapper d-flex flex-column justify-content-center'>
+            <p className='header1 w-100'>Gameset!!</p>
+            <div className='button d-flex justify-content-end' style={{ padding:"20px"}}>
+            <button className='rtn' onClick={returnToHome}> <p style={{color:"White"}}>Back to Home</p></button>
+            </div>
+            <div className='w-100 d-flex justify-content-center'>
             <table className='Ranking'>
                 <thead>
                     <tr>
@@ -49,9 +52,6 @@ function FinishBoard(props) {
                     {Finishboard.map((row, index) => <tr><td className='data'>{index + 1}</td><td className='data'>{row.username}</td><td className='data'>{row.player_score}</td></tr>)}
                 </tbody>
             </table>
-            </div>
-            <div className='button'>
-            <button className='rtn' onClick={returnToHome}> <p className='fcolor'> Back to Home</p></button>
             </div>
 
 
