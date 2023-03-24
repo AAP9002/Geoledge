@@ -9,7 +9,8 @@ const Waiting_for_players = (props) => {
     function leaveGame() {
         fetch(`/api/leaveSession?sessionID=${ props.sessionID }`).then(res => res.json()).then(res => {
             console.log(res.status);
-            window.location = "/#/Home";
+            window.location.href = "/#/Home";
+            window.location.reload();
         })
     }
     console.log("players" + props.Players);
