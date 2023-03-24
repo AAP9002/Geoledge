@@ -55,7 +55,7 @@ const Current_scores = (props) => {
             
             </div>
             <div className='w-100 d-flex justify-content-center'>
-                <div className='buttonp1 w-25'>
+                <div className='buttonp1 w-50'>
                             <btn className='styledbutton7' onClick={Change_State_to_next_question}> <p className='btntext'>Next Question</p></btn>
                 </div>
             </div>
