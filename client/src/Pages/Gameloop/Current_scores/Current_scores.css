@@ -1,4 +1,15 @@
+.reveal_answer_container {
+  /* display: flex; */
+   justify-content: center;
+}
+
+.alltable2 {
+  justify-content: center;
+}
+
 .score {
+  display: flex;
+  justify-content: center;
     position: absolute;
     top: 40%;
     left: 50%;
@@ -9,32 +20,133 @@
     font-size: 120px;
     font-family: "Comic Sans MS", cursive, sans-serif;
   }
-
+  
+  .scores-text {
+    text-align: center;
+  }
 
   .alltable2 {
+    display: flex;
     justify-content: center;
     align-items: center;
-    width: fit-content;
+    width: 800px;
     height: fit-content;
+    top: 200px;
+    margin-top: 10vh;
+    /* margin-left: 200px; */
   }
 
   .columns2 {
+     
+    justify-content: center;
     height: fit-content;
+    width: 33.34%;
+
   }
   .button1{
+    top: 100px;
     height:100px;
-    max-width: 250px;
+    width: 250px;
     border-radius: 80px;
     background-color: #8deccf;
     display: flex;
     justify-content: center;
+    position: relative;
+    left: -600px;
+    margin-top: 10vh;
   }
-  .btn{
+  .btn9{
     display: flex;
     justify-content: center;
-    max-width: 100%;
+    
   }
   .btntext{
+    display: flex;
+    justify-content: center;
     position: relative;
-    top: -8px;
+    top: 15px;
+    color: rgb(120, 85, 183);
   }
+  .buttonp1{
+    margin-top: 10vh;
+  }
+
+  .data {
+    color: white;
+  }
+
+  .waiting{
+    width: fit-content;
+    
+}
+
+.wfpstyledbutton{
+    background-color: #ae00ff;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    margin: 10px 5px 10px 20px;
+    cursor: pointer;
+    text-align: left;
+    transition: ease background-color 250ms;
+    height: fit-content;
+    width: fit-content;
+    opacity: 100%;
+    text-decoration: none;
+
+}
+
+.wfpstyledbutton:hover{
+    text-decoration: none;
+    color: #4E2461;
+}
+
+body::-webkit-scrollbar {
+    width: 12px;               
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: rgb(120, 28, 206);       
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background-color: rgb(230, 215, 228);    
+    border-radius: 20px;       
+    border: 3px solid rgb(194, 182, 159); 
+
+  }
+
+  .styledbutton7 {    
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  .buttonp1{
+    display: flex;
+    justify-content: center;
+    height:100px;
+    min-width: 250px;
+    border-radius: 80px;
+    background-color: #8deccf;
+    /* right: -40em; */
+    margin-top:8vh;
+  }
+  .c1{
+    width: 300px;
+  }
+
+  .board{
+    margin: 0 auto;
+position: relative;
+background-color: #5b0ca5;
+border-radius: 10px;
+max-width: 1000px;     
+overflow-y:scroll;
+scrollbar-width: auto;
+height:400px;
+display:block; 
+top: 8px;
+}

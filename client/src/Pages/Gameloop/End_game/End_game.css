@@ -8,8 +8,19 @@
     display:block;  
     max-width: 600px;
     }
-    .header1{
-        font-size: 70px
+
+    .header1-div{
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .header1-div p{
+        font-size: 70px;
+        max-width: 100vw;
+        color: white;
+        
        
     }
     .rtn{

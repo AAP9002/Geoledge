@@ -52,15 +52,26 @@ const Reveal_answer = (props) => {
                         <div class="col-md-6"> <iframe className='w-100 h-100' title="map" id="googlemap" src={"https://maps.google.com/maps?q="+correctAnswer+"country&t=&z=5&ie=UTF8&iwloc=&output=embed"} frameborder="0" marginheight="0" marginwidth="0"></iframe> </div>
                     </div>
                     </div>
-                    <div>
+                    <div className='btn0-div'>
                         <btn className='btn btn-success' onClick={Change_State_Current_Score}>Next</btn>
                     </div>
                 </div>
             );
-        } else
-            return (<div className='reveal_answer_container'>
-                <h1>Answer: {correctAnswer}</h1>
-            </div>);
+        } else {
+            return (
+                <div className='reveal_answer_container'>
+                    <div>
+                        <h1>Answer: {correctAnswer}</h1>
+                    </div>
+                    <div>
+                    <div class="row">
+                        <div class="col-md-6"> <img src={flag} className="w-100 h-auto"/> </div>
+                        <div class="col-md-6"> <iframe className='w-100 h-100' title="map" id="googlemap" src={"https://maps.google.com/maps?q="+correctAnswer+"country&t=&z=5&ie=UTF8&iwloc=&output=embed"} frameborder="0" marginheight="0" marginwidth="0"></iframe> </div>
+                    </div>
+                    </div>
+                </div>
+            );
+        }
     }
     else{
         return (<div className='reveal_answer_container'>

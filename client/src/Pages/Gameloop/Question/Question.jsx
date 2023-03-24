@@ -205,7 +205,7 @@ const Question = (props) => {
             <div className='search-container'>
                 <div className='search-inner'>
                     <form onSubmit={handleSubmit}>
-                        <input type='text' placeholder='Start Typing a Country' value={value} onChange={onChange} />
+                        <input autoFocus type='text' placeholder='Start Typing a Country...' value={value} onChange={onChange} />
                     </form>
                 </div>
                 <div className='dropdown'>

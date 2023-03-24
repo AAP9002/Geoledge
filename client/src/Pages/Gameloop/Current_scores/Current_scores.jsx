@@ -8,8 +8,7 @@ const Current_scores = (props) => {
     const sessionID = props.sessionID;
     const [userIsHost, setUserIsHost] = useState(false)
     const [loading, setloading] = useState(true)
-    const [Scoreboard, setScoreboard] = useState([]);
-    
+    const [Scoreboard, setScoreboard] = useState([]);    
     useEffect(() => {
         fetch('/api/isHost?sessionID='+sessionID).then(res => res.json()).then(stateJson => {
             setUserIsHost(stateJson.is_host)
@@ -37,49 +36,52 @@ const Current_scores = (props) => {
 
     if (!loading) {
         if (userIsHost == 1)
-            return (
-                <div className='reveal_answer_container'>
-                    <h1> Scores</h1>
-                    <div className='alltable2'>
-                        <table className='Rankings'>
-                            <thead>
-                                <tr>
-                                    <th className='columns2'>No</th>
-                                    <th className='columns2'>Player(Username)</th>
-                                    <th className='columns2'>Points</th>
-                                </tr>
-                            </thead>
-                    
-                            <tbody className='RankingTable'>
-                                {Scoreboard.map((row, index) => <tr><td className='data'>{index + 1}</td><td className='data'>{row.username}</td><td className='data'>{row.player_score}</td></tr>)}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className='button1'>
-                        <btn className='btn' onClick={Change_State_to_next_question}> <p className='btntext'>Next Question</p></btn>
-                    </div>
+            return (<>
+                <h1 className='w-100'>Current Scores</h1>
+                <div className='wrapper'>
+                <table className='board w-100'>
+                    <thead>
+                        <tr>
+                            <th className='columns'>No</th>
+                            <th className='columns'>Player(Username)</th>
+                            <th className='columns'>Score</th>
+                        </tr>
+                    </thead>
+            
+                <tbody className='RankingTable'>
+                    {Scoreboard.map((row, index) => <tr><td className='data'>{index + 1}</td><td className='data'>{row.username}</td><td className='data'>{row.player_score}</td></tr>)}
+                </tbody>
+            </table>
+            
+            </div>
+            <div className='w-100 d-flex justify-content-center'>
+                <div className='buttonp1 w-25'>
+                            <btn className='styledbutton7' onClick={Change_State_to_next_question}> <p className='btntext'>Next Question</p></btn>
                 </div>
-                
+            </div>
+            </>
             );
+
         else
-            return (<div className='reveal_answer_container'>
-                <h1> Scores</h1>
-                <div className='alltable2'>
-                    <table className='Rankings'>
-                        <thead>
-                            <tr>
-                                <th className='columns2'>No</th>
-                                <th className='columns2'>Player(Username)</th>
-                                <th className='columns2'>Points</th>
-                            </tr>
-                        </thead>
-                
-                        <tbody className='RankingTable'>
-                            {Scoreboard.map((row, index) => <tr><td className='data'>{index + 1}</td><td className='data'>{row.username}</td><td className='data'>{row.player_score}</td></tr>)}
-                        </tbody>
-                    </table>
-                </div>
-            </div>);
+            return (<>
+                <h1 className='w-100'>Current Scores</h1>
+                <div className='wrapper'>
+                <table className='board w-100'>
+                    <thead>
+                        <tr>
+                            <th className='columns'>No</th>
+                            <th className='columns'>Player(Username)</th>
+                            <th className='columns'>Score</th>
+                        </tr>
+                    </thead>
+            
+                <tbody className='RankingTable'>
+                    {Scoreboard.map((row, index) => <tr><td className='data'>{index + 1}</td><td className='data'>{row.username}</td><td className='data'>{row.player_score}</td></tr>)}
+                </tbody>
+            </table>
+            
+            </div>
+            </>);
     }
     else{
         return (<div className='reveal_answer_container'>

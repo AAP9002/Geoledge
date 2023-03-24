@@ -16,11 +16,52 @@
 }
 
 #app_background_image {
+  background-image: url('./starry2.png');
   z-index: -100;
   position: fixed;
   object-fit:cover;
   width: 100vw;
   height: 100vh;
+  /* animation: moveBackground 7s ease-in-out 0s infinite; */
+  background-size: cover;
+  animation-direction: alternate-reverse;
+}
+
+#stars{
+  background-image: url('./Stars.png');
+  z-index: -99;
+  position: fixed;
+  object-fit:cover;
+  width: 100vw;
+  height: 100vh;
+  mix-blend-mode: lighten;
+  animation: moveStars 100s ease-in-out 0s infinite;
+  animation-direction: alternate-reverse;
+}
+
+
+
+@keyframes moveBackground {
+  0% { background-position:-10px -10 }
+  10% { background-position:-1px -5px }
+  20% { background-position:-9px -8px }
+  30% { background-position:0 0px }
+  40% { background-position:7px 8px }
+  50% { background-position:14px 4px }
+  60% { background-position:6px -3px }
+  70% { background-position:6px -5px }
+  80% { background-position:0 5px }
+  90% { background-position:7px 8px }
+  100% { background-position:10px 10px }
+}
+
+@keyframes moveStars {
+  0% { background-position:10px 10px;
+    opacity: 0.9; }
+  25% {background-position:10px 100px;opacity: 1;}
+  50% { background-position:100px 200px ;opacity: 0.8;}
+  75% { background-position:70 200px ;opacity: 0.9;}
+  100% { background-position:300px 100px ;opacity: 0.7;}
 }
 
 .waiting {

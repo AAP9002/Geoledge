@@ -81,6 +81,8 @@
 
 .home-headers h1{
     text-decoration: none;
+    font-size: max(20vw, 40px);
+
 }
 
 .bottom h1{
@@ -180,8 +182,10 @@
   }*/
 
 .errormsgtxt{
-    font-size: 70%;
-    color: aliceblue;
+    font-size: 20px;
+    color: red;
+    width: 100vw;
+    text-align: center;
 }
   
 

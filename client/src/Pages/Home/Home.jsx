@@ -28,7 +28,7 @@ const About = () => {
 
                     } else if (res.status === "no avaiable sessions") {
                         // Show error message to user
-                        setMsg("No available sessions found - A perfect chance to host a game on your own! (￣ω￣)")
+                        setMsg("No available sessions found - A perfect chance to host a game on your own! 😳")
                     } else if (res.status === "error occurred on the server") {
                         // Show error message to user
                         console.log("Error occured on the server, help!!!")
@@ -90,8 +90,8 @@ const About = () => {
                         <div className="btns">
                             <button className="homestyledbutton2" onClick={findOnlineGame}> Play Online</button>	
                         </div>
-                        <div>
-                            <small className='errormsgtxt'>{errorMsg}</small>
+                        <div className='w-100'>
+                            <div className='errormsgtxt'>{errorMsg.trim()}</div>
                         </div>
                         <div className='btns2'>
                             <button className="homestyledbutton" onClick={HostLobby}> Host Game</button>
