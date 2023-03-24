@@ -97,7 +97,6 @@ module.exports = function (app, DBconnection) {
                             if (result[0][0].result == 0) {
                                 // All participents are either out of guesses or have answered the question correctly
                                 // Moving game_state to revealing answer
-                                console.log("reached");
                                 let query = "call update_game_state(?,?)"
 
                                 DBconnection.query(query, [session_id, "revealing answer"], (err, result) => {
@@ -382,9 +381,6 @@ module.exports = function (app, DBconnection) {
                     });
 
                     promise3.then(function(result) {
-                        console.log("guesses: " + result[0][0].guesses);
-                        console.log("max guesses: " + max_guesses);
-                        
                         if (result == null || result[0].length == 0) {
                             console.log("Issue when getting number of guesses made by user...");
                             finalResolve(false);
