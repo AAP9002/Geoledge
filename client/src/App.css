@@ -23,6 +23,7 @@
   width: 100vw;
   height: 100vh;
   /* animation: moveBackground 7s ease-in-out 0s infinite; */
+  background-size: cover;
   animation-direction: alternate-reverse;
 }
 

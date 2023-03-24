@@ -145,7 +145,8 @@ const Game = () => {
                 <>
                     <div className='w-100 d-flex justify-content-end'>
                         <button className="wfpstyledbutton leavebtn" onClick={leaveGame}> Leave </button>
-                    </div>                        <CurrentScores sessionID={sessionID} />
+                    </div>                        
+                    <CurrentScores sessionID={sessionID} />
                 </>
             );
         case "showing final scores":
