@@ -59,7 +59,7 @@
     .leaderboardH1{
      text-decoration-line: underline;
      color: aliceblue;
-     font-size: 80px;
+     font-size: 5vw;
      text-align: center;
      padding-bottom: 20px;
     }
@@ -68,7 +68,10 @@
         display: flex;
         justify-content: center;
         position: relative;
-        right: -275px;
+        align-items: flex-end;
+        justify-content: end;
+        max-width: 800px;
+        width: 100%;
     }
        
     
