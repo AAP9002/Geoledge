@@ -12,7 +12,6 @@ import Home from './Pages/Home/Home'
 import JoinLobby from './Pages/JoinLobby/JoinLobby';
 import LoginPage from './Pages/Sign-up/LoginPage.jsx'
 import Game from './Pages/Gameloop/Game';
-import background from './Pages/Home/starry2.png'
 import HowToPlay from './Pages/HowToPlay/HowToPlay.jsx'
 
 
@@ -20,7 +19,8 @@ function App() {
   
   return (
     <>
-    <img className='' id='app_background_image' src={background}></img>
+    <div className='' id='app_background_image'></div>
+    <div className='' id='stars'></div>
       <Router>
            <div className='App'>
            {(window.location.href.includes('/Game'))||(window.location.href.includes('Play'))? null: <Navbar /> }
