@@ -24,3 +24,22 @@
   .columns2 {
     height: fit-content;
   }
+  .button1{
+    height:100px;
+    width: 250px;
+    border-radius: 80px;
+    background-color: #8deccf;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    right: -550px;
+  }
+  .btn{
+    display: flex;
+    justify-content: center;
+    
+  }
+  .btntext{
+    position: relative;
+    top: -8px;
+  }
