@@ -30,7 +30,6 @@ module.exports = function (app, connection) {
                     console.log("ERROR: Error when changing game_state from 'starting' to 'displaying question'");
                     res.status(500).send("Error occured on the server");
                 }
-
                 resolve();
             })
         });

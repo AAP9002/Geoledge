@@ -22,6 +22,7 @@ function FinishBoard(props) {
 
     function returnToHome() {
         window.location.href = "/#/Home";
+        window.location.reload();
     }
 
 

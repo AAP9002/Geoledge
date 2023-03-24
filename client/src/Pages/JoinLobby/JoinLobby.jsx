@@ -27,6 +27,7 @@ function JoinLobby() {
                     else
                     {
                         window.location.href = "/#/Game";
+                        window.location.reload();
                     }
                 }
                 });

@@ -85,6 +85,7 @@ const Game = () => {
         fetch(`/api/leaveSession?sessionID=${ sessionID }`).then(res => res.json()).then(res => {
             console.log(res.status);
             window.location.href = "/#/Home";
+            window.location.reload();
         })
     }
     /* ==============  INFORMATION ON GAME_STATE  ==============
