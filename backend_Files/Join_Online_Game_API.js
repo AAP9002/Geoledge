@@ -24,10 +24,11 @@ module.exports = function(app, connection) {
                 function(result) {
                     if (result == null) {
                         // error occurred on the server (SQL error)
+                        // ie literally nothing returns, not even an empty []
                         res.status(200).send({ "status": "error occurred on the server" });
                     } else {
                         // evaluating whether there is an avaiable lobby in the results returned
-                        if (result.length[0] == 0) {
+                        if (result[0].length == 0) {
                             // no avaiable sessions for client to join
                             res.status(200).send({ "status": "no avaiable sessions" });
                         } else {

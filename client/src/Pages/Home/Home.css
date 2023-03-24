@@ -34,7 +34,6 @@
 
 .top h2{
     color: white;
-    font-family: "Comic Sans MS", cursive, sans-serif;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     text-align: center;
 }
@@ -86,7 +85,6 @@
 
 .bottom h1{
     color: rgb(233, 24, 128);
-    font-family: "Comic Sans MS", cursive, sans-serif;
     text-align: center;
     font-weight: bold;
     font-size: 300%;
@@ -94,7 +92,6 @@
 
 .bottom p{
     color:#4E2461;
-    font-family: "Comic Sans MS", cursive, sans-serif;
     font-weight: bold;
     text-overflow: clip;
     font-size: larger;
@@ -182,6 +179,10 @@
 
   }*/
 
+.errormsgtxt{
+    font-size: 70%;
+    color: aliceblue;
+}
   
 
 

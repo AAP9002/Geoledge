@@ -60,8 +60,29 @@ const Question = (props) => {
 
     const [value, setValue] = useState('');
 
+
+
+
     const onChange = (event) => {
-        setValue(event.target.value);
+        let inputValue = event.target.value;
+        setValue(inputValue);
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        
+        let matchingCountries = countryNames.filter((item) => {
+            const searchTerm = value.toLowerCase();
+            const country = item.country_name.toLowerCase();
+            return (searchTerm && country.startsWith(searchTerm));
+        })
+
+        if (matchingCountries.length === 1) {
+            console.log("Guessing " + matchingCountries[0].country_name);
+            return(check_guess(matchingCountries[0].country_id, matchingCountries[0].country_name));
+        } else {
+            return;
+        }
     }
 
     const check_guess = (country_code,countryName) => {
@@ -101,11 +122,27 @@ const Question = (props) => {
         set_display_searchbox_mobile(!display_searchbox_mobile)
     }
 
+    function Positive_time(){
+        return <bubble>+{timeUPDOWN}  Hrs</bubble>
+
+    }
+
+    function Negative_time(){
+        return <bubble>{timeUPDOWN}  Hrs</bubble>
+    }
+
+    function Time(){
+        if (timeUPDOWN > 0){
+            return <Positive_time/>
+        }
+        return <Negative_time/>
+    }
+
     function toggle_mapbox(){
         set_display_mapbox(!display_mapbox)
     }
 
-    if (numberOfGuessesUsed > MAX_GUESS) {
+    if (numberOfGuessesUsed >= MAX_GUESS) {
         return (<> <div><p style={{color: 'black',position:"relative",top:"-22px"}}>Time Left: {timeNumber}s</p></div>
         <p className='waiting'>Out Of Guesses</p>
         </>);
@@ -158,7 +195,7 @@ const Question = (props) => {
                 </div>
                 <div className='d-flex flex-sm-column justify-content-center'>
                     <b>Time</b>
-                    <bubble>{timeUPDOWN} Hrs</bubble>
+                    <Time/>
                 </div>
             </div>
             <div id="country_other_stats">
@@ -167,10 +204,12 @@ const Question = (props) => {
             </div>
             <div className='search-container'>
                 <div className='search-inner'>
-                    <input type='text' placeholder='Start Typing a Country' value={value} onChange={onChange} />
+                    <form onSubmit={handleSubmit}>
+                        <input type='text' placeholder='Start Typing a Country' value={value} onChange={onChange} />
+                    </form>
                 </div>
                 <div className='dropdown'>
-                    {countryNames.filter((item) => {
+                    {countryNames.filter((item) => {    
                         const searchTerm = value.toLowerCase();
                         const country = item.country_name.toLowerCase();
                         return (searchTerm && country.startsWith(searchTerm));

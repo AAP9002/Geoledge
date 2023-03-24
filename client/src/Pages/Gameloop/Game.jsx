@@ -35,7 +35,7 @@ const Game = () => {
             timer = setInterval(() => {
                 fetch('/api/getSessionID').then(res => res.json()).then(stateJson => {
                     if (previousState !== stateJson.game_state) {
-                        console.log(stateJson);
+                        // console.log(stateJson);
                         setPreviousState(stateJson.game_state)
                         setStatus(stateJson.game_state);
                         setSessionID(stateJson.session_id);
@@ -85,6 +85,7 @@ const Game = () => {
         fetch(`/api/leaveSession?sessionID=${ sessionID }`).then(res => res.json()).then(res => {
             console.log(res.status);
             window.location.href = "/#/Home";
+            window.location.reload();
         })
     }
     /* ==============  INFORMATION ON GAME_STATE  ==============

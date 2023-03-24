@@ -21,14 +21,12 @@
     
     
     .wrapper myTable{ 
-     font-family: Comic Sans MS;
     font-size:200%;  
     
      width: 70px; 
     }
     .wrapper columns{
         margin-left: 30px;
-     font-family: Comic Sans MS;
     font-size:200%;
     align-items: center;
     
@@ -59,10 +57,9 @@
      font-size: 30px;
     }
     .leaderboardH1{
-     font-family: Comic Sans MS;
      text-decoration-line: underline;
      color: aliceblue;
-     font-size: 80px;
+     font-size: 5vw;
      text-align: center;
      padding-bottom: 20px;
     }
@@ -71,7 +68,10 @@
         display: flex;
         justify-content: center;
         position: relative;
-        right: -275px;
+        align-items: flex-end;
+        justify-content: end;
+        max-width: 800px;
+        width: 100%;
     }
        
     

@@ -40,7 +40,7 @@ module.exports = function (app, connection) {
         promise.then(function (result) {
             // Waiting for question to end
             let promise2 = new Promise(function (resolve) {
-                let query = `SELECT time_limit FROM geo2002.session WHERE session_id = "${ sessionID }"`;
+                let query = `SELECT time_limit, current_question FROM geo2002.session WHERE session_id = "${ sessionID }"`;
 
                 connection.query(query, (err, result) => {
                     if (err) {
@@ -49,29 +49,57 @@ module.exports = function (app, connection) {
                         resolve(100);
                     }
                     else {
-                        resolve(result[0].time_limit);
+                        resolve(result);
                     }
                 })
             });
     
             promise2.then( 
-                function (timeLimit) {
-                    setTimeout(function() { roundEnd(res, sessionID) }, timeLimit * 1000);
+                function (result) {
+                    setTimeout(function() { roundEnd(res, sessionID, result[0].current_question) }, result[0].time_limit * 1000);
                 }
             );
         });
     }
 
-    function roundEnd(res, sessionID) {
-        // Switching game state from "displaying question" to "revealing answer"
-        let query = `UPDATE session SET game_state = "revealing answer" WHERE session_id = "${ sessionID }"`;
+    function roundEnd(res, sessionID, current_question) {
+        // if game_state still in "displaying question", and question number remains the same, then change game_state to "displaying answer"
+        let promise = new Promise(function(resolve) {
+            let query = `SELECT game_state, current_question FROM geo2002.session WHERE session_id = "${ sessionID }"`;
 
-        connection.query(query, (err, result) => {
-            if (err) {
-                console.log("ERROR: Error when changing game_state from starting to displaying question");
-                res.status(500).send("Error occured on the server");
+            connection.query(query, (err, result) => {
+                if (err) {
+                    console.log("Error when trying to get game state: " + err);
+                    resolve(false);
+                } else {
+                    if (result.length != 0) {
+                        if (result[0].game_state == "displaying question" && result[0].current_question == current_question) {
+                            resolve(true);
+                        } else {
+                            resolve(false);
+                        }
+                    }
+                }
+            });
+        });
+
+        promise.then(function(result) {
+            if (result) {
+                // Switching game state from "displaying question" to "revealing answer"
+                let query = `UPDATE session SET game_state = "revealing answer" WHERE session_id = "${ sessionID }"`;
+
+                connection.query(query, (err, result) => {
+                    if (err) {
+                        console.log("ERROR: Error when changing game_state from starting to displaying question");
+                        res.status(500).send("Error occured on the server");
+                    } else {
+                        res.status(200).send("OK");
+                    }
+                })
+            } else {
+                res.status(200).send("OK");
             }
-        })
+        });
     }
     
     // ====================   API   =======================
@@ -79,6 +107,7 @@ module.exports = function (app, connection) {
         // This API is called to move game_state from "showing current scores" to "starting next question"
         let userID = req.userID;
         let sessionID = req.query.sessionID;
+        console.log("next question");
         
         // Checking if client is the host of the session
         let promise = new Promise(function(resolve, reject) {
@@ -136,7 +165,6 @@ module.exports = function (app, connection) {
                             promise3.then(function() {
                                 // Game state changed from "waiting" to "starting"
                                 // Starting countdown for the game to start
-                                res.status(200).send("Successful");  // informing host that their API call is being handled accordingly
                                 setTimeout(function() { nextQuestion(res, sessionID) }, 5000);     // 5s timer
                             },
                             function() { 
