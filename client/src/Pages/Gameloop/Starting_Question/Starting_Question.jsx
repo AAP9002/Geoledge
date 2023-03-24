@@ -13,6 +13,10 @@ const Starting_Question = () => {
             setTimeout(() => setTimeNumber(timeNumber - 1), 1000)
         }
       }, [timeNumber]);
-    return(<><p className="waiting">Starting Question in {timeNumber}s</p></>);}
+    return(
+    <>
+        <p className="waiting">Start Guessing in {timeNumber}s</p>
+    </>
+    );}
 
 export default Starting_Question;

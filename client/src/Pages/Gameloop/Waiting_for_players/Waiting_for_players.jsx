@@ -36,7 +36,7 @@ const Waiting_for_players = (props) => {
             </table>
             </div>
             <div className='button'>
-            <button className='rtn' onClick={leaveGame}> <p className='fcolor'>Back to Home</p></button>
+            <button className='rtn1' onClick={leaveGame}> <p className='fcolor'>Back to Home</p></button>
             </div>
 
 

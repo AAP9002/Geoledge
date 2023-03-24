@@ -23,7 +23,7 @@
     position: relative;
     right: -40px;
     border-radius: 15px;
-    margin-top: 10px;
+    margin-top: 50px;
 }
 
 
@@ -40,6 +40,9 @@
     
  }
 
+ .b1 h2{
+    margin-top: 50px;
+ }
 
 
 h1{
@@ -47,6 +50,7 @@ h1{
    justify-content: center;
      text-decoration-line: underline;
      color: aliceblue;
+     margin-top: -4vh;
 }
 
 
@@ -64,14 +68,7 @@ h2{
     color: aliceblue;
     font-size: 15px;
 }
-.button1{
-   margin-left: 80px;
-   margin-top: 20px;
-   background-color: #af2ecc;
-   
-   border-radius: 30px;
 
-}
 
 
 .full_width_limit{
@@ -135,3 +132,4 @@ h2{
     font-size: 30px;
     color: white;
 }
+
