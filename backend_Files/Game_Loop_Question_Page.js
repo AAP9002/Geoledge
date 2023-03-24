@@ -283,18 +283,21 @@ module.exports = function (app, DBconnection) {
 
         myPromise.then(
             function(result) {
-                console.log(result)
-                let game_state = result[0][0].game_state
-                let answer = result[2][0].country_name
-                if (game_state == "revealing answer") {
-                    res.status(200).send({ country_name: answer})
+                if (result[0].length == 0) {
+                    console.log("No country returned")
+                    res.status(500).send({"status": "Error occured on the server"})
                 } else {
-                    res.status(401).send("game state not in revealing answer yet")
+                    let game_state = result[0][0].game_state
+                    if (game_state == "revealing answer") {
+                        res.status(200).send(result[2][0])
+                    } else {
+                        res.status(401).send({"status": "Invalid state for revealing an answer"})
+                    }
                 }
             }
             , function(err) {
                 console.log("sql broken: " + err)
-                res.status(500).send()
+                res.status(500).send({"status": "Error occured on the server"})
             }
         )
     });

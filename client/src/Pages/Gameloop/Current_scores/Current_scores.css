@@ -21,17 +21,21 @@
     padding-left: 300px;
   }
 
+
   .alltable2 {
     display: flex;
     justify-content: center;
-    width: fit-content;
+    width: 100%;
     height: fit-content;
+    display: flex;
   }
 
   .columns2 {
      
     justify-content: center;
     height: fit-content;
+    width: 33.34%;
+
   }
   .button1{
     display: flex;
@@ -43,11 +47,12 @@
     background-color: #8deccf;
     right: -550px;
     margin-top:8vh;
+  
+   
   }
-  .btn{
+  .btn9{
     display: flex;
     justify-content: center;
-    
     
   }
   .btntext{
@@ -55,4 +60,18 @@
     justify-content: center;
     position: relative;
     top: -8px;
+    color: white;
   }
+
+  .styledbutton7 {
+    background-color: #ab50d4;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px #ffffff;
+    margin-top: 10px;
+}

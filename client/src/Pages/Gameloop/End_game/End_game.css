@@ -2,36 +2,29 @@
     background-color: #5b0ca5;
     border-radius: 10px;
     align-items: center;
-    position: relative;
-    width: 800px;
-    
-    position:relative;
-    left: -50px;  
     overflow-y:scroll;
     scrollbar-width: thin;
     height:500px;
     display:block;  
-    top: 130px;
-    
+    max-width: 600px;
     }
-    .header1{
-        position: absolute;
-        right: -8em;
-        font-size: 70px
+
+    .header1-div{
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .header1-div p{
+        font-size: 70px;
+        max-width: 100vw;
+        color: white;
+        
        
     }
-    .button{
-        
-        position: relative;
-        top: 80px;
-        right: 180px;
-    }
-    .fcolor{
-        position: relative;
-        top: -10px;
-    }
     .rtn{
-        height: 50px;
+        height: 70px;
         background-color: #835ee8;
    
         border-radius: 30px;
