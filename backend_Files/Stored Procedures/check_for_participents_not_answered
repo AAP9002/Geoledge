@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `check_for_participents_not_answered`(in sessionIDIn int)
+BEGIN
+    SELECT EXISTS (SELECT 1 FROM participents WHERE session_id = sessionIDIn AND answered = 0) AS "result";
+END$$
+DELIMITER ;

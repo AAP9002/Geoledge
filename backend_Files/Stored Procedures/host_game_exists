@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `host_game_exists`(in userIDIn int)
+BEGIN
+select session_id, expired, game_state from session where host_user = userIDIn ORDER BY created_at desc;
+END$$
+DELIMITER ;

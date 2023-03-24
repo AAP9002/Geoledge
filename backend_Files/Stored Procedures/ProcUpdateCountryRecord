@@ -1,0 +1,41 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `ProcUpdateCountryRecord`(
+    in incountry_id char(3),
+    in incountry_name varchar(255),
+    in inindependent tinyint(1),
+    in inunMember tinyint(1),
+    in inregion varchar(45),
+    in inlatitude varchar(45),
+    in inlongitude varchar(45),
+    in insurface_area varchar(45),
+    in inpopulation varchar(45),
+    in intimezone varchar(45),
+    in indriving_side varchar(45),
+    in incapital varchar(45),
+    in inflag varchar(45),
+    in inlanguage varchar(45),
+    in inmap varchar(255),
+    in incurrency varchar(45))
+BEGIN
+update 
+  country 
+set 
+  country_name = incountry_name,
+  independent = inindependent,
+  unMember = inunMember,
+  region = inregion,
+  latitude = inlatitude,
+  longitude = inlongitude,
+  surface_area = insurface_area,
+  population = inpopulation,
+  timezone = intimezone,
+  driving_side = indriving_side,
+  capital = incapital,
+  flag = inflag,
+  language = inlanguage,
+  map = inmap,
+  currency = incurrency
+where 
+  country_id =  incountry_id;
+END$$
+DELIMITER ;

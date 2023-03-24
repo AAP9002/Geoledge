@@ -1,0 +1,8 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `get_current_session_id`(in host_userIn int)
+BEGIN
+    SELECT @game_session_id:=session_id FROM participents WHERE user_id = host_userIn ORDER BY `session_id` desc LIMIT 1;
+    Select session_id, game_state, time_limit, round_start, current_question, max_guesses  From session Where session_id = @game_session_id;
+
+END$$
+DELIMITER ;

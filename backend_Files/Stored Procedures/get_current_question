@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `get_current_question`(in sessionID int)
+BEGIN
+    SELECT current_question from session WHERE session_id = sessionID;
+END$$
+DELIMITER ;

@@ -1,0 +1,10 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `drop_game`(in session_idIn int)
+BEGIN
+delete from participents where session_id = session_idIn;
+select @QUIZ_ID := quiz_id from session where session_id = session_idIn;
+delete from country_set where quiz_id = @QUIZ_ID;
+delete from session where session_id = session_idIn;
+delete from quiz where quiz_id = @QUIZ_ID;
+END$$
+DELIMITER ;

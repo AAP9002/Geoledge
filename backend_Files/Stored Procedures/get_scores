@@ -1,0 +1,8 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `get_scores`(in session_idIn int, in user_idIn int)
+BEGIN
+SELECT users.username, participents.player_score FROM geo2002.participents INNER JOIN geo2002.users ON  users.user_id = participents.user_id WHERE session_id = session_idIn ORDER BY player_score DESC;
+SELECT participents.player_score as my_score FROM geo2002.participents INNER JOIN geo2002.users ON users.user_id = participents.user_id WHERE session_id = session_idIn and participents.user_id = user_idIn;
+
+END$$
+DELIMITER ;

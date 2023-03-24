@@ -1,0 +1,43 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `check_country_guess_correct`(in guess char(3),in userid int)
+BEGIN
+
+
+DECLARE SCORE INT;
+DECLARE MAX_SCORE INT;
+DECLARE seconds_lapsed int;
+
+
+SET MAX_SCORE = 10000;
+
+
+select * from country where country_id=guess;
+
+
+
+select @game_session_id:=session_id, @has_answered:=answered, @guesses_taken:=guesses from participents where user_id = userid ORDER BY session_id DESC LIMIT 1;
+Select  @quizId:=quiz_id , @max_guess_limit := max_guesses, @round_start_time := round_start, @max_time := time_limit, @game_state_now := game_state  From session Where session_id = @game_session_id;
+Select  @current_question_var := current_question From session Where session_id = @game_session_id;
+
+
+SELECT * FROM country LEFT JOIN country_set ON country_set.country_id =country.country_id where country_set.quiz_id=@quizId and country_set.question_no = @current_question_var;
+
+SELECT @correct_country_id:=country_set.country_id FROM country LEFT JOIN country_set ON country_set.country_id =country.country_id where country_set.quiz_id=@quizId and country_set.question_no = @current_question_var;
+
+
+SET seconds_lapsed = CEILING(TIMESTAMPDIFF(SECOND,CONVERT(@round_start_time,DATETIME),NOW()));
+SELECT seconds_lapsed;
+
+
+IF (@correct_country_id = guess and @game_state_now = 'displaying question' and seconds_lapsed>0 and @guesses_taken<@max_guess_limit) THEN
+
+    SET SCORE = CEILING(MAX_SCORE - ((3000*(@guesses_taken/@max_guess_limit)) + (7000*(seconds_lapsed/CONVERT(@max_time,UNSIGNED )))));
+    UPDATE participents set answered=1, player_score=player_score+SCORE where user_id=userid and session_id=@game_session_id;
+    select SCORE; 
+END IF;
+
+
+update participents set guesses = guesses + 1 where user_id=userid and session_id=@game_session_id;
+
+END$$
+DELIMITER ;

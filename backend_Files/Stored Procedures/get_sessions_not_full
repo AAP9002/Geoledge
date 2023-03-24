@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `get_sessions_not_full`()
+BEGIN
+    SELECT session_id FROM geo2002.session WHERE num_of_participents<max_participents and game_state = "waiting for players" and expired = 0;
+END$$
+DELIMITER ;

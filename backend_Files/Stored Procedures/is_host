@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `is_host`(in session_idIn int, in user_idIn int)
+BEGIN
+select (IF(user_idIn = host_user, 1, 0)) as value from session where session_id = session_idIn;
+END$$
+DELIMITER ;

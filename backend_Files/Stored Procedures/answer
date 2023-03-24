@@ -1,0 +1,11 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `answer`(in game_session_id int)
+BEGIN
+Select  @QUID:=quiz_id , @max_guess_limit := max_guesses, @round_start_time := round_start, @max_time := time_limit, game_state  From session Where session_id =game_session_id;
+Select  @current_question_var := current_question From session Where session_id = game_session_id;
+
+
+SELECT * FROM country LEFT JOIN country_set ON country_set.country_id =country.country_id where country_set.quiz_id=@QUID and country_set.question_no = @current_question_var;
+
+END$$
+DELIMITER ;

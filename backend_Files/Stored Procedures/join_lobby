@@ -1,0 +1,10 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `join_lobby`(in user_idIn int, in session_idIn int)
+BEGIN
+
+INSERT INTO participents (user_id, session_id) VALUES (user_idIn, session_idIn);
+
+UPDATE session SET num_of_participents = num_of_participents + 1 WHERE session_id = session_idIn;
+
+END$$
+DELIMITER ;

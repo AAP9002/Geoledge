@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `check_if_answered`(in session_idIn int, in user_idIn int)
+BEGIN
+    SELECT answered FROM participents WHERE user_id=user_idIn;
+END$$
+DELIMITER ;

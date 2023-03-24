@@ -1,0 +1,12 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `check_if_session_is_full`(in session_id_in int)
+BEGIN
+SELECT 
+    num_of_participents, max_participents, expired
+FROM 
+    session
+WHERE
+    session_id = session_id_in;
+
+END$$
+DELIMITER ;
