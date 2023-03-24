@@ -142,7 +142,7 @@ const Question = (props) => {
         set_display_mapbox(!display_mapbox)
     }
 
-    if (numberOfGuessesUsed > MAX_GUESS) {
+    if (numberOfGuessesUsed >= MAX_GUESS) {
         return (<> <div><p style={{color: 'black',position:"relative",top:"-22px"}}>Time Left: {timeNumber}s</p></div>
         <p className='waiting'>Out Of Guesses</p>
         </>);

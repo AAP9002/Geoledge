@@ -29,13 +29,17 @@ function HowToPlay() {
         <h3>
           <span className="circle1">Population</span>
         </h3>
-        <p className='population' style={{width: 1050, color:"black" , fontSize: "1.5rem" }}> 
-          The population hint will tell you if the country's population is higher or lower than the guessed country. The hint will appear as the text "up" or "down", and the color of the circle indicates how close you are to the correct answer.
+        <p className='population'> 
+          <p style = {{width: 1050, color:"black" , fontSize: "1.5rem"}}>
+            The population hint will tell you if the country's population is higher or lower than the 
+            guessed country.The hint will appear as the text "up" or "down", and the color of the circle
+            indicates how close you are to the correct answer.
+          </p>
         </p>
       </div>
       <div className="bubble2">
         <h3>
-          <span className="circle">Surface Area</span>
+          <span className="circle2"> Surface Area</span>
         </h3>
         
         <p style={{width: 1050, color:"black" , fontSize: "1.5rem"}}>

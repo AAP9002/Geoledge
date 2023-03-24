@@ -123,6 +123,11 @@
     text-align: center;
   }
 
+.lobby_table{
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
 .submit{
     background-color: #4E2461;
     color: #4E2461;

@@ -9,10 +9,7 @@
     font-size: 120px;
     font-family: "Comic Sans MS", cursive, sans-serif;
   }
-  
-  .rankings {
-    padding-left: 300px;
-  }
+
 
   .alltable2 {
     justify-content: center;
@@ -23,4 +20,21 @@
 
   .columns2 {
     height: fit-content;
+  }
+  .button1{
+    height:100px;
+    max-width: 250px;
+    border-radius: 80px;
+    background-color: #8deccf;
+    display: flex;
+    justify-content: center;
+  }
+  .btn{
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
+  }
+  .btntext{
+    position: relative;
+    top: -8px;
   }

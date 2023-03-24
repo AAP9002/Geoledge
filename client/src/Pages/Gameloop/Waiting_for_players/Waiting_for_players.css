@@ -24,18 +24,6 @@
     color: #4E2461;
 }
 
-
-
-.wrapper h1{
-    text-decoration-line: underline;
-    position: relative;
-    left: -50px;
-
-}
-.wrapper td {
-    color: aliceblue;
-}
-
 body::-webkit-scrollbar {
     width: 12px;               
   }
@@ -50,3 +38,5 @@ body::-webkit-scrollbar {
     border: 3px solid rgb(194, 182, 159); 
 
   }
+  
+  

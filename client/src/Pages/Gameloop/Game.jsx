@@ -51,18 +51,18 @@ const Game = () => {
 
 
 
-                        if(!window.location.endsWith("/#/Game")){
+                        if (!window.location.endsWith("/#/Game")) {
                             clearInterval(timer);
                         }
 
                     }
-                
-                if (sessionID !== -1) {
-                    fetch(`/api/getLobbyPlayers?sessionID=${ sessionID }`, { method: "GET" }).then(res => res.json()).then(stateJson => {
-                        setPlayers(stateJson.players);
-                        // console.log("Players will be blank, but not when you use players.map in return", Players)
-                    })
-                }
+
+                    if (sessionID !== -1) {
+                        fetch(`/api/getLobbyPlayers?sessionID=${sessionID}`, { method: "GET" }).then(res => res.json()).then(stateJson => {
+                            setPlayers(stateJson.players);
+                            // console.log("Players will be blank, but not when you use players.map in return", Players)
+                        })
+                    }
                 })
             }, 1000);
         }, 3000);
@@ -72,8 +72,8 @@ const Game = () => {
         return () => clearInterval(timer);
     }, []);
 
-    if (sessionID !== -1 && status=="waiting for players") {
-        fetch(`/api/getLobbyPlayers?sessionID=${ sessionID }`, { method: "GET" }).then(res => res.json()).then(stateJson => {
+    if (sessionID !== -1 && status == "waiting for players") {
+        fetch(`/api/getLobbyPlayers?sessionID=${sessionID}`, { method: "GET" }).then(res => res.json()).then(stateJson => {
             setPlayers(stateJson.players);
             // console.log("Players will be blank, but not when you use players.map in return", Players)
 
@@ -82,7 +82,7 @@ const Game = () => {
     }
 
     function leaveGame() {
-        fetch(`/api/leaveSession?sessionID=${ sessionID }`).then(res => res.json()).then(res => {
+        fetch(`/api/leaveSession?sessionID=${sessionID}`).then(res => res.json()).then(res => {
             console.log(res.status);
             window.location.href = "/#/Home";
             window.location.reload();
@@ -105,53 +105,59 @@ const Game = () => {
         case "waiting for players":
             return (<>
                 {/* <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button> */}
-                <WaitingForPlayers sessionID={ sessionID } Players={ Players }/>
-                </>
+                <WaitingForPlayers sessionID={sessionID} Players={Players} />
+            </>
             );
         case "starting game":
             return (
                 <>
-                <StartingGame />
+                    <StartingGame />
                 </>
             );
         case "displaying question":
             return (
                 <>
-                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
-                <Question timeLeft={gameTimeLimit} maxGuesses={maxGuesses} sessionID={sessionID}/>
+                    <div className='w-100 d-flex justify-content-end'>
+                        <button className="wfpstyledbutton leavebtn" onClick={leaveGame}> Leave </button>
+                    </div>                        <Question timeLeft={gameTimeLimit} maxGuesses={maxGuesses} sessionID={sessionID} />
                 </>
             );
         case "starting next question":
-            return(<>
-                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
-                <StartingQuestion/>
-                </>
-                );
+            return (<>
+                <div className='w-100 d-flex justify-content-end'>
+                    <button className="wfpstyledbutton leavebtn" onClick={leaveGame}> Leave </button>
+                </div>
+                <StartingQuestion />
+            </>
+            );
         case "revealing answer":
             return (
                 <>
-                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
-                <RevealAnswer sessionID={sessionID} />
+                    <div className='w-100 d-flex justify-content-end'>
+                        <button className="wfpstyledbutton leavebtn" onClick={leaveGame}> Leave </button>
+                    </div>
+                    <RevealAnswer sessionID={sessionID} />
                 </>
             );
 
         case "showing current scores":
             return (
                 <>
-                <button className="wfpstyledbutton" onClick={ leaveGame }> Leave </button>
-                <CurrentScores sessionID={sessionID} />
+                    <div className='w-100 d-flex justify-content-end'>
+                        <button className="wfpstyledbutton leavebtn" onClick={leaveGame}> Leave </button>
+                    </div>                        <CurrentScores sessionID={sessionID} />
                 </>
             );
         case "showing final scores":
             return (
                 <>
-                <EndGame sessionID={sessionID} />
+                    <EndGame sessionID={sessionID} />
                 </>
             );
         case "expired session":
             return (
                 <>
-                <ExpiredSession />
+                    <ExpiredSession />
                 </>
             );
         case "Loading":

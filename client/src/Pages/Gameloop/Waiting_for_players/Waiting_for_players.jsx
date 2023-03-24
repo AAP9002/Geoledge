@@ -1,6 +1,5 @@
 import React from 'react';
 import "./Waiting_for_players.css";
-//import "./Gamelobby.css";
 import { useState } from 'react';
 
 
@@ -15,17 +14,14 @@ const Waiting_for_players = (props) => {
     }
     console.log("players" + props.Players);
 
-    function returnToHome() {
 
-
-    }
     if (props.sessionID != undefined) {
         return(<>
-                <p className="waiting">Waiting for players</p>
+                {/* <p className="waiting">Waiting for players</p> */}
+
+                <h1 className='w-100'>Waiting for players</h1>
                 <div className='wrapper'>
-                <h1> <p className='header1'> Lobby</p></h1>
-                <div className='alltable'>
-                <table className='Ranking'>
+                <table className='Ranking w-100'>
                     <thead>
                         <tr>
                             <th className='columns'>No</th>
@@ -40,11 +36,10 @@ const Waiting_for_players = (props) => {
             </table>
             </div>
             <div className='button'>
-            <button className='rtn' onClick={returnToHome}> <p className='fcolor'> Back to Home</p></button>
+            <button className='rtn' onClick={leaveGame}> <p className='fcolor'>Back to Home</p></button>
             </div>
 
 
-        </div>
 
         </>);
     } else {
