@@ -6,7 +6,7 @@
     scrollbar-width: thin;
     height:500px;
     display:block;  
-    max-width: 600px;
+    max-width: 1000px;
     }
 
     .header1-div{
@@ -38,7 +38,7 @@
     }
     .columns{
         font-family:  Comic Sans MS;
-        font-size:10%;
+        font-size:5%;
        align-items: center;
         
         width: 800px;
@@ -94,4 +94,24 @@
     
       }
     
-    
+      .styledbutton7 {    
+        color: #fff;
+        cursor: pointer;
+        font-size: 1.2rem;
+        transition: background-color 0.3s ease;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .buttonp1{
+        display: flex;
+        justify-content: center;
+        min-width: 100px;
+        /* right: -40em; */
+        margin-top: 2vh;
+
+        height: 70px;
+        background-color: #835ee8;
+   
+        border-radius: 30px;
+
+      }
