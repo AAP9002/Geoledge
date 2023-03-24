@@ -37,7 +37,7 @@
     width: 33.34%;
 
   }
-  .button1{
+  .styledbutton7{
     display: flex;
     justify-content: center;
     position: relative;
@@ -59,19 +59,13 @@
     display: flex;
     justify-content: center;
     position: relative;
-    top: -8px;
-    color: white;
+    top: 15px;
+    color: rgb(120, 85, 183);
   }
-
-  .styledbutton7 {
-    background-color: #ab50d4;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 1.2rem;
-    padding: 10px 20px;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 2px 5px #ffffff;
-    margin-top: 10px;
-}
+  .buttonp1{
+    position: relative;
+    right: -90px;
+    margin-top: 10vh;
+  }
+ 
+ 
