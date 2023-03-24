@@ -1,0 +1,9 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `initialise_Values_On_Round_Start`(in session_id_in int)
+BEGIN
+    
+    UPDATE session SET round_start = NOW() WHERE session_id = session_id_in;
+    
+    Update participents set answered=0, guesses=0 where session_id = session_id_in;
+END$$
+DELIMITER ;

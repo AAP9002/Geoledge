@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `set_answered_true`(in session_idIn int, in user_idIn int)
+BEGIN
+    UPDATE participents SET answered = 1 WHERE user_id=user_idIn and session_id=session_idIn;
+END$$
+DELIMITER ;

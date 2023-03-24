@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `validate_host_in_session`(in userIDIn int, in sessionIDIn int)
+BEGIN
+    SELECT EXISTS (SELECT 1 FROM geo2002.session WHERE session_id = sessionIDIn AND host_user = userIDIn) AS "result";
+END$$
+DELIMITER ;

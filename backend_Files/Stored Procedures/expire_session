@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `expire_session`(in session_idIn int)
+BEGIN
+update session set game_state = "showing final scores", expired = 1 where session_id = session_idIn;
+END$$
+DELIMITER ;

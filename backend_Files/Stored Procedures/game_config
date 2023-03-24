@@ -1,0 +1,9 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `game_config`(in session_idIn int, in max_guessesIn int, in time_limitIn int, in num_of_questionsIn int)
+BEGIN
+UPDATE participents SET guesses = (max_guessesIn), player_score = (0) WHERE session_id=(session_idIn);
+UPDATE session SET max_guesses = (max_guessesIn), time_limit = (time_limitIn), round_ended = (0) WHERE session_id=(session_idIn);
+SELECT @QUIZ_ID := quiz_id FROM session WHERE session_id=session_idIn;
+UPDATE quiz SET num_of_questions = num_of_questionsIn WHERE quiz_id = @QUIZ_ID;
+END$$
+DELIMITER ;

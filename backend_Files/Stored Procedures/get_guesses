@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `get_guesses`(in session_idIn int, in user_idIn int)
+BEGIN
+    SELECT guesses FROM participents WHERE session_id=session_idIn AND user_id=user_idIn;
+END$$
+DELIMITER ;

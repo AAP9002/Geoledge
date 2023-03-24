@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `select_parts`(in session_idIn int)
+BEGIN
+select user_id from participents where session_id = session_idIn;
+END$$
+DELIMITER ;

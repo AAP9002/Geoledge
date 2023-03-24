@@ -1,0 +1,10 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `move_to_next_question`(in sessionID int(11))
+BEGIN
+    UPDATE session SET current_question = (current_question + 1) WHERE session_id = sessionID;
+
+    UPDATE session SET game_state = "displaying question" WHERE session_id = sessionID;
+
+    call initialise_Values_On_Round_Start(sessionID);
+END$$
+DELIMITER ;

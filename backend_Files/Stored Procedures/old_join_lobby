@@ -1,0 +1,13 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `old_join_lobby`(in user_idIn int, in session_idIn int)
+BEGIN
+UPDATE session inner join participents on session.session_id = participents.session_id SET num_of_participents = num_of_participents - 1 WHERE participents.user_id = user_idIn;
+
+delete from participents where user_id = user_idIn;
+
+INSERT INTO participents (user_id, session_id) VALUES (user_idIn, session_idIn);
+
+UPDATE session SET num_of_participents = num_of_participents + 1 WHERE session_id = session_idIn;
+
+END$$
+DELIMITER ;

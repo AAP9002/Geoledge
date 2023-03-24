@@ -1,0 +1,8 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `get_Current_Game_State`(in userid int)
+BEGIN
+select @game_session_id:=session_id from participents where user_id = userid ORDER BY session_id DESC LIMIT 1;
+
+Select  game_state From session Where session_id = @game_session_id;
+END$$
+DELIMITER ;

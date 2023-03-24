@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `update_game_state`(in sessionIDIn int, in new_game_state VARCHAR(45))
+BEGIN
+    UPDATE session SET game_state=new_game_state WHERE session_id = sessionIDIn;
+END$$
+DELIMITER ;

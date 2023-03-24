@@ -1,0 +1,13 @@
+DELIMITER $$
+CREATE DEFINER=`kevinnit1243`@`%` PROCEDURE `create_custom_lobby`(in host_userIn int, in quiz_id int)
+BEGIN
+
+INSERT INTO session (quiz_id, host_user, created_at, expired) VALUES (quiz_id, host_userIn, NOW(), 0);
+
+SELECT @SESS_ID := LAST_INSERT_ID() as id;
+
+INSERT INTO participents (user_id, session_id) VALUES (host_userIn, @SESS_ID);
+
+
+END$$
+DELIMITER ;
