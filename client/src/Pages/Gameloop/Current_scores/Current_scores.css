@@ -45,7 +45,6 @@
     width: 250px;
     border-radius: 80px;
     background-color: #8deccf;
-    right: -550px;
     margin-top:8vh;
   
    
@@ -63,8 +62,6 @@
     color: rgb(120, 85, 183);
   }
   .buttonp1{
-    position: relative;
-    right: -90px;
     margin-top: 10vh;
   }
  
