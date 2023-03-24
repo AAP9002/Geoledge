@@ -18,7 +18,7 @@ function ScoreBoard() {
         console.log("reached");
         window.location = "/#/Log-in";
       }
-      
+
       SetUsername(Account.username)
       setWins(Account.wins)
       setGamePlayed(Account.games_played)
@@ -29,48 +29,55 @@ function ScoreBoard() {
         SetWinrate(0)
       }
       else {
-        SetWinrate(Math.round((Account.wins / Account.games_played)*1000) / 10)
+        SetWinrate(Math.round((Account.wins / Account.games_played) * 1000) / 10)
       }
     });
   }, []);
 
   return (
-    <div className='all'>
-    <div className='Credentials'>
-      <div className='b1'>
-      <h1>Credentials</h1> 
-    
-      <h2>Username</h2> 
-      <div className='Container'><p className='username'>{Username}</p></div> 
-      <h2>Password</h2> 
-      <button className='button1'> <p className='cpw'>Change Password</p></button>
+    <div className='d-flex justify-content-center w-100'>
+    <div className='row full_width_limit w-100'>
+      <div className='Credentials col-lg-4'>
+        <div className='b1'>
+          <h1>Credentials</h1>
+
+          <h2>Username</h2>
+          <div className='Container'><p className='username'>{Username}</p></div>
+          <h2>Password</h2>
+          <button className='button1'> <p className='cpw'>Change Password</p></button>
+        </div>
       </div>
-    </div>
 
-    <div className='Statistics'>
-    <div className='b2'>
-      <h1 className='title2'>Statistics</h1> 
-      <h2 className='gpd'>Games Played</h2>
-      <h2 className='wr'>Win Rate(%)</h2>
-    
-      <div className='Container2'><p className='Gameplayed'>{GamePlayed}</p></div> 
+      <div className='Statistics col-lg-8'>
+        <div className='b2'>
+          <h1 className='title2'>Statistics</h1>
 
-      <div className='Container3'><p className='rate'>{WinRate}</p></div> 
-      
-      
-      
-      
+          <div className='row'>
+            <div className='col-lg-6 d-flex justify-content-center flex-column'>
+              <h2 className='gpd'>Games Played</h2>
+              <div className='d-flex justify-content-center'>
+                <div className='Container2 d-flex align-items-center'><p className='Gameplayed'>{GamePlayed}</p></div>
+              </div>
+            </div>
+            <div className='col-lg-6 d-flex justify-content-center flex-column'>
+              <h2 className='wr'>Win Rate(%)</h2>
+              <div className='d-flex justify-content-center'>
+                <div className='Container3 d-flex align-items-center'><p className='rate'>{WinRate}</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+
+
+
+    </div>
     </div>
 
 
 
-      
-    </div>
 
-   
-
-    
 
 
 

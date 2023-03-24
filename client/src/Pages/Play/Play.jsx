@@ -24,6 +24,7 @@ function Play() {
                     if (stateJson.status != "Lobby Verification Successful") {
                         console.log(stateJson.status)
                         window.location.href = "/#/Home";
+                        window.location.reload();
                     } else {
                         console.log("$%^&*")
                         setGame_Session_ID(sessionID)
@@ -64,11 +65,19 @@ function Play() {
         event.preventDefault();
         console.log('Number of Rounds:', NumberOfRounds, 'Time per Round', TimePerRound);
         fetch(`/api/SubmitGameSettings?sessionID=${game_Session_ID}&num_of_questions=${NumberOfRounds}&max_guesses=${10}&time_limit=${TimePerRound}`, { method: "POST" }).then(res => {
+            
         });
 
-        fetch(`/api/startGame?sessionID=${game_Session_ID}`, { method: "GET" });
+        fetch(`/api/startGame?sessionID=${game_Session_ID}`, { method: "GET" }).then(res => {
+        });
+
         window.location.href = "/#/Game";
     };
+
+    const leaveHostNewGame = ()=>{
+        window.location.href = "/#/";
+        window.location.reload();
+    }
 
 
     if(creating_game_Session){
@@ -76,22 +85,23 @@ function Play() {
     }
 
     return (
-        <div >
-            <Container className='back'>
-                <Row>
-                    <Row>
+        <div className='w-100 d-flex justify-content-center' >
+            <div className='back'>
+                <div className='row'>
+                    <div className='row'>
+                    <button className="styledbutton2" onClick={leaveHostNewGame}>Back To Home</button>
                         <div className="lob">
                             <h1>LOBBY CODE:{game_Session_ID}</h1>
                         </div>
-                    </Row>
-                    <Col>
+                    </div>
+                    <div className='col-md-6'>
                         {/* <table className="table">
                             <thead> <tc> <th>no:</th><th>Player</th></tc></thead>
                             <tbody>
                                 <tr><td>{No}</td></tr>
                             </tbody>
                         </table> */}
-                        <div className='table'>
+                        <div className='table w-100'>
                         <table>
                             <thead>
                                 <tr>
@@ -106,8 +116,9 @@ function Play() {
                             </tbody>
                         </table>
                       </div>
-                    </Col>
-                    <div className='col'>
+                    </div>
+                    
+                    <div className='col-md-6'>
                         <div className="settingscontainer">
                             <div className="row-md-4">
                                 <div >
@@ -142,7 +153,8 @@ function Play() {
                             </div>
                         </div>
                     </div>
-                </Row>
+                </div>
+                <br/>
                 <div>
                     <div className='formf'>
                         <h2>Number of rounds</h2>
@@ -157,7 +169,7 @@ function Play() {
                         </form>
                     </div>
                 </div>
-            </Container>
+            </div>
         </div>
 
     );

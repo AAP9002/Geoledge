@@ -23,6 +23,7 @@ const About = () => {
                         fetch(`/api/joinLobby?sessionID=${sessionID}`, { method: "GET" }).then(res => res.json()).then((res) => {
                             console.log(res);
                             window.location.href = "/#/Game";
+                            window.location.reload();
                         });
 
                     } else if (res.status === "no avaiable sessions") {
