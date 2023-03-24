@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 const Reveal_answer = (props) => {
 
     const sessionID = props.sessionID;
-    const [userIsHost, setUserIsHost] = useState(true)
+    const [userIsHost, setUserIsHost] = useState(false)
     const [correctAnswer, setCorrectAnswer] = useState("HERE")
     const [loading, setloading] = useState(true)
     useEffect(() => {
