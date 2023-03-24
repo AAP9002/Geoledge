@@ -86,6 +86,20 @@
     margin: 0 0.5em 0 0;
     padding-top: 50px;
     }
+  .circle2{
+    display: inline-block;
+    width: 6em;
+    height: 6em;
+    line-height: 2.5em;
+    border-radius: 50%;
+    text-align: center;
+    background-color: #cc00ff;
+    color: #000000;
+    font-weight: bold;
+    font-size: 1em;
+    margin: 0 0.5em 0 0;
+    padding-top: 50px;
+  }
 
 .containerf {
     width: 100%;
@@ -139,9 +153,5 @@
  
   
 
-  .population{
-    
-    color: red;
-  }
-
   
+
