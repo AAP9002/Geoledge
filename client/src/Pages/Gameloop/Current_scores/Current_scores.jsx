@@ -55,7 +55,7 @@ const Current_scores = (props) => {
                             </tbody>
                         </table>
                     </div>
-                    <div>
+                    <div className='button1'>
                         <btn className='btn' onClick={Change_State_to_next_question}> <p className='btntext'>Next Question</p></btn>
                     </div>
                 </div>
