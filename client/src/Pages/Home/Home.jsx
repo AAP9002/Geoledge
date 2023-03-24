@@ -90,8 +90,8 @@ const About = () => {
                         <div className="btns">
                             <button className="homestyledbutton2" onClick={findOnlineGame}> Play Online</button>	
                         </div>
-                        <div>
-                            <small className='errormsgtxt'>{errorMsg}</small>
+                        <div className='w-100'>
+                            <div className='errormsgtxt'>{errorMsg.trim()}</div>
                         </div>
                         <div className='btns2'>
                             <button className="homestyledbutton" onClick={HostLobby}> Host Game</button>

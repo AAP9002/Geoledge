@@ -43,8 +43,10 @@ function ScoreBoard() {
 
           <h2>Username</h2>
           <div className='Container'><p className='username'>{Username}</p></div>
-          <h2>Password</h2>
-          <button className='button1'> <p className='cpw'>Change Password</p></button>
+
+          
+          
+         
         </div>
       </div>
 

@@ -8,6 +8,8 @@
 }
 
 .score {
+  display: flex;
+  justify-content: center;
     position: absolute;
     top: 40%;
     left: 50%;
@@ -24,6 +26,7 @@
   }
 
   .alltable2 {
+    display: flex;
     justify-content: center;
     align-items: center;
     width: 800px;
@@ -34,7 +37,11 @@
   }
 
   .columns2 {
+     
+    justify-content: center;
     height: fit-content;
+    width: 33.34%;
+
   }
   .button1{
     top: 100px;
@@ -48,14 +55,20 @@
     left: -600px;
     margin-top: 10vh;
   }
-  .btn{
+  .btn9{
     display: flex;
     justify-content: center;
     
   }
   .btntext{
+    display: flex;
+    justify-content: center;
     position: relative;
-    top: -8px;
+    top: 15px;
+    color: rgb(120, 85, 183);
+  }
+  .buttonp1{
+    margin-top: 10vh;
   }
 
   .data {

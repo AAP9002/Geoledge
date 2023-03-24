@@ -3,16 +3,13 @@
 }
 
 .Signup {
-  background-image: url(./starry2.png);
-  background-repeat: no-repeat;
-  background-size: cover;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
 }
 
 .container {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,7 +22,7 @@
   border-radius: 20px;
   box-shadow: 0 2px 10px #8A2BE2;
   padding: 40px;
-  width: 460px;
+  max-width: 460px;
 }
 
 .forme h1 {
